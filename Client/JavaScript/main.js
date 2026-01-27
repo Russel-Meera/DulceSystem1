@@ -348,28 +348,26 @@ function viewPackageDetails(packageId) {
         </div>
     `;
 
-  const modal = new bootstrap.Modal(document.getElementById("packageModal"));
-  modal.show();
+  if (typeof bootstrap !== "undefined") {
+    const modal = new bootstrap.Modal(document.getElementById("packageModal"));
+    modal.show();
+  }
 }
 
 // Initialize on page load
 document.addEventListener("DOMContentLoaded", function () {
-  // Add enter key support for filters
-  document
-    .getElementById("priceFilter")
-    .addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        filterPackages();
-      }
+  const priceFilter = document.getElementById("priceFilter");
+  const typeFilter = document.getElementById("typeFilter");
+
+  if (priceFilter && typeFilter) {
+    priceFilter.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") filterPackages();
     });
 
-  document
-    .getElementById("typeFilter")
-    .addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        filterPackages();
-      }
+    typeFilter.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") filterPackages();
     });
+  }
 });
 
 // DULCE - Chapel Services Page JavaScript
@@ -592,20 +590,16 @@ function viewChapelDetails(chapelId) {
 
 // Initialize on page load
 document.addEventListener("DOMContentLoaded", function () {
-  // Add enter key support for filters
-  document
-    .getElementById("capacityFilter")
-    .addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        filterChapels();
-      }
+  const capacityFilter = document.getElementById("capacityFilter");
+  const featureFilter = document.getElementById("featureFilter");
+
+  if (capacityFilter && featureFilter) {
+    capacityFilter.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") filterChapels();
     });
 
-  document
-    .getElementById("featureFilter")
-    .addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        filterChapels();
-      }
+    featureFilter.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") filterChapels();
     });
+  }
 });
