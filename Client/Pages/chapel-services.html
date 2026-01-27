@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapel Services - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="Index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="funeral-packages.html"
+                >Funeral Packages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="chapel-services.html"
+                >Chapel Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="announcements.html">Announcements</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="obituaries.html">Obituaries</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-register ms-lg-3" href="register.html"
+                >Register</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-login ms-lg-2" href="login.html">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="page-title">Chapel Services</h1>
+            <p class="page-subtitle">
+              Peaceful and comfortable chapel facilities to honor your loved
+              ones with dignity and respect
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 mx-auto">
+            <div class="filter-card">
+              <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                  <label class="form-label">Chapel Capacity</label>
+                  <select class="form-select" id="capacityFilter">
+                    <option value="all">All Capacities</option>
+                    <option value="small">Small (1-50)</option>
+                    <option value="medium">Medium (51-100)</option>
+                    <option value="large">Large (101-200)</option>
+                    <option value="xlarge">Extra Large (200+)</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Features</label>
+                  <select class="form-select" id="featureFilter">
+                    <option value="all">All Features</option>
+                    <option value="airconditioned">Air-conditioned</option>
+                    <option value="parking">Parking Available</option>
+                    <option value="audiovisual">Audio/Visual Equipment</option>
+                    <option value="wifi">WiFi Available</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <button
+                    class="btn btn-primary-custom w-100"
+                    onclick="filterChapels()"
+                  >
+                    <i class="bi bi-funnel"></i> Apply Filter
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapels Section -->
+    <section class="chapels-section">
+      <div class="container">
+        <div id="chapels-container" class="row g-4">
+          <!-- Chapel Card 1 - Serenity Chapel -->
+          <div
+            class="col-lg-6 chapel-item"
+            data-capacity="medium"
+            data-features="airconditioned,parking,audiovisual"
+          >
+            <div class="chapel-card">
+              <div class="chapel-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1438032005730-c779502df39b?w=800&h=500&fit=crop"
+                  alt="Serenity Chapel"
+                  class="chapel-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/800x500/2c3e50/ffffff?text=Serenity+Chapel'
+                  "
+                />
+                <div class="chapel-badge">
+                  <i class="bi bi-star-fill"></i> Featured
+                </div>
+              </div>
+              <div class="chapel-content">
+                <div class="chapel-header">
+                  <h3 class="chapel-name">Serenity Chapel</h3>
+                  <div class="chapel-capacity">
+                    <i class="bi bi-people-fill"></i> Capacity: 80 people
+                  </div>
+                </div>
+                <p class="chapel-description">
+                  A peaceful and comfortable air-conditioned chapel perfect for
+                  intimate memorial services. Features modern amenities and
+                  elegant interiors designed to provide comfort during difficult
+                  times.
+                </p>
+                <div class="chapel-features">
+                  <h5 class="features-title">Chapel Features:</h5>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-snow"></i> Air-conditioned
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-car-front-fill"></i> Parking Space
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-speaker-fill"></i> Sound System
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-display"></i> LED Screen
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-wifi"></i> WiFi Available
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-cup-hot-fill"></i> Coffee Area
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chapel-actions">
+                  <button
+                    class="btn btn-view-chapel"
+                    onclick="viewChapelDetails(1)"
+                  >
+                    <i class="bi bi-eye"></i> View Details
+                  </button>
+                  <a href="login.html" class="btn btn-select-chapel">
+                    <i class="bi bi-check-circle"></i> Select Chapel
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chapel Card 2 - Harmony Hall -->
+          <div
+            class="col-lg-6 chapel-item"
+            data-capacity="large"
+            data-features="airconditioned,parking,audiovisual,wifi"
+          >
+            <div class="chapel-card">
+              <div class="chapel-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1519167758804-f8bcda37c6a0?w=800&h=500&fit=crop"
+                  alt="Harmony Hall"
+                  class="chapel-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/800x500/2c3e50/ffffff?text=Harmony+Hall'
+                  "
+                />
+                <div class="chapel-badge premium">
+                  <i class="bi bi-gem"></i> Premium
+                </div>
+              </div>
+              <div class="chapel-content">
+                <div class="chapel-header">
+                  <h3 class="chapel-name">Harmony Hall</h3>
+                  <div class="chapel-capacity">
+                    <i class="bi bi-people-fill"></i> Capacity: 150 people
+                  </div>
+                </div>
+                <p class="chapel-description">
+                  Our largest and most elegant chapel featuring premium
+                  amenities and spacious interiors. Ideal for larger gatherings
+                  with state-of-the-art facilities and comfortable seating
+                  arrangements.
+                </p>
+                <div class="chapel-features">
+                  <h5 class="features-title">Chapel Features:</h5>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-snow"></i> Premium AC
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-car-front-fill"></i> Large Parking
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-speaker-fill"></i> Pro Audio System
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-tv"></i> Multiple Screens
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-wifi"></i> High-Speed WiFi
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-reception-4"></i> Live Streaming
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-cup-straw"></i> Refreshment Area
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-door-open"></i> Private Lounge
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chapel-actions">
+                  <button
+                    class="btn btn-view-chapel"
+                    onclick="viewChapelDetails(2)"
+                  >
+                    <i class="bi bi-eye"></i> View Details
+                  </button>
+                  <a href="login.html" class="btn btn-select-chapel">
+                    <i class="bi bi-check-circle"></i> Select Chapel
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chapel Card 3 - Grace Chapel -->
+          <div
+            class="col-lg-6 chapel-item"
+            data-capacity="small"
+            data-features="airconditioned,audiovisual"
+          >
+            <div class="chapel-card">
+              <div class="chapel-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=500&fit=crop"
+                  alt="Grace Chapel"
+                  class="chapel-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/800x500/2c3e50/ffffff?text=Grace+Chapel'
+                  "
+                />
+              </div>
+              <div class="chapel-content">
+                <div class="chapel-header">
+                  <h3 class="chapel-name">Grace Chapel</h3>
+                  <div class="chapel-capacity">
+                    <i class="bi bi-people-fill"></i> Capacity: 50 people
+                  </div>
+                </div>
+                <p class="chapel-description">
+                  An intimate and cozy chapel perfect for small family
+                  gatherings. Features essential amenities in a warm and
+                  comforting environment designed for privacy and solace.
+                </p>
+                <div class="chapel-features">
+                  <h5 class="features-title">Chapel Features:</h5>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-snow"></i> Air-conditioned
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-speaker-fill"></i> Sound System
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-display"></i> TV Screen
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-cup-hot-fill"></i> Coffee Station
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chapel-actions">
+                  <button
+                    class="btn btn-view-chapel"
+                    onclick="viewChapelDetails(3)"
+                  >
+                    <i class="bi bi-eye"></i> View Details
+                  </button>
+                  <a href="login.html" class="btn btn-select-chapel">
+                    <i class="bi bi-check-circle"></i> Select Chapel
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chapel Card 4 - Tranquility Suite -->
+          <div
+            class="col-lg-6 chapel-item"
+            data-capacity="xlarge"
+            data-features="airconditioned,parking,audiovisual,wifi"
+          >
+            <div class="chapel-card">
+              <div class="chapel-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1478860409698-8707f313ee8b?w=800&h=500&fit=crop"
+                  alt="Tranquility Suite"
+                  class="chapel-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/800x500/2c3e50/ffffff?text=Tranquility+Suite'
+                  "
+                />
+                <div class="chapel-badge deluxe">
+                  <i class="bi bi-award-fill"></i> Deluxe
+                </div>
+              </div>
+              <div class="chapel-content">
+                <div class="chapel-header">
+                  <h3 class="chapel-name">Tranquility Suite</h3>
+                  <div class="chapel-capacity">
+                    <i class="bi bi-people-fill"></i> Capacity: 250 people
+                  </div>
+                </div>
+                <p class="chapel-description">
+                  Our most prestigious chapel suite offering luxurious
+                  facilities and exceptional amenities. Perfect for large
+                  memorial services with VIP accommodations and comprehensive
+                  media capabilities.
+                </p>
+                <div class="chapel-features">
+                  <h5 class="features-title">Chapel Features:</h5>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-snow"></i> Climate Control
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-car-front-fill"></i> VIP Parking
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-speaker-fill"></i> Premium Sound
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-projector"></i> Projector System
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-wifi"></i> Premium WiFi
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-camera-video"></i> Video Recording
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-broadcast"></i> Live Streaming
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-door-closed"></i> Multiple Lounges
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-cup-straw"></i> Catering Area
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="feature-item">
+                        <i class="bi bi-person-badge"></i> Concierge Service
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chapel-actions">
+                  <button
+                    class="btn btn-view-chapel"
+                    onclick="viewChapelDetails(4)"
+                  >
+                    <i class="bi bi-eye"></i> View Details
+                  </button>
+                  <a href="login.html" class="btn btn-select-chapel">
+                    <i class="bi bi-check-circle"></i> Select Chapel
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div
+          id="no-results-chapel"
+          class="text-center mt-5"
+          style="display: none"
+        >
+          <i class="bi bi-search" style="font-size: 3rem; color: #7f8c8d"></i>
+          <h3 class="mt-3">No Chapels Found</h3>
+          <p class="text-muted">
+            Try adjusting your filters to see more results.
+          </p>
+          <button class="btn btn-primary-custom" onclick="resetChapelFilters()">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapel Details Modal -->
+    <div
+      class="modal fade"
+      id="chapelModal"
+      tabindex="-1"
+      aria-labelledby="chapelModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="chapelModalLabel">Chapel Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalChapelDetails">
+            <!-- Chapel details will be loaded here dynamically -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <a href="login.html" class="btn btn-primary-custom">
+              <i class="bi bi-check-circle"></i> Select This Chapel
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">
+              <i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services
+            </h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Providing compassionate and professional funeral services with
+              modern digital convenience.
+            </p>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+              <li><a href="funeral-packages.html">Funeral Packages</a></li>
+              <li><a href="chapel-services.html">Chapel Services</a></li>
+              <li><a href="announcements.html">Announcements</a></li>
+              <li><a href="obituaries.html">Obituaries</a></li>
+              <li><a href="register.html">Register</a></li>
+              <li><a href="login.html">Login</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Contact Information</h5>
+            <ul class="footer-links">
+              <li>
+                <i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1
+              </li>
+              <li>Alaminos, Laguna</li>
+              <li><i class="bi bi-envelope-fill"></i> info@dulcefuneral.com</li>
+              <li><i class="bi bi-telephone-fill"></i> Available 24/7</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+          <p>
+            Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan
+            Institute, Inc.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/chapels.js"></script>
+  </body>
+</html>

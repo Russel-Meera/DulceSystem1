@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Funeral Packages - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="Index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="funeral-packages.html"
+                >Funeral Packages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chapel-services.html"
+                >Chapel Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="announcements.html">Announcements</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="obituaries.html">Obituaries</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-register ms-lg-3" href="register.html"
+                >Register</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-login ms-lg-2" href="login.html">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="page-title">Funeral Service Packages</h1>
+            <p class="page-subtitle">
+              Choose from our compassionate and comprehensive funeral service
+              packages designed to honor your loved ones
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 mx-auto">
+            <div class="filter-card">
+              <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                  <label class="form-label">Price Range</label>
+                  <select class="form-select" id="priceFilter">
+                    <option value="all">All Prices</option>
+                    <option value="0-50000">Below ₱50,000</option>
+                    <option value="50000-100000">₱50,000 - ₱100,000</option>
+                    <option value="100000-200000">₱100,000 - ₱200,000</option>
+                    <option value="200000-999999">Above ₱200,000</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Package Type</label>
+                  <select class="form-select" id="typeFilter">
+                    <option value="all">All Types</option>
+                    <option value="basic">Basic</option>
+                    <option value="standard">Standard</option>
+                    <option value="premium">Premium</option>
+                    <option value="deluxe">Deluxe</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <button
+                    class="btn btn-primary-custom w-100"
+                    onclick="filterPackages()"
+                  >
+                    <i class="bi bi-funnel"></i> Apply Filter
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section class="packages-section">
+      <div class="container">
+        <div id="packages-container" class="row g-4">
+          <!-- Package Card 1 - Basic Package -->
+          <div
+            class="col-md-6 col-lg-4 package-item"
+            data-price="45000"
+            data-type="basic"
+          >
+            <div class="package-card">
+              <div class="package-badge">Basic</div>
+              <div class="package-header">
+                <h3 class="package-name">Serenity Basic</h3>
+                <div class="package-price">₱45,000</div>
+              </div>
+              <div class="package-body">
+                <p class="package-description">
+                  Essential funeral services with dignified care for your loved
+                  one.
+                </p>
+                <ul class="package-inclusions">
+                  <li><i class="bi bi-check-circle-fill"></i> Basic Casket</li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Embalming Service
+                  </li>
+                  <li><i class="bi bi-check-circle-fill"></i> 2 Days Wake</li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Chapel Usage (2
+                    days)
+                  </li>
+                  <li><i class="bi bi-check-circle-fill"></i> Funeral Car</li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Basic Flower
+                    Arrangement
+                  </li>
+                  <li><i class="bi bi-check-circle-fill"></i> Guest Book</li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> 50 Memorial Cards
+                  </li>
+                </ul>
+              </div>
+              <div class="package-footer">
+                <a href="login.html" class="btn btn-select-package">
+                  <i class="bi bi-calendar-check"></i> Select Package
+                </a>
+                <button
+                  class="btn btn-view-details"
+                  onclick="viewPackageDetails(1)"
+                >
+                  <i class="bi bi-info-circle"></i> View Details
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package Card 2 - Standard Package -->
+          <div
+            class="col-md-6 col-lg-4 package-item"
+            data-price="85000"
+            data-type="standard"
+          >
+            <div class="package-card popular">
+              <div class="package-badge popular-badge">Most Popular</div>
+              <div class="package-header">
+                <h3 class="package-name">Serenity Standard</h3>
+                <div class="package-price">₱85,000</div>
+              </div>
+              <div class="package-body">
+                <p class="package-description">
+                  Comprehensive funeral services with enhanced amenities and
+                  comfort.
+                </p>
+                <ul class="package-inclusions">
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Premium Casket
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Complete Embalming
+                  </li>
+                  <li><i class="bi bi-check-circle-fill"></i> 3 Days Wake</li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Air-conditioned
+                    Chapel (3 days)
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Funeral Car with
+                    Escort
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Premium Flower
+                    Arrangements
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Memorial Video
+                    Tribute
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> 100 Memorial Cards
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Coffee & Snacks
+                    Service
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Photography Service
+                  </li>
+                </ul>
+              </div>
+              <div class="package-footer">
+                <a href="login.html" class="btn btn-select-package">
+                  <i class="bi bi-calendar-check"></i> Select Package
+                </a>
+                <button
+                  class="btn btn-view-details"
+                  onclick="viewPackageDetails(2)"
+                >
+                  <i class="bi bi-info-circle"></i> View Details
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package Card 3 - Premium Package -->
+          <div
+            class="col-md-6 col-lg-4 package-item"
+            data-price="150000"
+            data-type="premium"
+          >
+            <div class="package-card">
+              <div class="package-badge">Premium</div>
+              <div class="package-header">
+                <h3 class="package-name">Serenity Premium</h3>
+                <div class="package-price">₱150,000</div>
+              </div>
+              <div class="package-body">
+                <p class="package-description">
+                  Premium services with luxury amenities and personalized care.
+                </p>
+                <ul class="package-inclusions">
+                  <li><i class="bi bi-check-circle-fill"></i> Luxury Casket</li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Premium Embalming &
+                    Cosmetics
+                  </li>
+                  <li><i class="bi bi-check-circle-fill"></i> 4 Days Wake</li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Deluxe Chapel with
+                    Lounge (4 days)
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Premium Funeral
+                    Fleet
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Designer Flower
+                    Arrangements
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Professional Video &
+                    Photo Coverage
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> 200 Premium Memorial
+                    Cards
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Full Catering
+                    Service
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Live Streaming
+                    Service
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Memorial Website
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> 24/7 Concierge
+                    Service
+                  </li>
+                </ul>
+              </div>
+              <div class="package-footer">
+                <a href="login.html" class="btn btn-select-package">
+                  <i class="bi bi-calendar-check"></i> Select Package
+                </a>
+                <button
+                  class="btn btn-view-details"
+                  onclick="viewPackageDetails(3)"
+                >
+                  <i class="bi bi-info-circle"></i> View Details
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package Card 4 - Deluxe Package -->
+          <div
+            class="col-md-6 col-lg-4 package-item"
+            data-price="250000"
+            data-type="deluxe"
+          >
+            <div class="package-card">
+              <div class="package-badge deluxe-badge">Deluxe</div>
+              <div class="package-header">
+                <h3 class="package-name">Serenity Deluxe</h3>
+                <div class="package-price">₱250,000</div>
+              </div>
+              <div class="package-body">
+                <p class="package-description">
+                  Ultimate luxury service with exclusive amenities and bespoke
+                  arrangements.
+                </p>
+                <ul class="package-inclusions">
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Imported Luxury
+                    Casket
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Advanced Embalming &
+                    Restoration
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> 5 Days Wake
+                    (Flexible)
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Presidential Chapel
+                    Suite (5 days)
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Luxury Funeral
+                    Convoy
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Bespoke Floral
+                    Designs
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Cinematic Video
+                    Production
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> 300 Custom Memorial
+                    Cards
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Premium Catering &
+                    Bar Service
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Multi-platform Live
+                    Streaming
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Personalized
+                    Memorial Website
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Dedicated Event
+                    Coordinator
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> VIP Guest Services
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Custom Music &
+                    Tribute Performance
+                  </li>
+                </ul>
+              </div>
+              <div class="package-footer">
+                <a href="login.html" class="btn btn-select-package">
+                  <i class="bi bi-calendar-check"></i> Select Package
+                </a>
+                <button
+                  class="btn btn-view-details"
+                  onclick="viewPackageDetails(4)"
+                >
+                  <i class="bi bi-info-circle"></i> View Details
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Package Card 5 - Custom Package -->
+          <div
+            class="col-md-6 col-lg-4 package-item"
+            data-price="0"
+            data-type="custom"
+          >
+            <div class="package-card custom">
+              <div class="package-badge custom-badge">Custom</div>
+              <div class="package-header">
+                <h3 class="package-name">Custom Package</h3>
+                <div class="package-price">Personalized</div>
+              </div>
+              <div class="package-body">
+                <p class="package-description">
+                  Create your own package tailored to your specific needs and
+                  preferences.
+                </p>
+                <ul class="package-inclusions">
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Choose Your Casket
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Flexible Wake
+                    Duration
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Select Chapel Type
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Customizable
+                    Services
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Add-on Options
+                    Available
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle-fill"></i> Personal
+                    Consultation
+                  </li>
+                </ul>
+                <div class="custom-note">
+                  <i class="bi bi-info-circle"></i>
+                  <p>
+                    Our team will work with you to create a personalized package
+                    that fits your budget and requirements.
+                  </p>
+                </div>
+              </div>
+              <div class="package-footer">
+                <a href="login.html" class="btn btn-select-package">
+                  <i class="bi bi-chat-dots"></i> Request Consultation
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="text-center mt-5" style="display: none">
+          <i class="bi bi-search" style="font-size: 3rem; color: #7f8c8d"></i>
+          <h3 class="mt-3">No Packages Found</h3>
+          <p class="text-muted">
+            Try adjusting your filters to see more results.
+          </p>
+          <button class="btn btn-primary-custom" onclick="resetFilters()">
+            Reset Filters
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Package Details Modal -->
+    <div
+      class="modal fade"
+      id="packageModal"
+      tabindex="-1"
+      aria-labelledby="packageModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="packageModalLabel">Package Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalPackageDetails">
+            <!-- Package details will be loaded here dynamically -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <a href="login.html" class="btn btn-primary-custom">
+              <i class="bi bi-calendar-check"></i> Select This Package
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">
+              <i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services
+            </h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Providing compassionate and professional funeral services with
+              modern digital convenience.
+            </p>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+              <li><a href="funeral-packages.html">Funeral Packages</a></li>
+              <li><a href="chapel-services.html">Chapel Services</a></li>
+              <li><a href="announcements.html">Announcements</a></li>
+              <li><a href="obituaries.html">Obituaries</a></li>
+              <li><a href="register.html">Register</a></li>
+              <li><a href="login.html">Login</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Contact Information</h5>
+            <ul class="footer-links">
+              <li>
+                <i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1
+              </li>
+              <li>Alaminos, Laguna</li>
+              <li><i class="bi bi-envelope-fill"></i> info@dulcefuneral.com</li>
+              <li><i class="bi bi-telephone-fill"></i> Available 24/7</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+          <p>
+            Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan
+            Institute, Inc.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/packages.js"></script>
+  </body>
+</html>

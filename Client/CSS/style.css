@@ -323,3 +323,546 @@ body {
     margin: 0.5rem 0;
   }
 }
+/* ============================================
+   FUNERAL PACKAGES PAGE STYLES
+   ============================================ */
+
+/* Page Header */
+.page-header {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  color: white;
+  padding: 80px 0 60px 0;
+  margin-bottom: 40px;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.page-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Filter Section */
+.filter-section {
+  margin-bottom: 40px;
+}
+
+.filter-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Packages Section */
+.packages-section {
+  padding: 40px 0 80px 0;
+}
+
+/* Package Card */
+.package-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+}
+
+.package-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent-color);
+}
+
+.package-card.popular {
+  border-color: #f39c12;
+  box-shadow: 0 8px 25px rgba(243, 156, 18, 0.3);
+}
+
+.package-card.custom {
+  border: 2px dashed var(--accent-color);
+}
+
+/* Package Badge */
+.package-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--accent-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 1;
+}
+
+.popular-badge {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  animation: pulse 2s infinite;
+}
+
+.deluxe-badge {
+  background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+}
+
+.custom-badge {
+  background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Package Header */
+.package-header {
+  padding: 2rem 2rem 1rem 2rem;
+  text-align: center;
+  border-bottom: 2px solid var(--light-bg);
+}
+
+.package-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.package-price {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-top: 0.5rem;
+}
+
+/* Package Body */
+.package-body {
+  padding: 2rem;
+  flex-grow: 1;
+}
+
+.package-description {
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.package-inclusions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.package-inclusions li {
+  padding: 0.6rem 0;
+  color: var(--text-dark);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.package-inclusions li i {
+  color: #27ae60;
+  font-size: 1.1rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+/* Custom Note */
+.custom-note {
+  background: var(--light-bg);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.custom-note i {
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.custom-note p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Package Footer */
+.package-footer {
+  padding: 1.5rem 2rem 2rem 2rem;
+  border-top: 2px solid var(--light-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.btn-select-package {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-select-package:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+  color: white;
+}
+
+.btn-view-details {
+  background: transparent;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-view-details:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+/* Modal Styling */
+.modal-content {
+  border-radius: 15px;
+  border: none;
+}
+
+.modal-header {
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--secondary-color) 100%
+  );
+  color: white;
+  border-radius: 15px 15px 0 0;
+  padding: 1.5rem 2rem;
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-footer {
+  border-top: 2px solid var(--light-bg);
+  padding: 1.5rem 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
+  }
+
+  .filter-card {
+    padding: 1.5rem;
+  }
+
+  .package-name {
+    font-size: 1.5rem;
+  }
+
+  .package-price {
+    font-size: 2rem;
+  }
+
+  .package-footer {
+    flex-direction: column;
+  }
+}
+
+/* ============================================
+   CHAPEL SERVICES PAGE STYLES
+   ============================================ */
+
+.chapels-section {
+  padding: 40px 0 80px 0;
+}
+
+/* Chapel Card */
+.chapel-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chapel-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Chapel Image */
+.chapel-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.chapel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+}
+
+.chapel-card:hover .chapel-image {
+  transform: scale(1.1);
+}
+
+/* Chapel Badge */
+.chapel-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--accent-color);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.chapel-badge.premium {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.chapel-badge.deluxe {
+  background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+}
+
+.chapel-badge i {
+  margin-right: 0.3rem;
+}
+
+/* Chapel Content */
+.chapel-content {
+  padding: 2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chapel-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--light-bg);
+}
+
+.chapel-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.chapel-capacity {
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.chapel-capacity i {
+  margin-right: 0.5rem;
+}
+
+.chapel-description {
+  color: #7f8c8d;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Chapel Features */
+.chapel-features {
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.features-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.feature-item {
+  background: var(--light-bg);
+  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: var(--accent-color);
+  color: white;
+  transform: translateX(5px);
+}
+
+.feature-item i {
+  font-size: 1.1rem;
+  color: var(--accent-color);
+}
+
+.feature-item:hover i {
+  color: white;
+}
+
+/* Chapel Actions */
+.chapel-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 2px solid var(--light-bg);
+}
+
+.btn-view-chapel {
+  flex: 1;
+  background: transparent;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-view-chapel:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+.btn-select-chapel {
+  flex: 1;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-select-chapel:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+  color: white;
+}
+
+/* Modal Image Gallery */
+.modal-chapel-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+}
+
+.chapel-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.detail-feature-card {
+  background: var(--light-bg);
+  padding: 1.2rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.detail-feature-card:hover {
+  background: var(--accent-color);
+  color: white;
+  transform: translateY(-5px);
+}
+
+.detail-feature-card i {
+  font-size: 2rem;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+}
+
+.detail-feature-card:hover i {
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chapel-image-wrapper {
+    height: 250px;
+  }
+
+  .chapel-actions {
+    flex-direction: column;
+  }
+
+  .chapel-name {
+    font-size: 1.5rem;
+  }
+
+  .modal-chapel-image {
+    height: 250px;
+  }
+}
