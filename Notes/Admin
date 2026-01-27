@@ -1,0 +1,356 @@
+Perfect! Let me create the **Admin Use Case Diagram** next, following the same rigorous structure.
+
+---
+
+# ADMIN USE CASE DIAGRAM – DULCE SYSTEM
+
+## 1. ACTOR
+
+**Primary Actor**
+
+- **Administrator**
+  - Represents the funeral home management/owner
+  - Has full system privileges and control
+  - Manages all system operations, users, and data
+  - Interacts through web browser with elevated access
+
+**Secondary Actor (Optional in diagram)**
+
+- **System** (for automated processes like receipt generation, report compilation)
+
+---
+
+## 2. ADMIN USE CASES (COMPLETE LIST)
+
+These are all use cases the Administrator actor can perform.
+
+### A. Administrator Access & Control
+
+1. **Admin Login**
+2. **Access Admin Dashboard**
+3. **Admin Logout**
+
+### B. User & Account Management
+
+1. **View Client Accounts**
+2. **Manage Client Records**
+   - Update client information
+   - Validate client data
+3. **Manage Staff Accounts**
+   - Create staff account
+   - Update staff account
+   - Disable staff account
+4. **Manage User Roles**
+
+### C. Funeral Services & Package Management
+
+1. **Manage Funeral Packages**
+   - Create funeral package
+   - Update funeral package
+   - Remove funeral package
+2. **Manage Chapel Services**
+   - Add chapel service
+   - Update chapel availability
+   - Remove chapel service
+3. **Update Service Pricing**
+4. **Update Service Descriptions**
+
+### D. Booking & Scheduling Management
+
+1. **View All Bookings**
+2. **Review Booking Requests**
+3. **Approve Booking**
+4. **Reject Booking**
+5. **Manage Service Schedules**
+   - Assign service schedule
+   - Modify service schedule
+   - View schedule calendar
+6. **Update Service Status**
+7. **Monitor Service Progress**
+
+### E. Document Management
+
+1. **View All Client Documents**
+2. **Review Uploaded Documents**
+3. **Approve Documents**
+4. **Reject Documents**
+5. **Archive Documents**
+
+### F. Billing, Payments & Financial Control
+
+1. **Generate Billing Statement**
+2. **Create Invoice**
+3. **Monitor Online Payments**
+4. **Monitor Donations**
+5. **View Transaction History**
+6. **Generate Digital Receipt**
+7. **Process Payment Records**
+
+### G. Reports & Analytics
+
+1. **Generate Financial Reports**
+   - Revenue reports
+   - Payment summaries
+   - Donation reports
+2. **Generate Operational Reports**
+   - Booking volume
+   - Service schedules
+   - Service completion rates
+3. **Generate Client Reports**
+   - Client activity
+   - Transaction summaries
+4. **View Reports**
+5. **Export Reports** (implied)
+
+### H. Content Management
+
+1. **Manage Announcements**
+   - Create announcement
+   - Update announcement
+   - Remove announcement
+2. **Manage Obituaries**
+   - Create obituary
+   - Update obituary
+   - Remove obituary
+3. **Manage Upcoming Services Display**
+
+### I. System Oversight & Monitoring
+
+1. **Monitor System Operations**
+2. **View System Activity Logs**
+3. **Ensure Data Integrity**
+4. **Maintain Audit Records**
+
+---
+
+## 3. USE CASE GROUPING (SYSTEM BOUNDARY VIEW)
+
+**System Boundary:** DULCE: Integrated Funeral Service Management System
+
+**Outside the boundary:**
+
+- Actor: Administrator
+
+---
+
+## 4. USE CASE RELATIONSHIPS (CRITICAL FOR ACCURACY)
+
+### A. «include» Relationships
+
+**Manage Funeral Packages:**
+
+- «include» Create Funeral Package
+- «include» Update Funeral Package
+- «include» Remove Funeral Package
+
+**Manage Chapel Services:**
+
+- «include» Add Chapel Service
+- «include» Update Chapel Availability
+- «include» Remove Chapel Service
+
+**Manage Staff Accounts:**
+
+- «include» Create Staff Account
+- «include» Update Staff Account
+- «include» Disable Staff Account
+
+**Review Booking Requests:**
+
+- «include» View All Bookings
+- «include» Approve Booking OR Reject Booking
+
+**Generate Billing Statement:**
+
+- «include» Create Invoice
+- «include» Generate Digital Receipt
+
+**Manage Announcements:**
+
+- «include» Create Announcement
+- «include» Update Announcement
+- «include» Remove Announcement
+
+**Manage Obituaries:**
+
+- «include» Create Obituary
+- «include» Update Obituary
+- «include» Remove Obituary
+
+**Generate Financial Reports:**
+
+- «include» View Transaction History
+- «include» Monitor Payments
+- «include» Monitor Donations
+
+### B. «extend» Relationships
+
+**Export Reports:**
+
+- «extend» View Reports (optional action)
+
+**Archive Documents:**
+
+- «extend» Review Uploaded Documents (conditional)
+
+**Process Payment Records:**
+
+- «extend» Monitor Online Payments (when manual intervention needed)
+
+### C. Authentication Dependency
+
+All secured admin use cases require:
+
+- **Admin Login** (prerequisite)
+
+**Note for diagram:** "Administrator must be logged in to access all admin functions"
+
+---
+
+## 5. FINAL UML DIAGRAM STRUCTURE
+
+### Layout Recommendation (for clarity):
+
+**Left side:** Actor (Administrator)
+
+**Inside System Boundary (organized by module):**
+
+**Top Section:**
+
+- Access & Authentication
+- User Management
+
+**Middle-Left Section:**
+
+- Service & Package Management
+- Booking Management
+
+**Middle-Right Section:**
+
+- Document Management
+- Payment & Billing
+
+**Bottom Section:**
+
+- Reports & Analytics
+- Content Management
+- System Oversight
+
+---
+
+## 6. SIMPLIFIED TEXTUAL UML REPRESENTATION
+
+```
+Actor: Administrator
+
+Administrator → Admin Login
+Administrator → Access Admin Dashboard
+
+[User & Account Management]
+Administrator → View Client Accounts
+Administrator → Manage Client Records
+Administrator → Manage Staff Accounts
+    «include» Create Staff Account
+    «include» Update Staff Account
+    «include» Disable Staff Account
+
+[Service & Package Management]
+Administrator → Manage Funeral Packages
+    «include» Create Funeral Package
+    «include» Update Funeral Package
+    «include» Remove Funeral Package
+Administrator → Manage Chapel Services
+    «include» Add Chapel Service
+    «include» Update Chapel Availability
+Administrator → Update Service Pricing
+
+[Booking Management]
+Administrator → View All Bookings
+Administrator → Review Booking Requests
+    «include» Approve Booking
+    «include» Reject Booking
+Administrator → Manage Service Schedules
+    «include» Assign Schedule
+    «include» Modify Schedule
+Administrator → Update Service Status
+Administrator → Monitor Service Progress
+
+[Document Management]
+Administrator → View All Client Documents
+Administrator → Review Uploaded Documents
+Administrator → Approve Documents
+Administrator → Reject Documents
+    «extend» Archive Documents
+
+[Financial Control]
+Administrator → Generate Billing Statement
+    «include» Create Invoice
+    «include» Generate Digital Receipt
+Administrator → Monitor Online Payments
+Administrator → Monitor Donations
+Administrator → View Transaction History
+
+[Reports & Analytics]
+Administrator → Generate Financial Reports
+Administrator → Generate Operational Reports
+Administrator → Generate Client Reports
+Administrator → View Reports
+    «extend» Export Reports
+
+[Content Management]
+Administrator → Manage Announcements
+    «include» Create Announcement
+    «include» Update Announcement
+    «include» Remove Announcement
+Administrator → Manage Obituaries
+    «include» Create Obituary
+    «include» Update Obituary
+    «include» Remove Obituary
+
+[System Oversight]
+Administrator → Monitor System Operations
+Administrator → View System Activity Logs
+Administrator → Ensure Data Integrity
+
+Administrator → Admin Logout
+```
+
+---
+
+## 7. COMPARISON: CLIENT vs ADMIN USE CASES
+
+| Category             | Client Use Cases | Admin Use Cases     |
+| -------------------- | ---------------- | ------------------- |
+| **Authentication**   | 3                | 3                   |
+| **Service Browsing** | 4                | 0 (creates instead) |
+| **Booking**          | 7                | 7 (management)      |
+| **Documents**        | 3                | 5 (validation)      |
+| **Payments**         | 6                | 7 (oversight)       |
+| **Reports**          | 0                | 5                   |
+| **Content**          | 2 (view only)    | 6 (full management) |
+| **System Admin**     | 0                | 4                   |
+| **TOTAL**            | **25**           | **37**              |
+
+---
+
+## 8. WHY THIS ADMIN USE CASE DIAGRAM IS CORRECT
+
+✅ Covers all 30 admin functionalities identified earlier  
+✅ Uses proper UML relationships («include», «extend»)  
+✅ Clearly separates management functions from client functions  
+✅ Matches thesis scope and three-tier architecture  
+✅ Ready for Chapter III documentation  
+✅ Defense-ready with clear rationale
+
+---
+
+## NEXT RECOMMENDED STEP
+
+Now you have both **Client** and **Admin** use case diagrams. The logical next moves are:
+
+1. **Staff Use Case Diagram** (smallest, overlaps with Admin but limited)
+2. **Use Case Specifications** (detailed flow for each use case)
+3. **Activity Diagrams** (workflow for key processes like booking, payment)
+4. **Sequence Diagrams** (interaction between user, system, database)
+
+**Which would you like me to do next?**
