@@ -1,40 +1,130 @@
-<div class="card">
-  <h4>Funeral Packages</h4>
-  <p>Manage available funeral service packages.</p>
-</div>
 
-<div class="cards-grid">
+<table id="packagesTable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Package Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Basic Package</td>
+      <td>• Simple casket<br>• 1-day viewing<br>• Basic memorial setup</td>
+      <td>₱25,000</td>
+      <td>
+        <button class="edit-btn" onclick="editPackage(1)">Edit</button>
+        <button class="delete-btn" onclick="deletePackage(1)">Delete</button>
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Standard Package</td>
+      <td>• Premium casket<br>• 3-day viewing<br>• Floral arrangements<br>• Memorial tarpaulin</td>
+      <td>₱45,000</td>
+      <td>
+        <button class="edit-btn" onclick="editPackage(2)">Edit</button>
+        <button class="delete-btn" onclick="deletePackage(2)">Delete</button>
+      </td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Premium Package</td>
+      <td>• Imported casket<br>• 5-day viewing<br>• Full chapel setup<br>• Hearse & family car</td>
+      <td>₱75,000</td>
+      <td>
+        <button class="edit-btn" onclick="editPackage(3)">Edit</button>
+        <button class="delete-btn" onclick="deletePackage(3)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <div class="card">
-    <h4>Basic Package</h4>
-    <p>
-      • Simple casket<br>
-      • 1-day viewing<br>
-      • Basic memorial setup
-    </p>
-    <p><strong>₱25,000</strong></p>
-  </div>
+<style>
+  /* Table styling */
+  #packagesTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
 
-  <div class="card">
-    <h4>Standard Package</h4>
-    <p>
-      • Premium casket<br>
-      • 3-day viewing<br>
-      • Floral arrangements<br>
-      • Memorial tarpaulin
-    </p>
-    <p><strong>₱45,000</strong></p>
-  </div>
+  #packagesTable th, #packagesTable td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+  }
 
-  <div class="card">
-    <h4>Premium Package</h4>
-    <p>
-      • Imported casket<br>
-      • 5-day viewing<br>
-      • Full chapel setup<br>
-      • Hearse & family car
-    </p>
-    <p><strong>₱75,000</strong></p>
-  </div>
+  #packagesTable th {
+    background-color: #4b6cb7;
+    color: #fff;
+  }
 
-</div>
+  #packagesTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #packagesTable tr:hover {
+    background-color: #d1d1d1;
+  }
+
+  .edit-btn, .delete-btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+  }
+
+  .edit-btn {
+    background-color: #28a745;
+  }
+
+  .edit-btn:hover {
+    background-color: #218838;
+  }
+
+  .delete-btn {
+    background-color: #dc3545;
+  }
+
+  .delete-btn:hover {
+    background-color: #c82333;
+  }
+</style>
+
+<script>
+  // Example action functions
+  function editPackage(id) {
+    alert('Edit package with ID: ' + id);
+    // Add your edit logic here
+  }
+
+  function deletePackage(id) {
+    if (confirm('Are you sure you want to delete package ID ' + id + '?')) {
+      alert('Deleted package ID: ' + id);
+      // Add your delete logic here
+    }
+  }
+
+  // Optional: simple search/filter
+  document.addEventListener('DOMContentLoaded', () => {
+    const table = document.getElementById('packagesTable');
+    const input = document.createElement('input');
+    input.placeholder = 'Search packages...';
+    input.style.marginBottom = '10px';
+    input.style.padding = '5px';
+    table.parentNode.insertBefore(input, table);
+
+    input.addEventListener('input', () => {
+      const filter = input.value.toLowerCase();
+      Array.from(table.tBodies[0].rows).forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(filter) ? '' : 'none';
+      });
+    });
+  });
+</script>

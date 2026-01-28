@@ -30,11 +30,10 @@
           <span class="menu-label">Dashboard</span>
         </button>
 
-        <button class="menu-item" onclick="loadPage(this, 'funeralPackages.html', 'Funeral Services')">
+        <button class="menu-item" onclick="loadPage(this, 'Funeral Services', 'funeralPackages.html')">
           <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
-            </path>
+              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
           </svg>
           <span class="menu-label">Funeral Services</span>
         </button>
@@ -115,7 +114,7 @@
       <!-- Content Area -->
       <main class="content-area">
         <div class="content-container" id="dynamicContent">
-          <!-- Empty State -->
+          <!-- Dashboard Default Content -->
           <div class="empty-state">
             <div class="empty-icon">
               <svg id="pageIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -167,24 +166,23 @@
       document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
       element.classList.add('active');
       document.getElementById('pageTitle').textContent = pageName;
-      document.getElementById('emptyTitle').textContent = pageName + ' Page';
-      document.getElementById('emptyDescription').textContent = `This is where your ${pageName.toLowerCase()} content will appear.`;
-      const iconSvg = element.querySelector('svg').cloneNode(true);
-      iconSvg.setAttribute('width', '48');
-      iconSvg.setAttribute('height', '48');
-      document.getElementById('pageIcon').replaceWith(iconSvg);
-      iconSvg.id = 'pageIcon';
+      document.getElementById('dynamicContent').innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">
+            ${element.querySelector('svg').outerHTML}
+          </div>
+          <h3>${pageName} Page</h3>
+          <p>This is where your ${pageName.toLowerCase()} content will appear.</p>
+        </div>
+      `;
     }
 
+    // Load external HTML pages
     function loadPage(element, title, file) {
-      // Update active menu
       document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
       element.classList.add('active');
-
-      // Update page title
       document.getElementById('pageTitle').textContent = title;
 
-      // Fetch the HTML page
       fetch(file)
         .then(res => {
           if (!res.ok) throw new Error('Network response not ok');
