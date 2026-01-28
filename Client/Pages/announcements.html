@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Announcements - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="Index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="funeral-packages.html"
+                >Funeral Packages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chapel-services.html"
+                >Chapel Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="announcements.html"
+                >Announcements</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="obituaries.html">Obituaries</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-register ms-lg-3" href="register.html"
+                >Register</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-login ms-lg-2" href="login.html">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="page-title">Announcements</h1>
+            <p class="page-subtitle">
+              Stay updated with the latest news, updates, and important
+              information from DULCE Funeral Services
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Search Section -->
+    <section class="filter-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="filter-card">
+              <div class="row g-3 align-items-end">
+                <div class="col-md-5">
+                  <label class="form-label">Search Announcements</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-search"></i>
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="searchAnnouncement"
+                      placeholder="Search by title or content..."
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Category</label>
+                  <select class="form-select" id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="general">General</option>
+                    <option value="service">Service Update</option>
+                    <option value="holiday">Holiday Notice</option>
+                    <option value="important">Important</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Sort By</label>
+                  <select class="form-select" id="sortFilter">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <button
+                    class="btn btn-primary-custom w-100"
+                    onclick="filterAnnouncements()"
+                  >
+                    <i class="bi bi-funnel"></i> Filter
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Announcements Section -->
+    <section class="announcements-section">
+      <div class="container">
+        <!-- Featured/Pinned Announcements -->
+        <div id="pinned-announcements" class="mb-5">
+          <h3 class="section-subtitle mb-4">
+            <i class="bi bi-pin-angle-fill text-danger"></i> Pinned
+            Announcements
+          </h3>
+          <div class="row g-4">
+            <!-- Pinned Announcement 1 -->
+            <div
+              class="col-12 announcement-item pinned"
+              data-category="important"
+              data-date="2025-01-25"
+            >
+              <div class="announcement-card pinned-card">
+                <div class="announcement-pin">
+                  <i class="bi bi-pin-fill"></i>
+                </div>
+                <div class="announcement-header">
+                  <div class="announcement-meta">
+                    <span class="announcement-category important">
+                      <i class="bi bi-exclamation-circle-fill"></i> Important
+                    </span>
+                    <span class="announcement-date">
+                      <i class="bi bi-calendar-event"></i> January 25, 2025
+                    </span>
+                  </div>
+                  <h3 class="announcement-title">
+                    Extended Operating Hours for the Holiday Season
+                  </h3>
+                </div>
+                <div class="announcement-content">
+                  <p>
+                    We are pleased to announce that DULCE Funeral Services will
+                    be extending our operating hours during the upcoming holiday
+                    season to better serve our clients. Our dedicated team will
+                    be available 24/7 to provide compassionate support and
+                    professional services when you need us most.
+                  </p>
+                  <p>
+                    For any inquiries or immediate assistance, please don't
+                    hesitate to contact us at any time. We remain committed to
+                    serving you with dignity and respect.
+                  </p>
+                </div>
+                <div class="announcement-footer">
+                  <button
+                    class="btn btn-read-more"
+                    onclick="viewAnnouncementDetails(1)"
+                  >
+                    <i class="bi bi-chevron-right"></i> Read More
+                  </button>
+                  <div class="announcement-actions">
+                    <span class="text-muted">
+                      <i class="bi bi-eye"></i> 245 views
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Regular Announcements -->
+        <div id="announcements-container">
+          <h3 class="section-subtitle mb-4">
+            <i class="bi bi-megaphone-fill"></i> Recent Announcements
+          </h3>
+          <div class="row g-4">
+            <!-- Announcement 1 -->
+            <div
+              class="col-lg-6 announcement-item"
+              data-category="service"
+              data-date="2025-01-22"
+            >
+              <div class="announcement-card">
+                <div class="announcement-header">
+                  <div class="announcement-meta">
+                    <span class="announcement-category service">
+                      <i class="bi bi-gear-fill"></i> Service Update
+                    </span>
+                    <span class="announcement-date">
+                      <i class="bi bi-calendar-event"></i> January 22, 2025
+                    </span>
+                  </div>
+                  <h4 class="announcement-title">
+                    New Online Payment Options Available
+                  </h4>
+                </div>
+                <div class="announcement-content">
+                  <p>
+                    We're excited to announce new convenient payment options for
+                    our services. Clients can now pay through GCash, PayMaya,
+                    bank transfer, and credit/debit cards through our secure
+                    online payment system.
+                  </p>
+                </div>
+                <div class="announcement-footer">
+                  <button
+                    class="btn btn-read-more"
+                    onclick="viewAnnouncementDetails(2)"
+                  >
+                    <i class="bi bi-chevron-right"></i> Read More
+                  </button>
+                  <div class="announcement-actions">
+                    <span class="text-muted">
+                      <i class="bi bi-eye"></i> 189 views
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Announcement 2 -->
+            <div
+              class="col-lg-6 announcement-item"
+              data-category="general"
+              data-date="2025-01-20"
+            >
+              <div class="announcement-card">
+                <div class="announcement-header">
+                  <div class="announcement-meta">
+                    <span class="announcement-category general">
+                      <i class="bi bi-info-circle-fill"></i> General
+                    </span>
+                    <span class="announcement-date">
+                      <i class="bi bi-calendar-event"></i> January 20, 2025
+                    </span>
+                  </div>
+                  <h4 class="announcement-title">
+                    Virtual Memorial Services Now Available
+                  </h4>
+                </div>
+                <div class="announcement-content">
+                  <p>
+                    In response to client needs, we now offer live streaming
+                    services for memorial ceremonies. Family and friends who
+                    cannot attend in person can participate remotely through our
+                    secure online platform.
+                  </p>
+                </div>
+                <div class="announcement-footer">
+                  <button
+                    class="btn btn-read-more"
+                    onclick="viewAnnouncementDetails(3)"
+                  >
+                    <i class="bi bi-chevron-right"></i> Read More
+                  </button>
+                  <div class="announcement-actions">
+                    <span class="text-muted">
+                      <i class="bi bi-eye"></i> 156 views
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Announcement 3 -->
+            <div
+              class="col-lg-6 announcement-item"
+              data-category="holiday"
+              data-date="2025-01-15"
+            >
+              <div class="announcement-card">
+                <div class="announcement-header">
+                  <div class="announcement-meta">
+                    <span class="announcement-category holiday">
+                      <i class="bi bi-calendar-heart-fill"></i> Holiday Notice
+                    </span>
+                    <span class="announcement-date">
+                      <i class="bi bi-calendar-event"></i> January 15, 2025
+                    </span>
+                  </div>
+                  <h4 class="announcement-title">
+                    Schedule Updates for Upcoming Holidays
+                  </h4>
+                </div>
+                <div class="announcement-content">
+                  <p>
+                    Please be informed of our adjusted operating schedules for
+                    the upcoming national holidays. Emergency services remain
+                    available 24/7. Regular services will resume on the
+                    specified dates.
+                  </p>
+                </div>
+                <div class="announcement-footer">
+                  <button
+                    class="btn btn-read-more"
+                    onclick="viewAnnouncementDetails(4)"
+                  >
+                    <i class="bi bi-chevron-right"></i> Read More
+                  </button>
+                  <div class="announcement-actions">
+                    <span class="text-muted">
+                      <i class="bi bi-eye"></i> 312 views
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Announcement 4 -->
+            <div
+              class="col-lg-6 announcement-item"
+              data-category="service"
+              data-date="2025-01-10"
+            >
+              <div class="announcement-card">
+                <div class="announcement-header">
+                  <div class="announcement-meta">
+                    <span class="announcement-category service">
+                      <i class="bi bi-gear-fill"></i> Service Update
+                    </span>
+                    <span class="announcement-date">
+                      <i class="bi bi-calendar-event"></i> January 10, 2025
+                    </span>
+                  </div>
+                  <h4 class="announcement-title">
+                    New Chapel Renovation Completed
+                  </h4>
+                </div>
+                <div class="announcement-content">
+                  <p>
+                    We're proud to announce the completion of our Harmony Hall
+                    renovation. The chapel now features enhanced audio-visual
+                    equipment, improved seating, and upgraded air conditioning
+                    for your comfort.
+                  </p>
+                </div>
+                <div class="announcement-footer">
+                  <button
+                    class="btn btn-read-more"
+                    onclick="viewAnnouncementDetails(5)"
+                  >
+                    <i class="bi bi-chevron-right"></i> Read More
+                  </button>
+                  <div class="announcement-actions">
+                    <span class="text-muted">
+                      <i class="bi bi-eye"></i> 278 views
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Announcement 5 -->
+            <div
+              class="col-lg-6 announcement-item"
+              data-category="general"
+              data-date="2025-01-05"
+            >
+              <div class="announcement-card">
+                <div class="announcement-header">
+                  <div class="announcement-meta">
+                    <span class="announcement-category general">
+                      <i class="bi bi-info-circle-fill"></i> General
+                    </span>
+                    <span class="announcement-date">
+                      <i class="bi bi-calendar-event"></i> January 5, 2025
+                    </span>
+                  </div>
+                  <h4 class="announcement-title">Community Outreach Program</h4>
+                </div>
+                <div class="announcement-content">
+                  <p>
+                    DULCE Funeral Services is launching a community outreach
+                    program to provide grief counseling and support services to
+                    families in need. More details will be shared soon.
+                  </p>
+                </div>
+                <div class="announcement-footer">
+                  <button
+                    class="btn btn-read-more"
+                    onclick="viewAnnouncementDetails(6)"
+                  >
+                    <i class="bi bi-chevron-right"></i> Read More
+                  </button>
+                  <div class="announcement-actions">
+                    <span class="text-muted">
+                      <i class="bi bi-eye"></i> 198 views
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Announcement 6 -->
+            <div
+              class="col-lg-6 announcement-item"
+              data-category="general"
+              data-date="2025-01-01"
+            >
+              <div class="announcement-card">
+                <div class="announcement-header">
+                  <div class="announcement-meta">
+                    <span class="announcement-category general">
+                      <i class="bi bi-info-circle-fill"></i> General
+                    </span>
+                    <span class="announcement-date">
+                      <i class="bi bi-calendar-event"></i> January 1, 2025
+                    </span>
+                  </div>
+                  <h4 class="announcement-title">Happy New Year from DULCE</h4>
+                </div>
+                <div class="announcement-content">
+                  <p>
+                    As we welcome the new year, DULCE Funeral Services extends
+                    warm wishes to all our clients and their families. Thank you
+                    for trusting us with your needs. We remain committed to
+                    serving with compassion.
+                  </p>
+                </div>
+                <div class="announcement-footer">
+                  <button
+                    class="btn btn-read-more"
+                    onclick="viewAnnouncementDetails(7)"
+                  >
+                    <i class="bi bi-chevron-right"></i> Read More
+                  </button>
+                  <div class="announcement-actions">
+                    <span class="text-muted">
+                      <i class="bi bi-eye"></i> 421 views
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div
+          id="no-results-announcements"
+          class="text-center mt-5"
+          style="display: none"
+        >
+          <i class="bi bi-search" style="font-size: 3rem; color: #7f8c8d"></i>
+          <h3 class="mt-3">No Announcements Found</h3>
+          <p class="text-muted">
+            Try adjusting your search or filters to see more results.
+          </p>
+          <button
+            class="btn btn-primary-custom"
+            onclick="resetAnnouncementFilters()"
+          >
+            Reset Filters
+          </button>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-wrapper mt-5">
+          <nav aria-label="Announcements pagination">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">
+                  <i class="bi bi-chevron-left"></i> Previous
+                </a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  Next <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- Announcement Details Modal -->
+    <div
+      class="modal fade"
+      id="announcementModal"
+      tabindex="-1"
+      aria-labelledby="announcementModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="announcementModalLabel">
+              Announcement Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalAnnouncementDetails">
+            <!-- Announcement details will be loaded here dynamically -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">
+              <i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services
+            </h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Providing compassionate and professional funeral services with
+              modern digital convenience.
+            </p>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+              <li><a href="funeral-packages.html">Funeral Packages</a></li>
+              <li><a href="chapel-services.html">Chapel Services</a></li>
+              <li><a href="announcements.html">Announcements</a></li>
+              <li><a href="obituaries.html">Obituaries</a></li>
+              <li><a href="register.html">Register</a></li>
+              <li><a href="login.html">Login</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Contact Information</h5>
+            <ul class="footer-links">
+              <li>
+                <i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1
+              </li>
+              <li>Alaminos, Laguna</li>
+              <li><i class="bi bi-envelope-fill"></i> info@dulcefuneral.com</li>
+              <li><i class="bi bi-telephone-fill"></i> Available 24/7</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+          <p>
+            Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan
+            Institute, Inc.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/announcements.js"></script>
+  </body>
+</html>

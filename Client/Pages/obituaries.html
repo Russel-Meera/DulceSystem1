@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Obituaries - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="Index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="funeral-packages.html"
+                >Funeral Packages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chapel-services.html"
+                >Chapel Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="announcements.html">Announcements</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="obituaries.html">Obituaries</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-register ms-lg-3" href="register.html"
+                >Register</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-login ms-lg-2" href="login.html">Login</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="page-title">In Loving Memory</h1>
+            <p class="page-subtitle">
+              Honoring the lives and legacies of those who have touched our
+              hearts
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Search Section -->
+    <section class="filter-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="filter-card">
+              <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                  <label class="form-label">Search by Name</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="bi bi-search"></i>
+                    </span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="searchObituary"
+                      placeholder="Search by deceased name..."
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Sort By</label>
+                  <select class="form-select" id="sortFilter">
+                    <option value="newest">Most Recent</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <button
+                    class="btn btn-primary-custom w-100"
+                    onclick="filterObituaries()"
+                  >
+                    <i class="bi bi-funnel"></i> Apply
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Obituaries Section -->
+    <section class="obituaries-section">
+      <div class="container">
+        <div id="obituaries-container" class="row g-4">
+          <!-- Obituary Card 1 -->
+          <div
+            class="col-lg-4 col-md-6 obituary-item"
+            data-name="Maria Santos Cruz"
+            data-date="2025-01-20"
+          >
+            <div class="obituary-card">
+              <div class="obituary-ribbon">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+              <div class="obituary-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop"
+                  alt="Maria Santos Cruz"
+                  class="obituary-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x400/2c3e50/ffffff?text=M.S.C'
+                  "
+                />
+                <div class="obituary-overlay">
+                  <button
+                    class="btn btn-view-obituary"
+                    onclick="viewObituaryDetails(1)"
+                  >
+                    <i class="bi bi-book"></i> View Full Obituary
+                  </button>
+                </div>
+              </div>
+              <div class="obituary-content">
+                <h3 class="obituary-name">Maria Santos Cruz</h3>
+                <div class="obituary-dates">
+                  <span class="birth-date">March 15, 1945</span>
+                  <span class="date-separator">—</span>
+                  <span class="death-date">January 18, 2025</span>
+                </div>
+                <div class="obituary-age">79 years old</div>
+                <p class="obituary-excerpt">
+                  Beloved mother, grandmother, and friend. Maria dedicated her
+                  life to her family and community, touching countless lives
+                  with her warmth and kindness.
+                </p>
+                <div class="obituary-service-info">
+                  <div class="service-detail">
+                    <i class="bi bi-calendar-event"></i>
+                    <div>
+                      <strong>Wake:</strong>
+                      <span>Jan 20-22, 2025</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-building"></i>
+                    <div>
+                      <strong>Chapel:</strong>
+                      <span>Serenity Chapel</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                      <strong>Viewing:</strong>
+                      <span>9:00 AM - 9:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="obituary-footer">
+                <button class="btn btn-condolence" onclick="sendCondolence(1)">
+                  <i class="bi bi-envelope-heart"></i> Send Condolences
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Obituary Card 2 -->
+          <div
+            class="col-lg-4 col-md-6 obituary-item"
+            data-name="Roberto Miguel Reyes"
+            data-date="2025-01-18"
+          >
+            <div class="obituary-card">
+              <div class="obituary-ribbon">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+              <div class="obituary-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop"
+                  alt="Roberto Miguel Reyes"
+                  class="obituary-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x400/2c3e50/ffffff?text=R.M.R'
+                  "
+                />
+                <div class="obituary-overlay">
+                  <button
+                    class="btn btn-view-obituary"
+                    onclick="viewObituaryDetails(2)"
+                  >
+                    <i class="bi bi-book"></i> View Full Obituary
+                  </button>
+                </div>
+              </div>
+              <div class="obituary-content">
+                <h3 class="obituary-name">Roberto Miguel Reyes</h3>
+                <div class="obituary-dates">
+                  <span class="birth-date">July 8, 1960</span>
+                  <span class="date-separator">—</span>
+                  <span class="death-date">January 16, 2025</span>
+                </div>
+                <div class="obituary-age">64 years old</div>
+                <p class="obituary-excerpt">
+                  Loving husband, devoted father, and respected educator.
+                  Roberto's passion for teaching and dedication to his students
+                  made a lasting impact on the community.
+                </p>
+                <div class="obituary-service-info">
+                  <div class="service-detail">
+                    <i class="bi bi-calendar-event"></i>
+                    <div>
+                      <strong>Wake:</strong>
+                      <span>Jan 18-20, 2025</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-building"></i>
+                    <div>
+                      <strong>Chapel:</strong>
+                      <span>Harmony Hall</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                      <strong>Viewing:</strong>
+                      <span>8:00 AM - 10:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="obituary-footer">
+                <button class="btn btn-condolence" onclick="sendCondolence(2)">
+                  <i class="bi bi-envelope-heart"></i> Send Condolences
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Obituary Card 3 -->
+          <div
+            class="col-lg-4 col-md-6 obituary-item"
+            data-name="Elena Beatriz Hernandez"
+            data-date="2025-01-15"
+          >
+            <div class="obituary-card">
+              <div class="obituary-ribbon">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+              <div class="obituary-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop"
+                  alt="Elena Beatriz Hernandez"
+                  class="obituary-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x400/2c3e50/ffffff?text=E.B.H'
+                  "
+                />
+                <div class="obituary-overlay">
+                  <button
+                    class="btn btn-view-obituary"
+                    onclick="viewObituaryDetails(3)"
+                  >
+                    <i class="bi bi-book"></i> View Full Obituary
+                  </button>
+                </div>
+              </div>
+              <div class="obituary-content">
+                <h3 class="obituary-name">Elena Beatriz Hernandez</h3>
+                <div class="obituary-dates">
+                  <span class="birth-date">November 22, 1952</span>
+                  <span class="date-separator">—</span>
+                  <span class="death-date">January 13, 2025</span>
+                </div>
+                <div class="obituary-age">72 years old</div>
+                <p class="obituary-excerpt">
+                  Cherished wife, mother of three, and devoted grandmother.
+                  Elena's love for cooking and hospitality brought joy to
+                  everyone who knew her.
+                </p>
+                <div class="obituary-service-info">
+                  <div class="service-detail">
+                    <i class="bi bi-calendar-event"></i>
+                    <div>
+                      <strong>Wake:</strong>
+                      <span>Jan 15-17, 2025</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-building"></i>
+                    <div>
+                      <strong>Chapel:</strong>
+                      <span>Grace Chapel</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                      <strong>Viewing:</strong>
+                      <span>10:00 AM - 8:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="obituary-footer">
+                <button class="btn btn-condolence" onclick="sendCondolence(3)">
+                  <i class="bi bi-envelope-heart"></i> Send Condolences
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Obituary Card 4 -->
+          <div
+            class="col-lg-4 col-md-6 obituary-item"
+            data-name="Jose Antonio Diaz"
+            data-date="2025-01-12"
+          >
+            <div class="obituary-card">
+              <div class="obituary-ribbon">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+              <div class="obituary-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop"
+                  alt="Jose Antonio Diaz"
+                  class="obituary-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x400/2c3e50/ffffff?text=J.A.D'
+                  "
+                />
+                <div class="obituary-overlay">
+                  <button
+                    class="btn btn-view-obituary"
+                    onclick="viewObituaryDetails(4)"
+                  >
+                    <i class="bi bi-book"></i> View Full Obituary
+                  </button>
+                </div>
+              </div>
+              <div class="obituary-content">
+                <h3 class="obituary-name">Jose Antonio Diaz</h3>
+                <div class="obituary-dates">
+                  <span class="birth-date">April 3, 1938</span>
+                  <span class="date-separator">—</span>
+                  <span class="death-date">January 10, 2025</span>
+                </div>
+                <div class="obituary-age">86 years old</div>
+                <p class="obituary-excerpt">
+                  Beloved patriarch, war veteran, and community leader. Jose's
+                  wisdom, strength, and generosity inspired generations of
+                  family and friends.
+                </p>
+                <div class="obituary-service-info">
+                  <div class="service-detail">
+                    <i class="bi bi-calendar-event"></i>
+                    <div>
+                      <strong>Wake:</strong>
+                      <span>Jan 12-15, 2025</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-building"></i>
+                    <div>
+                      <strong>Chapel:</strong>
+                      <span>Tranquility Suite</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                      <strong>Viewing:</strong>
+                      <span>24 Hours</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="obituary-footer">
+                <button class="btn btn-condolence" onclick="sendCondolence(4)">
+                  <i class="bi bi-envelope-heart"></i> Send Condolences
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Obituary Card 5 -->
+          <div
+            class="col-lg-4 col-md-6 obituary-item"
+            data-name="Carmen Gloria Mendez"
+            data-date="2025-01-08"
+          >
+            <div class="obituary-card">
+              <div class="obituary-ribbon">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+              <div class="obituary-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop"
+                  alt="Carmen Gloria Mendez"
+                  class="obituary-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x400/2c3e50/ffffff?text=C.G.M'
+                  "
+                />
+                <div class="obituary-overlay">
+                  <button
+                    class="btn btn-view-obituary"
+                    onclick="viewObituaryDetails(5)"
+                  >
+                    <i class="bi bi-book"></i> View Full Obituary
+                  </button>
+                </div>
+              </div>
+              <div class="obituary-content">
+                <h3 class="obituary-name">Carmen Gloria Mendez</h3>
+                <div class="obituary-dates">
+                  <span class="birth-date">September 12, 1968</span>
+                  <span class="date-separator">—</span>
+                  <span class="death-date">January 6, 2025</span>
+                </div>
+                <div class="obituary-age">56 years old</div>
+                <p class="obituary-excerpt">
+                  Compassionate nurse, loving mother, and devoted friend.
+                  Carmen's caring spirit and selfless dedication to helping
+                  others will be deeply missed.
+                </p>
+                <div class="obituary-service-info">
+                  <div class="service-detail">
+                    <i class="bi bi-calendar-event"></i>
+                    <div>
+                      <strong>Wake:</strong>
+                      <span>Jan 8-10, 2025</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-building"></i>
+                    <div>
+                      <strong>Chapel:</strong>
+                      <span>Serenity Chapel</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                      <strong>Viewing:</strong>
+                      <span>9:00 AM - 9:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="obituary-footer">
+                <button class="btn btn-condolence" onclick="sendCondolence(5)">
+                  <i class="bi bi-envelope-heart"></i> Send Condolences
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Obituary Card 6 -->
+          <div
+            class="col-lg-4 col-md-6 obituary-item"
+            data-name="Fernando Luis Garcia"
+            data-date="2025-01-05"
+          >
+            <div class="obituary-card">
+              <div class="obituary-ribbon">
+                <i class="bi bi-heart-fill"></i>
+              </div>
+              <div class="obituary-image-wrapper">
+                <img
+                  src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop"
+                  alt="Fernando Luis Garcia"
+                  class="obituary-image"
+                  onerror="
+                    this.src =
+                      'https://via.placeholder.com/400x400/2c3e50/ffffff?text=F.L.G'
+                  "
+                />
+                <div class="obituary-overlay">
+                  <button
+                    class="btn btn-view-obituary"
+                    onclick="viewObituaryDetails(6)"
+                  >
+                    <i class="bi bi-book"></i> View Full Obituary
+                  </button>
+                </div>
+              </div>
+              <div class="obituary-content">
+                <h3 class="obituary-name">Fernando Luis Garcia</h3>
+                <div class="obituary-dates">
+                  <span class="birth-date">January 28, 1975</span>
+                  <span class="date-separator">—</span>
+                  <span class="death-date">January 3, 2025</span>
+                </div>
+                <div class="obituary-age">49 years old</div>
+                <p class="obituary-excerpt">
+                  Talented musician, devoted husband, and proud father.
+                  Fernando's love for music and passion for life touched
+                  everyone who had the privilege of knowing him.
+                </p>
+                <div class="obituary-service-info">
+                  <div class="service-detail">
+                    <i class="bi bi-calendar-event"></i>
+                    <div>
+                      <strong>Wake:</strong>
+                      <span>Jan 5-7, 2025</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-building"></i>
+                    <div>
+                      <strong>Chapel:</strong>
+                      <span>Harmony Hall</span>
+                    </div>
+                  </div>
+                  <div class="service-detail">
+                    <i class="bi bi-clock"></i>
+                    <div>
+                      <strong>Viewing:</strong>
+                      <span>8:00 AM - 10:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="obituary-footer">
+                <button class="btn btn-condolence" onclick="sendCondolence(6)">
+                  <i class="bi bi-envelope-heart"></i> Send Condolences
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Results Message -->
+        <div
+          id="no-results-obituaries"
+          class="text-center mt-5"
+          style="display: none"
+        >
+          <i class="bi bi-search" style="font-size: 3rem; color: #7f8c8d"></i>
+          <h3 class="mt-3">No Obituaries Found</h3>
+          <p class="text-muted">
+            Try adjusting your search to see more results.
+          </p>
+          <button
+            class="btn btn-primary-custom"
+            onclick="resetObituaryFilters()"
+          >
+            Reset Search
+          </button>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination-wrapper mt-5">
+          <nav aria-label="Obituaries pagination">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">
+                  <i class="bi bi-chevron-left"></i> Previous
+                </a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">
+                  Next <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- Obituary Details Modal -->
+    <div
+      class="modal fade"
+      id="obituaryModal"
+      tabindex="-1"
+      aria-labelledby="obituaryModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="obituaryModalLabel">Full Obituary</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalObituaryDetails">
+            <!-- Obituary details will be loaded here dynamically -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary-custom"
+              onclick="printObituary()"
+            >
+              <i class="bi bi-printer"></i> Print Obituary
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Condolence Modal -->
+    <div
+      class="modal fade"
+      id="condolenceModal"
+      tabindex="-1"
+      aria-labelledby="condolenceModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="condolenceModalLabel">
+              Send Condolences
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted">
+              Please log in or register to send condolences to the family.
+            </p>
+            <div class="alert alert-info">
+              <i class="bi bi-info-circle"></i> Registered users can send
+              personalized condolence messages that will be shared with the
+              bereaved family.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a href="login.html" class="btn btn-primary-custom">
+              <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+            <a href="register.html" class="btn btn-outline-primary">
+              <i class="bi bi-person-plus"></i> Register
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">
+              <i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services
+            </h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Providing compassionate and professional funeral services with
+              modern digital convenience.
+            </p>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+              <li><a href="funeral-packages.html">Funeral Packages</a></li>
+              <li><a href="chapel-services.html">Chapel Services</a></li>
+              <li><a href="announcements.html">Announcements</a></li>
+              <li><a href="obituaries.html">Obituaries</a></li>
+              <li><a href="register.html">Register</a></li>
+              <li><a href="login.html">Login</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Contact Information</h5>
+            <ul class="footer-links">
+              <li>
+                <i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1
+              </li>
+              <li>Alaminos, Laguna</li>
+              <li><i class="bi bi-envelope-fill"></i> info@dulcefuneral.com</li>
+              <li><i class="bi bi-telephone-fill"></i> Available 24/7</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+          <p>
+            Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan
+            Institute, Inc.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/obituaries.js"></script>
+  </body>
+</html>

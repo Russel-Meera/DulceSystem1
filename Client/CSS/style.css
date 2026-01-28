@@ -866,3 +866,690 @@ body {
     height: 250px;
   }
 }
+
+/* ============================================
+   ANNOUNCEMENTS PAGE STYLES
+   ============================================ */
+
+.announcements-section {
+  padding: 40px 0 80px 0;
+}
+
+.section-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Announcement Card */
+.announcement-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-left: 4px solid var(--accent-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.announcement-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Pinned Card */
+.announcement-card.pinned-card {
+  border-left: 4px solid #e74c3c;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+}
+
+.announcement-pin {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #e74c3c;
+  font-size: 1.5rem;
+  animation: pinBounce 2s infinite;
+}
+
+@keyframes pinBounce {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-15deg);
+  }
+  75% {
+    transform: rotate(15deg);
+  }
+}
+
+/* Announcement Header */
+.announcement-header {
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+}
+
+.announcement-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.announcement-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+}
+
+.announcement-category.general {
+  background: linear-gradient(135deg, var(--accent-color) 0%, #2980b9 100%);
+}
+
+.announcement-category.service {
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+}
+
+.announcement-category.holiday {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.announcement-category.important {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  animation: pulse 2s infinite;
+}
+
+.announcement-date {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.announcement-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.pinned-card .announcement-title {
+  font-size: 1.5rem;
+}
+
+/* Announcement Content */
+.announcement-content {
+  padding: 0 1.5rem 1rem 1.5rem;
+  color: #555;
+  line-height: 1.7;
+  flex-grow: 1;
+}
+
+.announcement-content p {
+  margin-bottom: 0.8rem;
+}
+
+.announcement-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Announcement Footer */
+.announcement-footer {
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid var(--light-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.btn-read-more {
+  background: transparent;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  padding: 0.5rem 1.2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-read-more:hover {
+  background: var(--accent-color);
+  color: white;
+  transform: translateX(5px);
+}
+
+.announcement-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.announcement-actions span {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Search Input Enhancement */
+.input-group-text {
+  background: var(--light-bg);
+  border: 1px solid #dee2e6;
+  color: var(--accent-color);
+}
+
+#searchAnnouncement {
+  border-left: none;
+}
+
+#searchAnnouncement:focus {
+  border-color: var(--accent-color);
+  box-shadow: none;
+}
+
+/* Pagination */
+.pagination-wrapper {
+  margin-top: 3rem;
+}
+
+.pagination .page-link {
+  color: var(--accent-color);
+  border: 1px solid #dee2e6;
+  padding: 0.6rem 1rem;
+  margin: 0 0.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.pagination .page-item.active .page-link {
+  background: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #7f8c8d;
+}
+
+/* Modal Enhancements */
+.announcement-modal-header {
+  background: var(--light-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.announcement-modal-content {
+  line-height: 1.8;
+  color: #555;
+}
+
+.announcement-modal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--light-bg);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .announcement-title {
+    font-size: 1.1rem;
+  }
+
+  .pinned-card .announcement-title {
+    font-size: 1.3rem;
+  }
+
+  .announcement-footer {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .btn-read-more {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .announcement-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
+/* Loading State */
+.announcement-loading {
+  text-align: center;
+  padding: 3rem;
+  color: #7f8c8d;
+}
+
+.announcement-loading i {
+  font-size: 3rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* ============================================
+   OBITUARIES PAGE STYLES
+   ============================================ */
+
+.obituaries-section {
+  padding: 40px 0 80px 0;
+  background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+}
+
+/* Obituary Card */
+.obituary-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.obituary-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  border-color: var(--accent-color);
+}
+
+/* Obituary Ribbon */
+.obituary-ribbon {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(
+    135deg,
+    rgba(231, 76, 60, 0.9) 0%,
+    rgba(192, 57, 43, 0.9) 100%
+  );
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+  font-size: 1.2rem;
+}
+
+/* Obituary Image */
+.obituary-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+}
+
+.obituary-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+  filter: grayscale(20%);
+}
+
+.obituary-card:hover .obituary-image {
+  transform: scale(1.05);
+  filter: grayscale(0%);
+}
+
+/* Obituary Overlay */
+.obituary-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.obituary-card:hover .obituary-overlay {
+  opacity: 1;
+}
+
+.btn-view-obituary {
+  background: white;
+  color: var(--primary-color);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  transform: translateY(20px);
+}
+
+.obituary-card:hover .btn-view-obituary {
+  transform: translateY(0);
+}
+
+.btn-view-obituary:hover {
+  background: var(--accent-color);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+/* Obituary Content */
+.obituary-content {
+  padding: 2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.obituary-name {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.obituary-dates {
+  text-align: center;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.date-separator {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.obituary-age {
+  text-align: center;
+  color: var(--accent-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--light-bg);
+}
+
+.obituary-excerpt {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Service Info */
+.obituary-service-info {
+  background: var(--light-bg);
+  padding: 1.2rem;
+  border-radius: 12px;
+  margin-top: auto;
+}
+
+.service-detail {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+  align-items: flex-start;
+}
+
+.service-detail:last-child {
+  margin-bottom: 0;
+}
+
+.service-detail i {
+  color: var(--accent-color);
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.service-detail div {
+  flex: 1;
+}
+
+.service-detail strong {
+  display: block;
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  margin-bottom: 0.2rem;
+}
+
+.service-detail span {
+  color: #7f8c8d;
+  font-size: 0.85rem;
+}
+
+/* Obituary Footer */
+.obituary-footer {
+  padding: 1.5rem 2rem;
+  border-top: 2px solid var(--light-bg);
+}
+
+.btn-condolence {
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent-color) 0%, #2980b9 100%);
+  color: white;
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-condolence:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+  background: linear-gradient(135deg, #2980b9 0%, var(--accent-color) 100%);
+}
+
+/* Modal Enhancements */
+.obituary-modal-image {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 auto 2rem auto;
+  display: block;
+  border: 5px solid var(--light-bg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.obituary-modal-header {
+  text-align: center;
+  padding: 2rem;
+  background: var(--light-bg);
+  border-radius: 15px;
+  margin-bottom: 2rem;
+}
+
+.obituary-modal-name {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.obituary-modal-dates {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-bottom: 0.5rem;
+}
+
+.obituary-modal-age {
+  font-size: 1rem;
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.obituary-full-content {
+  line-height: 1.9;
+  color: #555;
+  font-size: 1.05rem;
+}
+
+.obituary-full-content p {
+  margin-bottom: 1.5rem;
+}
+
+.obituary-section-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin: 2rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.survived-by-list {
+  list-style: none;
+  padding: 0;
+}
+
+.survived-by-list li {
+  padding: 0.5rem 0;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.survived-by-list li:before {
+  content: "•";
+  position: absolute;
+  left: 0.5rem;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+/* Memorial Quote Box */
+.memorial-quote {
+  background: linear-gradient(135deg, #ecf0f1 0%, #e8eaed 100%);
+  padding: 2rem;
+  border-left: 4px solid var(--accent-color);
+  border-radius: 10px;
+  margin: 2rem 0;
+  font-style: italic;
+  color: #555;
+}
+
+.memorial-quote p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Service Schedule Box */
+.service-schedule-box {
+  background: white;
+  border: 2px solid var(--accent-color);
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.service-schedule-box h4 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .obituary-image-wrapper {
+    height: 300px;
+  }
+
+  .obituary-name {
+    font-size: 1.4rem;
+  }
+
+  .obituary-modal-image {
+    width: 200px;
+    height: 200px;
+  }
+
+  .obituary-modal-name {
+    font-size: 1.8rem;
+  }
+
+  .service-detail {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .modal-header,
+  .modal-footer,
+  .navbar,
+  .footer {
+    display: none !important;
+  }
+
+  .obituary-modal-image {
+    width: 200px;
+    height: 200px;
+  }
+}
