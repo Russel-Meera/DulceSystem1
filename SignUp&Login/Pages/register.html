@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body class="auth-page">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="../../Client/Pages/Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="../../Client/Pages/Index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="../../Client/Pages/funeral-packages.html"
+                >Funeral Packages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../Client/Pages/chapel-services.html"
+                >Chapel Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../Client/Pages/announcements.html"
+                >Announcements</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../Client/Pages/obituaries.html"
+                >Obituaries</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Register Section -->
+    <section class="auth-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="auth-card">
+              <div class="row g-0">
+                <!-- Left Side - Image/Info -->
+                <div class="col-lg-6 auth-image-side">
+                  <div class="auth-image-content">
+                    <div class="auth-brand">
+                      <i class="bi bi-heart-pulse-fill"></i>
+                      <h2>DULCE</h2>
+                    </div>
+                    <h3 class="auth-image-title">Join DULCE Today</h3>
+                    <p class="auth-image-text">
+                      Create your account to access our comprehensive funeral
+                      service management system and experience compassionate
+                      care with modern convenience.
+                    </p>
+                    <div class="auth-features">
+                      <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Easy Online Booking</span>
+                      </div>
+                      <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Digital Document Upload</span>
+                      </div>
+                      <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Real-time Status Updates</span>
+                      </div>
+                      <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Secure Payment Processing</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Side - Register Form -->
+                <div class="col-lg-6 auth-form-side">
+                  <div class="auth-form-content">
+                    <div class="auth-header">
+                      <h3 class="auth-title">Create Your Account</h3>
+                      <p class="auth-subtitle">
+                        Fill in the details below to get started
+                      </p>
+                    </div>
+
+                    <!-- Alert Messages -->
+                    <div
+                      id="registerAlert"
+                      class="alert alert-dismissible fade"
+                      role="alert"
+                      style="display: none"
+                    >
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                      <span id="registerAlertMessage"></span>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                      ></button>
+                    </div>
+
+                    <form id="registerForm" class="auth-form">
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="firstName" class="form-label">
+                            <i class="bi bi-person"></i> First Name
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="firstName"
+                            placeholder="First name"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your first name.
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="lastName" class="form-label">
+                            <i class="bi bi-person"></i> Last Name
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="lastName"
+                            placeholder="Last name"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            Please enter your last name.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="registerEmail" class="form-label">
+                          <i class="bi bi-envelope"></i> Email Address
+                        </label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="registerEmail"
+                          placeholder="your.email@example.com"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter a valid email address.
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="contactNumber" class="form-label">
+                          <i class="bi bi-telephone"></i> Contact Number
+                        </label>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          id="contactNumber"
+                          placeholder="09XX XXX XXXX"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter a valid contact number.
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="address" class="form-label">
+                          <i class="bi bi-geo-alt"></i> Address
+                        </label>
+                        <textarea
+                          class="form-control"
+                          id="address"
+                          rows="2"
+                          placeholder="Complete address"
+                          required
+                        ></textarea>
+                        <div class="invalid-feedback">
+                          Please enter your address.
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="registerPassword" class="form-label">
+                          <i class="bi bi-lock"></i> Password
+                        </label>
+                        <div class="password-input-wrapper">
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="registerPassword"
+                            placeholder="Create a strong password"
+                            required
+                          />
+                          <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('registerPassword')"
+                          >
+                            <i class="bi bi-eye" id="registerPassword-icon"></i>
+                          </button>
+                        </div>
+                        <div
+                          class="password-strength"
+                          id="passwordStrength"
+                        ></div>
+                        <small class="form-text text-muted">
+                          Password must be at least 8 characters long
+                        </small>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">
+                          <i class="bi bi-lock-fill"></i> Confirm Password
+                        </label>
+                        <div class="password-input-wrapper">
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="confirmPassword"
+                            placeholder="Re-enter your password"
+                            required
+                          />
+                          <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('confirmPassword')"
+                          >
+                            <i class="bi bi-eye" id="confirmPassword-icon"></i>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          Passwords do not match.
+                        </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="agreeTerms"
+                            required
+                          />
+                          <label class="form-check-label" for="agreeTerms">
+                            I agree to the
+                            <a href="#" class="auth-link">Terms of Service</a>
+                            and <a href="#" class="auth-link">Privacy Policy</a>
+                          </label>
+                          <div class="invalid-feedback">
+                            You must agree before submitting.
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="btn btn-primary-custom btn-lg w-100 mb-3"
+                      >
+                        <i class="bi bi-person-plus"></i> Create Account
+                      </button>
+
+                      <div class="auth-divider">
+                        <span>OR</span>
+                      </div>
+
+                      <div class="text-center mt-4">
+                        <p class="mb-0">
+                          Already have an account?
+                          <a href="login.html" class="auth-link">Login Here</a>
+                        </p>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div
+          class="footer-bottom"
+          style="border: none; margin: 0; padding: 1.5rem 0"
+        >
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/auth.js"></script>
+  </body>
+</html>

@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/auth-style.css" />
+  </head>
+  <body class="auth-page">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="../../Client/Pages/Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="../../Client/Pages/Index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="../../Client/Pages/funeral-packages.html"
+                >Funeral Packages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../Client/Pages/chapel-services.html"
+                >Chapel Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../Client/Pages/announcements.html"
+                >Announcements</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../../Client/Pages/obituaries.html"
+                >Obituaries</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="auth-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="auth-card">
+              <div class="row g-0">
+                <!-- Left Side - Image/Info -->
+                <div class="col-lg-6 auth-image-side">
+                  <div class="auth-image-content">
+                    <div class="auth-brand">
+                      <i class="bi bi-heart-pulse-fill"></i>
+                      <h2>DULCE</h2>
+                    </div>
+                    <h3 class="auth-image-title">Welcome Back</h3>
+                    <p class="auth-image-text">
+                      Access your account to manage funeral services, view
+                      bookings, and stay connected with our compassionate
+                      support team.
+                    </p>
+                    <div class="auth-features">
+                      <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Manage Your Bookings</span>
+                      </div>
+                      <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Track Service Status</span>
+                      </div>
+                      <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Secure Online Payments</span>
+                      </div>
+                      <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>24/7 Support Access</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Side - Login Form -->
+                <div class="col-lg-6 auth-form-side">
+                  <div class="auth-form-content">
+                    <div class="auth-header">
+                      <h3 class="auth-title">Login to Your Account</h3>
+                      <p class="auth-subtitle">
+                        Enter your credentials to access your account
+                      </p>
+                    </div>
+
+                    <!-- Alert Messages -->
+                    <div
+                      id="loginAlert"
+                      class="alert alert-danger alert-dismissible fade"
+                      role="alert"
+                      style="display: none"
+                    >
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                      <span id="loginAlertMessage"></span>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                      ></button>
+                    </div>
+
+                    <form id="loginForm" class="auth-form">
+                      <div class="mb-4">
+                        <label for="loginEmail" class="form-label">
+                          <i class="bi bi-envelope"></i> Email Address
+                        </label>
+                        <input
+                          type="email"
+                          class="form-control form-control-lg"
+                          id="loginEmail"
+                          placeholder="Enter your email"
+                          required
+                        />
+                        <div class="invalid-feedback">
+                          Please enter a valid email address.
+                        </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <label for="loginPassword" class="form-label">
+                          <i class="bi bi-lock"></i> Password
+                        </label>
+                        <div class="password-input-wrapper">
+                          <input
+                            type="password"
+                            class="form-control form-control-lg"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            required
+                          />
+                          <button
+                            type="button"
+                            class="password-toggle"
+                            onclick="togglePassword('loginPassword')"
+                          >
+                            <i class="bi bi-eye" id="loginPassword-icon"></i>
+                          </button>
+                        </div>
+                        <div class="invalid-feedback">
+                          Please enter your password.
+                        </div>
+                      </div>
+
+                      <div
+                        class="mb-4 d-flex justify-content-between align-items-center"
+                      >
+                        <div class="form-check">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="rememberMe"
+                          />
+                          <label class="form-check-label" for="rememberMe">
+                            Remember me
+                          </label>
+                        </div>
+                        <a
+                          href="forgot-password.html"
+                          class="forgot-password-link"
+                        >
+                          Forgot Password?
+                        </a>
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="btn btn-primary-custom btn-lg w-100 mb-3"
+                      >
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                      </button>
+
+                      <div class="auth-divider">
+                        <span>OR</span>
+                      </div>
+
+                      <div class="text-center mt-4">
+                        <p class="mb-0">
+                          Don't have an account?
+                          <a href="register.html" class="auth-link"
+                            >Register Now</a
+                          >
+                        </p>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div
+          class="footer-bottom"
+          style="border: none; margin: 0; padding: 1.5rem 0"
+        >
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/auth.js"></script>
+  </body>
+</html>
