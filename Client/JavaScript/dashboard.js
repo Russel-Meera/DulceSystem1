@@ -6,16 +6,76 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Load dashboard statistics and recent bookings
 function loadDashboardData() {
-  // In production, this will fetch from API
-  // For now, using sample data
+  // Fetch dashboard statistics
+  fetch("http://localhost/DULCESYSTEM1/Client/api/get-dashboard-stats.php")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        document.getElementById("totalBookings").textContent =
+          data.stats.totalBookings;
+        document.getElementById("pendingBookings").textContent =
+          data.stats.pendingBookings;
+        document.getElementById("totalDocuments").textContent =
+          data.stats.totalDocuments;
+        document.getElementById("totalPayments").textContent =
+          "₱" + data.stats.totalPayments;
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading dashboard stats:", error);
+    });
 
-  // Update statistics (will be replaced with actual API calls)
-  document.getElementById("totalBookings").textContent = "2";
-  document.getElementById("pendingBookings").textContent = "1";
-  document.getElementById("totalDocuments").textContent = "3";
-  document.getElementById("totalPayments").textContent = "₱85,000";
+  // Fetch recent bookings
+  fetch("http://localhost/DULCESYSTEM1/Client/api/get-bookings.php?limit=5")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success && data.bookings.length > 0) {
+        displayRecentBookings(data.bookings);
+      } else {
+        // Show empty state (already in HTML)
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading recent bookings:", error);
+    });
+}
 
-  // Load recent bookings
-  // This will be replaced with actual API call
-  // For now, showing empty state
+// Display recent bookings
+function displayRecentBookings(bookings) {
+  const container = document.getElementById("recentBookings");
+  container.innerHTML = "";
+
+  bookings.forEach((booking) => {
+    const bookingCard = `
+            <div class="booking-item-small mb-3">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <strong>${booking.package_name}</strong>
+                        <p class="mb-1 text-muted">${booking.chapel_name}</p>
+                        <small class="text-muted">${formatDate(booking.service_date)}</small>
+                    </div>
+                    <span class="badge bg-${getStatusColor(booking.booking_status)}">
+                        ${booking.booking_status}
+                    </span>
+                </div>
+            </div>
+        `;
+    container.innerHTML += bookingCard;
+  });
+}
+
+// Helper functions
+function formatDate(dateString) {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(dateString).toLocaleDateString("en-US", options);
+}
+
+function getStatusColor(status) {
+  const colors = {
+    Pending: "warning",
+    Approved: "info",
+    Completed: "success",
+    Cancelled: "danger",
+  };
+  return colors[status] || "secondary";
 }
