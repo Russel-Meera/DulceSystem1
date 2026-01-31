@@ -29,33 +29,43 @@ document.addEventListener("DOMContentLoaded", function () {
         '<span class="spinner-border spinner-border-sm me-2"></span>Logging in...';
       submitBtn.disabled = true;
 
-      // Simulate API call (In production, this will be an actual API request)
-      setTimeout(() => {
-        // For demo purposes, check if email exists
-        // In production, this will validate against database
-        if (email && password) {
-          // Success - redirect to dashboard
-          showAlert(
-            "loginAlert",
-            "Login successful! Redirecting...",
-            "success",
-          );
+      // Send login request to server
+      fetch("../../Client/api/login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          rememberMe: rememberMe,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showAlert("loginAlert", data.message, "success");
 
-          setTimeout(() => {
-            // In production, redirect to client dashboard
-            window.location.href = "../../Client/Pages/client-dashboard.html";
-          }, 1500);
-        } else {
-          // Error
+            // Redirect to client dashboard/home
+            setTimeout(() => {
+              window.location.href = "../../Client/Pages/Index.html";
+            }, 1000);
+          } else {
+            showAlert("loginAlert", data.message, "danger");
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
           showAlert(
             "loginAlert",
-            "Invalid email or password. Please try again.",
+            "An error occurred. Please try again.",
             "danger",
           );
           submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;
-        }
-      }, 1500);
+        });
     });
   }
 
@@ -84,19 +94,39 @@ document.addEventListener("DOMContentLoaded", function () {
         '<span class="spinner-border spinner-border-sm me-2"></span>Creating Account...';
       submitBtn.disabled = true;
 
-      // Simulate API call (In production, this will save to database)
-      setTimeout(() => {
-        // Success
-        showAlert(
-          "registerAlert",
-          "Account created successfully! Redirecting to login...",
-          "success",
-        );
+      // Send registration request to server
+      fetch("../../Client/api/register.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showAlert("registerAlert", data.message, "success");
 
-        setTimeout(() => {
-          window.location.href = "login.html";
-        }, 2000);
-      }, 1500);
+            // Redirect to login page
+            setTimeout(() => {
+              window.location.href = "login.html";
+            }, 2000);
+          } else {
+            showAlert("registerAlert", data.message, "danger");
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          showAlert(
+            "registerAlert",
+            "An error occurred. Please try again.",
+            "danger",
+          );
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+        });
     });
 
     // Real-time password strength checker
@@ -144,9 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
         '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
       submitBtn.disabled = true;
 
-      // Simulate API call (In production, this will send reset email)
+      // Simulate sending email (implement actual email sending in production)
       setTimeout(() => {
-        // Hide form and show success message
         document.getElementById("forgotPasswordForm").style.display = "none";
         document.getElementById("resetEmailSent").style.display = "block";
         document.getElementById("sentEmailAddress").textContent = email;
