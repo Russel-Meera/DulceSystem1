@@ -37,39 +37,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto align-items-center">
-            <li class="nav-item">
-              <a class="nav-link" href="Index.html">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="funeral-packages.html"
-                >Funeral Packages</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="chapel-services.html"
-                >Chapel Services</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="announcements.html">Announcements</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="obituaries.html">Obituaries</a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="btn btn-register ms-lg-3"
-                href="../../SignUp&Login/Pages/register.html"
-                >Register</a
-              >
-            </li>
-            <li class="nav-item">
-              <a
-                class="btn btn-login ms-lg-2"
-                href="../../SignUp&Login/Pages/login.html"
-                >Login</a
-              >
-            </li>
+            <li class="nav-item"><a class="nav-link" href="Index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="funeral-packages.html">Funeral Packages</a></li>
+            <li class="nav-item"><a class="nav-link" href="chapel-services.html">Chapel Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="announcements.html">Announcements</a></li>
+            <li class="nav-item"><a class="nav-link" href="obituaries.html">Obituaries</a></li>
+            <li class="nav-item"><a class="btn btn-register ms-lg-3" href="../../SignUp&Login/Pages/register.html">Register</a></li>
+            <li class="nav-item"><a class="btn btn-login ms-lg-2" href="../../SignUp&Login/Pages/login.html">Login</a></li>
           </ul>
         </div>
       </div>
@@ -82,8 +56,7 @@
           <div class="col-12 text-center">
             <h1 class="page-title">Funeral Service Packages</h1>
             <p class="page-subtitle">
-              Choose from our compassionate and comprehensive funeral service
-              packages designed to honor your loved ones
+              Choose from our compassionate and comprehensive funeral service packages designed to honor your loved ones
             </p>
           </div>
         </div>
@@ -111,17 +84,11 @@
                   <label class="form-label">Package Type</label>
                   <select class="form-select" id="typeFilter">
                     <option value="all">All Types</option>
-                    <option value="basic">Basic</option>
-                    <option value="standard">Standard</option>
-                    <option value="premium">Premium</option>
-                    <option value="deluxe">Deluxe</option>
+                    <!-- Optional: JS can add package types dynamically here -->
                   </select>
                 </div>
                 <div class="col-md-4">
-                  <button
-                    class="btn btn-primary-custom w-100"
-                    onclick="filterPackages()"
-                  >
+                  <button class="btn btn-primary-custom w-100" onclick="filterPackages()">
                     <i class="bi bi-funnel"></i> Apply Filter
                   </button>
                 </div>
@@ -135,58 +102,8 @@
     <!-- Packages Section -->
     <section class="packages-section">
       <div class="container">
-        <div id="packages-container" class="row g-4">
-          <!-- Package Card 1 - Basic Package -->
-          <div
-            class="col-md-6 col-lg-4 package-item"
-            data-price="45000"
-            data-type="basic"
-          >
-            <div class="package-card">
-              <div class="package-badge">Basic</div>
-              <div class="package-header">
-                <h3 class="package-name">Serenity Basic</h3>
-                <div class="package-price">₱45,000</div>
-              </div>
-              <div class="package-body">
-                <p class="package-description">
-                  Essential funeral services with dignified care for your loved
-                  one.
-                </p>
-                <ul class="package-inclusions">
-                  <li><i class="bi bi-check-circle-fill"></i> Basic Casket</li>
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i> Embalming Service
-                  </li>
-                  <li><i class="bi bi-check-circle-fill"></i> 2 Days Wake</li>
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i> Chapel Usage (2
-                    days)
-                  </li>
-                  <li><i class="bi bi-check-circle-fill"></i> Funeral Car</li>
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i> Basic Flower
-                    Arrangement
-                  </li>
-                  <li><i class="bi bi-check-circle-fill"></i> Guest Book</li>
-                  <li>
-                    <i class="bi bi-check-circle-fill"></i> 50 Memorial Cards
-                  </li>
-                </ul>
-              </div>
-              <div class="package-footer">
-                <a href="login.html" class="btn btn-select-package">
-                  <i class="bi bi-calendar-check"></i> Select Package
-                </a>
-                <button
-                  class="btn btn-view-details"
-                  onclick="viewPackageDetails(1)"
-                >
-                  <i class="bi bi-info-circle"></i> View Details
-                </button>
-              </div>
-            </div>
-          </div>
+        <!-- Dynamic Package Cards Will Be Injected Here -->
+        <div id="packages-container" class="row g-4"></div>
 
         <!-- No Results Message -->
         <div id="no-results" class="text-center mt-5" style="display: none">
@@ -203,37 +120,18 @@
     </section>
 
     <!-- Package Details Modal -->
-    <div
-      class="modal fade"
-      id="packageModal"
-      tabindex="-1"
-      aria-labelledby="packageModalLabel"
-      aria-hidden="true"
-    >
-      <div
-        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-      >
+    <div class="modal fade" id="packageModal" tabindex="-1" aria-labelledby="packageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="packageModalLabel">Package Details</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" id="modalPackageDetails">
             <!-- Package details will be loaded here dynamically -->
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <a href="login.html" class="btn btn-primary-custom">
               <i class="bi bi-calendar-check"></i> Select This Package
             </a>
@@ -247,15 +145,11 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4 mb-4">
-            <h5 class="footer-title">
-              <i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services
-            </h5>
+            <h5 class="footer-title"><i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services</h5>
             <p style="color: rgba(255, 255, 255, 0.8)">
-              Providing compassionate and professional funeral services with
-              modern digital convenience.
+              Providing compassionate and professional funeral services with modern digital convenience.
             </p>
           </div>
-
           <div class="col-md-4 mb-4">
             <h5 class="footer-title">Quick Links</h5>
             <ul class="footer-links">
@@ -263,35 +157,23 @@
               <li><a href="chapel-services.html">Chapel Services</a></li>
               <li><a href="announcements.html">Announcements</a></li>
               <li><a href="obituaries.html">Obituaries</a></li>
-              <li>
-                <a href="../../SignUp&Login/Pages/register.html">Register</a>
-              </li>
+              <li><a href="../../SignUp&Login/Pages/register.html">Register</a></li>
               <li><a href="../../SignUp&Login/Pages/login.html">Login</a></li>
             </ul>
           </div>
-
           <div class="col-md-4 mb-4">
             <h5 class="footer-title">Contact Information</h5>
             <ul class="footer-links">
-              <li>
-                <i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1
-              </li>
+              <li><i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1</li>
               <li>Alaminos, Laguna</li>
               <li><i class="bi bi-envelope-fill"></i> info@dulcefuneral.com</li>
               <li><i class="bi bi-telephone-fill"></i> Available 24/7</li>
             </ul>
           </div>
         </div>
-
         <div class="footer-bottom">
-          <p>
-            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
-            rights reserved.
-          </p>
-          <p>
-            Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan
-            Institute, Inc.
-          </p>
+          <p>&copy; 2025 DULCE: Integrated Funeral Service Management System. All rights reserved.</p>
+          <p>Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan Institute, Inc.</p>
         </div>
       </div>
     </footer>
@@ -302,7 +184,5 @@
     <!-- Custom JavaScript -->
     <script src="../JavaScript/main.js"></script>
     <script src="../JavaScript/packages.js"></script>
-    <!-- Session Management -->
-    <script src="../JavaScript/session.js"></script>
   </body>
 </html>

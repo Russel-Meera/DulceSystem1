@@ -18,13 +18,16 @@ $name = $_POST['name'] ?? '';
 $type = $_POST['type'] ?? '';
 $price = $_POST['price'] ?? '';
 $description = $_POST['description'] ?? '';
-$details = $_POST['details'] ?? '';
+$details = $_POST['details'] ?? []; // This is an array from details[] inputs
 
 if (empty($name) || empty($type) || empty($price) || empty($description)) {
     $response['message'] = 'Please fill all required fields';
     echo json_encode($response);
     exit;
 }
+
+// Convert details array to JSON for storage
+$detailsJson = json_encode(array_values(array_filter($details))); // Remove empty strings
 
 $imageName = null;
 
@@ -33,7 +36,6 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] !== 4) { // 4 = no file
     $fileError = $_FILES['image']['error'];
     if ($fileError !== 0) {
         $response['message'] = 'File upload error code: ' . $fileError;
-        $response['debug'] = $_FILES['image'];
         echo json_encode($response);
         exit;
     }
@@ -60,7 +62,6 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] !== 4) { // 4 = no file
 
     if (!move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
         $response['message'] = 'Failed to move uploaded file. Check folder permissions';
-        $response['debug'] = $_FILES['image'];
         echo json_encode($response);
         exit;
     }
@@ -74,7 +75,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param("ssisss", $name, $type, $price, $description, $details, $imageName);
+$stmt->bind_param("ssisss", $name, $type, $price, $description, $detailsJson, $imageName);
 
 if ($stmt->execute()) {
     $response = [
@@ -84,6 +85,7 @@ if ($stmt->execute()) {
         'type' => $type,
         'price' => $price,
         'description' => $description,
+        'details' => $detailsJson,
         'image' => $imageName
     ];
 } else {

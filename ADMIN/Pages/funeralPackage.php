@@ -136,12 +136,14 @@ $currentPage = 'Users'; // Set the current page
       <!-- Content Area -->
       <main class="content-area">
         <div class="content-container">
+          <!-- Package Controls -->
           <div class="package-controls">
             <button class="add-package-btn" id="openPackageModal">+ Add Package</button>
             <input type="text" class="search-box" placeholder="Search packages..." id="searchInput" />
             <button class="add-package-btn" id="reloadTable" style="background:#555;">⟳ Reload Table</button>
           </div>
 
+          <!-- Packages Table -->
           <table id="packagesTable">
             <thead>
               <tr>
@@ -158,20 +160,35 @@ $currentPage = 'Users'; // Set the current page
             <tbody></tbody>
           </table>
 
+          <!-- Add/Edit Package Modal -->
           <div class="unique-package-modal" id="packageModal">
             <div class="modal-content">
               <span class="close-modal">&times;</span>
               <h2>Add Package</h2>
               <form id="addPackageForm">
                 <input type="text" name="name" placeholder="Package Name" required />
+
                 <select name="type" required>
                   <option value="">Select Package Type</option>
                   <option value="Basic">Basic</option>
                   <option value="Standard">Standard</option>
                   <option value="Premium">Premium</option>
                 </select>
+
                 <textarea name="description" placeholder="Description" required></textarea>
-                <textarea name="details" placeholder="Additional Details"></textarea>
+
+                <!-- Dynamic Additional Details -->
+                <div id="detailsContainer">
+                  <label>Package Inclusions / Additional Details:</label>
+
+                  <div class="detail-item">
+                    <input type="text" name="details[]" placeholder="Enter item" />
+                    <button type="button" class="removeDetail" title="Remove item">−</button>
+                  </div>
+
+                  <button type="button" id="addDetail" class="add-detail-btn">+ Add Item</button>
+                </div>
+
                 <input type="number" name="price" placeholder="Price" required />
                 <input type="file" name="image" accept="image/*" />
                 <button type="submit" class="submit-btn">Add Package</button>
@@ -245,13 +262,42 @@ $currentPage = 'Users'; // Set the current page
       packageModal.querySelector(".close-modal").addEventListener("click", () => {
         packageModal.style.display = "none";
         addForm.reset();
+        resetDetailsInputs();
       });
+
       window.addEventListener("click", e => {
         if (e.target === packageModal) {
           packageModal.style.display = "none";
           addForm.reset();
+          resetDetailsInputs();
         }
       });
+
+      // Dynamic Additional Details
+      const detailsContainer = document.getElementById("detailsContainer");
+      document.getElementById("addDetail").addEventListener("click", () => {
+        const div = document.createElement("div");
+        div.classList.add("detail-item");
+        div.innerHTML = `
+      <input type="text" name="details[]" placeholder="Enter item" />
+      <button type="button" class="removeDetail" title="Remove item">−</button>
+    `;
+        detailsContainer.insertBefore(div, document.getElementById("addDetail"));
+      });
+
+      detailsContainer.addEventListener("click", e => {
+        if (e.target.classList.contains("removeDetail")) {
+          e.target.parentElement.remove();
+        }
+      });
+
+      function resetDetailsInputs() {
+        // Keep one empty input
+        detailsContainer.querySelectorAll(".detail-item").forEach((div, index) => {
+          if (index === 0) div.querySelector("input").value = "";
+          else div.remove();
+        });
+      }
 
       // Load packages
       function loadPackages() {
@@ -263,25 +309,40 @@ $currentPage = 'Users'; // Set the current page
               tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#888;">No packages found</td></tr>`;
               return;
             }
+
             data.forEach(pkg => {
               const imageHTML = pkg.image ? `<img src="../uploads/packages/${pkg.image}" alt="${pkg.name}" />` : '';
+
               const actionHTML = `
             <button class="icon-btn edit-btn" title="Edit" onclick="editPackage(${pkg.id})">✏️</button>
             <button class="icon-btn delete-btn" title="Delete" onclick="deletePackage(this, ${pkg.id})">🗑️</button>
           `;
+
+              // Convert details JSON array into a list
+              let detailsList = '-';
+              try {
+                const detailsArr = Array.isArray(pkg.details) ? pkg.details : JSON.parse(pkg.details);
+                if (detailsArr.length) {
+                  detailsList = '<ul>' + detailsArr.map(d => `<li>${d}</li>`).join('') + '</ul>';
+                }
+              } catch {
+                if (pkg.details) detailsList = pkg.details;
+              }
+
               const row = tableBody.insertRow();
               row.innerHTML = `
             <td>${pkg.id}</td>
             <td>${pkg.name}</td>
             <td>${pkg.type}</td>
             <td class="details" title="${pkg.description}">${pkg.description}</td>
-            <td class="details" title="${pkg.details || ''}">${pkg.details || '-'}</td>
+            <td class="details">${detailsList}</td>
             <td>₱${Number(pkg.price).toLocaleString()}</td>
             <td>${imageHTML}</td>
             <td>${actionHTML}</td>
           `;
             });
-          }).catch(err => console.error("Error loading packages:", err));
+          })
+          .catch(err => console.error("Error loading packages:", err));
       }
 
       loadPackages();
@@ -306,6 +367,7 @@ $currentPage = 'Users'; // Set the current page
               loadPackages();
               packageModal.style.display = "none";
               addForm.reset();
+              resetDetailsInputs();
             } else alert("Error: " + data.message);
           });
       });
@@ -313,17 +375,18 @@ $currentPage = 'Users'; // Set the current page
 
     window.addEventListener("DOMContentLoaded", initPackagePage);
 
-    // Dummy edit/delete
+    // Dummy edit/delete functions
     function editPackage(id) { alert("Edit package ID: " + id); }
     function deletePackage(btn, id) {
       if (!confirm("Are you sure you want to delete this package?")) return;
       fetch(`../PHP/deletePackage.php?id=${id}`)
         .then(res => res.json())
         .then(data => {
-          if (data.status === "success") { btn.closest("tr").remove(); }
+          if (data.status === "success") btn.closest("tr").remove();
           else alert("Error: " + data.message);
         });
     }
+
   </script>
 </body>
 
