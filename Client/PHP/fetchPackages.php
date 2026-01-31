@@ -43,7 +43,7 @@ while ($row = $result->fetch_assoc()) {
         'description' => $row['description'],
         'details' => $details,
         'image' => !empty($row['image'])
-            ? '../ADMIN/uploads/packages/' . $row['image']
+            ? '../../ADMIN/uploads/packages/' . $row['image']
             : null
     ];
 }
