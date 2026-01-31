@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Bookings - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="Index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="funeral-packages.html"
+                >Funeral Packages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chapel-services.html"
+                >Chapel Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="announcements.html">Announcements</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="obituaries.html">Obituaries</a>
+            </li>
+            <!-- User dropdown will be inserted here by session.js -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Bookings Header -->
+    <section class="dashboard-header">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <h1 class="dashboard-title">
+              <i class="bi bi-calendar-check"></i> My Bookings
+            </h1>
+            <p class="dashboard-subtitle">
+              Manage and track your funeral service bookings
+            </p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="funeral-packages.html" class="btn btn-primary-custom">
+              <i class="bi bi-plus-circle"></i> New Booking
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bookings Content -->
+    <section class="dashboard-content">
+      <div class="container">
+        <!-- Filter Tabs -->
+        <div class="bookings-filter mb-4">
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" data-filter="all"
+                >All Bookings</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-filter="pending">Pending</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-filter="approved">Approved</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-filter="completed">Completed</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-filter="cancelled">Cancelled</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Bookings List -->
+        <div id="bookingsList" class="row g-4">
+          <!-- Sample Booking Card 1 - Pending -->
+          <div class="col-lg-6 booking-item" data-status="pending">
+            <div class="booking-card">
+              <div class="booking-header">
+                <div class="booking-id">#DULCE-2025-001</div>
+                <span class="booking-status pending">
+                  <i class="bi bi-clock-history"></i> Pending
+                </span>
+              </div>
+              <div class="booking-body">
+                <div class="booking-detail">
+                  <i class="bi bi-box-seam"></i>
+                  <div>
+                    <strong>Package:</strong>
+                    <span>Serenity Standard</span>
+                  </div>
+                </div>
+                <div class="booking-detail">
+                  <i class="bi bi-building"></i>
+                  <div>
+                    <strong>Chapel:</strong>
+                    <span>Harmony Hall</span>
+                  </div>
+                </div>
+                <div class="booking-detail">
+                  <i class="bi bi-calendar-event"></i>
+                  <div>
+                    <strong>Service Date:</strong>
+                    <span>February 15, 2025</span>
+                  </div>
+                </div>
+                <div class="booking-detail">
+                  <i class="bi bi-clock"></i>
+                  <div>
+                    <strong>Service Time:</strong>
+                    <span>10:00 AM</span>
+                  </div>
+                </div>
+                <div class="booking-detail">
+                  <i class="bi bi-calendar-plus"></i>
+                  <div>
+                    <strong>Booked On:</strong>
+                    <span>January 30, 2025</span>
+                  </div>
+                </div>
+              </div>
+              <div class="booking-footer">
+                <button
+                  class="btn btn-outline-primary btn-sm"
+                  onclick="viewBookingDetails(1)"
+                >
+                  <i class="bi bi-eye"></i> View Details
+                </button>
+                <button class="btn btn-outline-danger btn-sm">
+                  <i class="bi bi-x-circle"></i> Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sample Booking Card 2 - Approved -->
+          <div class="col-lg-6 booking-item" data-status="approved">
+            <div class="booking-card">
+              <div class="booking-header">
+                <div class="booking-id">#DULCE-2025-002</div>
+                <span class="booking-status approved">
+                  <i class="bi bi-check-circle"></i> Approved
+                </span>
+              </div>
+              <div class="booking-body">
+                <div class="booking-detail">
+                  <i class="bi bi-box-seam"></i>
+                  <div>
+                    <strong>Package:</strong>
+                    <span>Serenity Premium</span>
+                  </div>
+                </div>
+                <div class="booking-detail">
+                  <i class="bi bi-building"></i>
+                  <div>
+                    <strong>Chapel:</strong>
+                    <span>Tranquility Suite</span>
+                  </div>
+                </div>
+                <div class="booking-detail">
+                  <i class="bi bi-calendar-event"></i>
+                  <div>
+                    <strong>Service Date:</strong>
+                    <span>February 20, 2025</span>
+                  </div>
+                </div>
+                <div class="booking-detail">
+                  <i class="bi bi-clock"></i>
+                  <div>
+                    <strong>Service Time:</strong>
+                    <span>2:00 PM</span>
+                  </div>
+                </div>
+                <div class="booking-detail">
+                  <i class="bi bi-calendar-plus"></i>
+                  <div>
+                    <strong>Booked On:</strong>
+                    <span>January 28, 2025</span>
+                  </div>
+                </div>
+              </div>
+              <div class="booking-footer">
+                <button
+                  class="btn btn-outline-primary btn-sm"
+                  onclick="viewBookingDetails(2)"
+                >
+                  <i class="bi bi-eye"></i> View Details
+                </button>
+                <button class="btn btn-primary-custom btn-sm">
+                  <i class="bi bi-file-earmark-arrow-up"></i> Upload Documents
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State (hidden by default, shown when no bookings) -->
+          <div class="col-12" id="emptyState" style="display: none">
+            <div class="dashboard-card">
+              <div class="card-body text-center py-5">
+                <i
+                  class="bi bi-inbox"
+                  style="font-size: 4rem; color: #7f8c8d"
+                ></i>
+                <h3 class="mt-4">No Bookings Found</h3>
+                <p class="text-muted">You haven't made any bookings yet.</p>
+                <a
+                  href="funeral-packages.html"
+                  class="btn btn-primary-custom mt-3"
+                >
+                  <i class="bi bi-plus-circle"></i> Create Your First Booking
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Details Modal -->
+    <div
+      class="modal fade"
+      id="bookingModal"
+      tabindex="-1"
+      aria-labelledby="bookingModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bookingModalLabel">Booking Details</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalBookingDetails">
+            <!-- Booking details will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">
+              <i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services
+            </h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Providing compassionate and professional funeral services with
+              modern digital convenience.
+            </p>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+              <li><a href="funeral-packages.html">Funeral Packages</a></li>
+              <li><a href="chapel-services.html">Chapel Services</a></li>
+              <li><a href="announcements.html">Announcements</a></li>
+              <li><a href="obituaries.html">Obituaries</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Contact Information</h5>
+            <ul class="footer-links">
+              <li>
+                <i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1
+              </li>
+              <li>Alaminos, Laguna</li>
+              <li><i class="bi bi-envelope-fill"></i> info@dulcefuneral.com</li>
+              <li><i class="bi bi-telephone-fill"></i> Available 24/7</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+          <p>
+            Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan
+            Institute, Inc.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/session.js"></script>
+    <script src="../JavaScript/bookings.js"></script>
+  </body>
+</html>

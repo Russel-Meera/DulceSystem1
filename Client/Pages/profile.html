@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Profile - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="Index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="funeral-packages.html"
+                >Funeral Packages</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chapel-services.html"
+                >Chapel Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="announcements.html">Announcements</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="obituaries.html">Obituaries</a>
+            </li>
+            <!-- User dropdown will be inserted here by session.js -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <section class="dashboard-header">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <h1 class="dashboard-title">
+              <i class="bi bi-person-circle"></i> My Profile
+            </h1>
+            <p class="dashboard-subtitle">Manage your account information</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <a href="client-dashboard.html" class="btn btn-outline-primary">
+              <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Content -->
+    <section class="dashboard-content">
+      <div class="container">
+        <div class="row g-4">
+          <!-- Profile Sidebar -->
+          <div class="col-lg-4">
+            <div class="dashboard-card">
+              <div class="card-body text-center">
+                <div class="profile-avatar">
+                  <i class="bi bi-person-circle"></i>
+                </div>
+                <h4 class="profile-name mt-3" id="profileName">Loading...</h4>
+                <p class="profile-email text-muted" id="profileEmail">
+                  Loading...
+                </p>
+                <span class="badge bg-success mt-2">Active Account</span>
+
+                <hr class="my-4" />
+
+                <div class="profile-stats">
+                  <div class="row text-center">
+                    <div class="col-6">
+                      <div class="profile-stat-number" id="profileBookings">
+                        0
+                      </div>
+                      <div class="profile-stat-label">Bookings</div>
+                    </div>
+                    <div class="col-6">
+                      <div class="profile-stat-number" id="profileDocs">0</div>
+                      <div class="profile-stat-label">Documents</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profile Information -->
+          <div class="col-lg-8">
+            <div class="dashboard-card">
+              <div class="card-header">
+                <h4 class="card-title">
+                  <i class="bi bi-person-vcard"></i> Personal Information
+                </h4>
+              </div>
+              <div class="card-body">
+                <!-- Alert Messages -->
+                <div
+                  id="profileAlert"
+                  class="alert alert-dismissible fade"
+                  role="alert"
+                  style="display: none"
+                >
+                  <span id="profileAlertMessage"></span>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                  ></button>
+                </div>
+
+                <form id="profileForm">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="fullName" class="form-label">
+                        <i class="bi bi-person"></i> Full Name
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="fullName"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="email" class="form-label">
+                        <i class="bi bi-envelope"></i> Email Address
+                      </label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        disabled
+                      />
+                      <small class="text-muted">Email cannot be changed</small>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="contactNumber" class="form-label">
+                        <i class="bi bi-telephone"></i> Contact Number
+                      </label>
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="contactNumber"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="memberSince" class="form-label">
+                        <i class="bi bi-calendar-check"></i> Member Since
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="memberSince"
+                        disabled
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="address" class="form-label">
+                      <i class="bi bi-geo-alt"></i> Address
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="address"
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div class="text-end">
+                    <button type="submit" class="btn btn-primary-custom">
+                      <i class="bi bi-check-circle"></i> Save Changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Change Password -->
+            <div class="dashboard-card mt-4">
+              <div class="card-header">
+                <h4 class="card-title">
+                  <i class="bi bi-shield-lock"></i> Change Password
+                </h4>
+              </div>
+              <div class="card-body">
+                <!-- Alert Messages -->
+                <div
+                  id="passwordAlert"
+                  class="alert alert-dismissible fade"
+                  role="alert"
+                  style="display: none"
+                >
+                  <span id="passwordAlertMessage"></span>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                  ></button>
+                </div>
+
+                <form id="passwordForm">
+                  <div class="mb-3">
+                    <label for="currentPassword" class="form-label">
+                      <i class="bi bi-lock"></i> Current Password
+                    </label>
+                    <div class="password-input-wrapper">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="currentPassword"
+                        required
+                      />
+                      <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('currentPassword')"
+                      >
+                        <i class="bi bi-eye" id="currentPassword-icon"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="newPassword" class="form-label">
+                      <i class="bi bi-lock-fill"></i> New Password
+                    </label>
+                    <div class="password-input-wrapper">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="newPassword"
+                        required
+                      />
+                      <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('newPassword')"
+                      >
+                        <i class="bi bi-eye" id="newPassword-icon"></i>
+                      </button>
+                    </div>
+                    <small class="text-muted"
+                      >Password must be at least 8 characters</small
+                    >
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="confirmNewPassword" class="form-label">
+                      <i class="bi bi-lock-fill"></i> Confirm New Password
+                    </label>
+                    <div class="password-input-wrapper">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="confirmNewPassword"
+                        required
+                      />
+                      <button
+                        type="button"
+                        class="password-toggle"
+                        onclick="togglePassword('confirmNewPassword')"
+                      >
+                        <i class="bi bi-eye" id="confirmNewPassword-icon"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="text-end">
+                    <button type="submit" class="btn btn-primary-custom">
+                      <i class="bi bi-shield-check"></i> Update Password
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">
+              <i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services
+            </h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Providing compassionate and professional funeral services with
+              modern digital convenience.
+            </p>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+              <li><a href="funeral-packages.html">Funeral Packages</a></li>
+              <li><a href="chapel-services.html">Chapel Services</a></li>
+              <li><a href="announcements.html">Announcements</a></li>
+              <li><a href="obituaries.html">Obituaries</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Contact Information</h5>
+            <ul class="footer-links">
+              <li>
+                <i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1
+              </li>
+              <li>Alaminos, Laguna</li>
+              <li><i class="bi bi-envelope-fill"></i> info@dulcefuneral.com</li>
+              <li><i class="bi bi-telephone-fill"></i> Available 24/7</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+          <p>
+            Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan
+            Institute, Inc.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/session.js"></script>
+    <script src="../JavaScript/profile.js"></script>
+  </body>
+</html>
