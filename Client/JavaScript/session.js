@@ -1,21 +1,27 @@
 // DULCE - Session Management for Client Pages
 
-// Check if user is logged in
 function checkUserSession() {
-  fetch("http://localhost/DULCESYSTEM1/Client/api/check-session.php")
-    .then((response) => response.json())
+  fetch("http://localhost/DULCESYSTEM1/Client/api/check-session.php", {
+    credentials: "include", // required for PHP session cookies
+  })
+    .then((response) => {
+      if (!response.ok) {
+        console.error("Session: Unknown (HTTP error " + response.status + ")");
+        throw new Error("HTTP " + response.status);
+      }
+      return response.json();
+    })
     .then((data) => {
-      if (data.logged_in) {
-        // User is logged in
+      const hasSession = data.logged_in === true;
+
+      // 🔹 The line you asked for
+      console.log("Session:", hasSession);
+
+      if (hasSession) {
         updateNavbarForLoggedInUser(data.user);
-
-        // Hide registration CTAs
         hideRegistrationCTAs();
-
-        // Disable back button to prevent going back to login
         disableBackButton();
       } else {
-        // User is not logged in - redirect to login for protected pages
         const protectedPages = [
           "client-dashboard.html",
           "bookings.html",
@@ -25,14 +31,13 @@ function checkUserSession() {
         ];
 
         const currentPage = window.location.pathname.split("/").pop();
-
         if (protectedPages.includes(currentPage)) {
           window.location.href = "../../SignUp&Login/Pages/login.html";
         }
       }
     })
-    .catch((error) => {
-      console.error("Session check error:", error);
+    .catch((err) => {
+      console.error("Session: Unknown (network/runtime error)", err.message);
     });
 }
 
