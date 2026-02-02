@@ -7,8 +7,12 @@ $currentPage = 'Products'; // Set the current page
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
+  <title>Admin Dashboard - Chapel Services</title>
   <link rel="stylesheet" href="../CSS/adminPage.css">
+  <link rel="stylesheet" href="../CSS/funeralService.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 
 <body>
@@ -47,7 +51,8 @@ $currentPage = 'Products'; // Set the current page
           <span class="menu-label">Funeral Services</span>
         </button>
 
-        <button class="menu-item <?php echo $currentPage == 'Products' ? 'active' : ''; ?>" onclick="location.href='#'">
+        <button class="menu-item <?php echo $currentPage == 'Products' ? 'active' : ''; ?>"
+          onclick="location.href='chapelServices.php'">
           <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
@@ -116,8 +121,8 @@ $currentPage = 'Products'; // Set the current page
       <header class="header">
         <div class="header-content">
           <div class="header-title">
-            <h2 id="pageTitle">Dashboard</h2>
-            <p>Welcome back, Admin</p>
+            <h2 id="pageTitle">Chapel Services</h2>
+            <p>Manage your Chapel Services Contents</p>
           </div>
           <div class="user-info">
             <div class="user-details">
@@ -132,33 +137,65 @@ $currentPage = 'Products'; // Set the current page
       <!-- Content Area -->
       <main class="content-area">
         <div class="content-container">
-          <!-- Empty State -->
-          <div class="empty-state">
-            <div class="empty-icon">
-              <svg id="pageIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                </path>
-              </svg>
-            </div>
-            <h3 id="emptyTitle">Dashboard Page</h3>
-            <p id="emptyDescription">This is where your dashboard content will appear.</p>
-            <small>Click on different menu items to navigate between pages.</small>
+          <!-- Controls -->
+          <div class="package-controls">
+            <button class="add-package-btn" id="openChapelModal">+ Add Chapel</button>
+            <input type="text" class="search-box" placeholder="Search chapels..." id="searchInput" />
+            <button class="add-package-btn" id="reloadTable" style="background:#555;">⟳ Reload Table</button>
           </div>
 
-          <!-- Example Cards -->
-          <div class="cards-grid">
-            <div class="card">
-              <h4>Quick Stats</h4>
-              <p>Add your statistics here</p>
-            </div>
-            <div class="card">
-              <h4>Recent Activity</h4>
-              <p>Add recent activity here</p>
-            </div>
-            <div class="card">
-              <h4>Quick Actions</h4>
-              <p>Add action buttons here</p>
+          <table id="packagesTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th> <!-- make sure this exists -->
+                <th>Capacity</th>
+                <th>Capacity Type</th>
+                <th>Features</th>
+                <th>Badge</th>
+                <th>Image</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <!-- Add/Edit Chapel Modal -->
+          <div class="unique-package-modal" id="chapelModal">
+            <div class="modal-content">
+              <span class="close-modal">&times;</span>
+              <h2>Add Chapel</h2>
+              <form id="addChapelForm">
+                <input type="text" name="name" placeholder="Chapel Name" required />
+
+                <textarea name="description" placeholder="Description" required></textarea> <!-- added -->
+
+                <input type="number" name="capacity" placeholder="Capacity" required />
+                <select name="capacity_type" required>
+                  <option value="">Select Capacity Type</option>
+                  <option value="small">Small</option>
+                  <option value="medium">Medium</option>
+                  <option value="large">Large</option>
+                  <option value="xlarge">X-Large</option>
+                </select>
+
+                <!-- Dynamic Features -->
+                <div id="featuresContainer">
+                  <label>Features / Additional Details:</label>
+
+                  <div class="detail-item">
+                    <input type="text" name="features[]" placeholder="Enter feature" />
+                    <button type="button" class="removeDetail" title="Remove item">−</button>
+                  </div>
+
+                  <button type="button" id="addFeature" class="add-detail-btn">+ Add Feature</button>
+                </div>
+
+                <input type="text" name="badge" placeholder="Badge / Special Label" />
+                <input type="file" name="image" accept="image/*" />
+                <button type="submit" class="submit-btn">Add Chapel</button>
+              </form>
             </div>
           </div>
         </div>
@@ -171,46 +208,165 @@ $currentPage = 'Products'; // Set the current page
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const menuIcon = document.getElementById('menuIcon');
-
       sidebar.classList.toggle('collapsed');
-
-      // Change icon
-      if (sidebar.classList.contains('collapsed')) {
-        menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
-      } else {
-        menuIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
-      }
+      menuIcon.innerHTML = sidebar.classList.contains('collapsed') ?
+        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>' :
+        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
     }
 
-    // Change active menu
-    function changeMenu(element, pageName) {
-      // Remove active class from all menu items
-      const menuItems = document.querySelectorAll('.menu-item');
-      menuItems.forEach(item => item.classList.remove('active'));
-
-      // Add active class to clicked item
-      element.classList.add('active');
-
-      // Update page title
-      document.getElementById('pageTitle').textContent = pageName;
-      document.getElementById('emptyTitle').textContent = pageName + ' Page';
-      document.getElementById('emptyDescription').textContent = `This is where your ${pageName.toLowerCase()} content will appear.`;
-
-      // Update icon in empty state (copy from menu item)
-      const iconSvg = element.querySelector('svg').cloneNode(true);
-      iconSvg.setAttribute('width', '48');
-      iconSvg.setAttribute('height', '48');
-      document.getElementById('pageIcon').replaceWith(iconSvg);
-      iconSvg.id = 'pageIcon';
-    }
-
-    // Logout function
+    // Logout
     function logout() {
       if (confirm('Are you sure you want to logout?')) {
         alert('Logged out successfully!');
-        // Add your logout logic here
       }
     }
+
+    // Init page
+    function initChapelPage() {
+      const chapelModal = document.getElementById("chapelModal");
+      const form = document.getElementById("addChapelForm");
+      const reloadBtn = document.getElementById("reloadTable");
+      const searchInput = document.getElementById("searchInput");
+      const tableBody = document.querySelector("#packagesTable tbody"); // keep same as funeral
+
+      // Open modal
+      document.getElementById("openChapelModal").addEventListener("click", () => {
+        chapelModal.style.display = "block";
+      });
+
+      // Close modal
+      chapelModal.querySelector(".close-modal").addEventListener("click", () => {
+        chapelModal.style.display = "none";
+        form.reset();
+        resetFeatureInputs();
+      });
+
+      window.addEventListener("click", e => {
+        if (e.target === chapelModal) {
+          chapelModal.style.display = "none";
+          form.reset();
+          resetFeatureInputs();
+        }
+      });
+
+      // ======================
+      // Dynamic Features Logic
+      // ======================
+      const featuresContainer = document.getElementById("featuresContainer");
+      document.getElementById("addFeature").addEventListener("click", () => {
+        const div = document.createElement("div");
+        div.classList.add("detail-item"); // same class as funeral for consistent CSS
+        div.innerHTML = `
+      <input type="text" name="features[]" placeholder="Enter feature" />
+      <button type="button" class="removeDetail" title="Remove item">−</button>
+    `;
+        featuresContainer.insertBefore(div, document.getElementById("addFeature"));
+      });
+
+      // Remove dynamically added feature
+      featuresContainer.addEventListener("click", e => {
+        if (e.target.classList.contains("removeDetail")) {
+          e.target.parentElement.remove();
+        }
+      });
+
+      function resetFeatureInputs() {
+        // Keep one empty input
+        featuresContainer.querySelectorAll(".detail-item").forEach((div, index) => {
+          if (index === 0) div.querySelector("input").value = "";
+          else div.remove();
+        });
+      }
+
+      // ======================
+      // Load Chapels
+      // ======================
+      function loadChapels() {
+        fetch("../PHP/fetchChapels.php")
+          .then(res => res.json())
+          .then(data => {
+            tableBody.innerHTML = "";
+            if (!data.length) {
+              tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:#888;">No chapels found</td></tr>`;
+              return;
+            }
+
+            data.forEach(chapel => {
+              // Convert features JSON array to list
+              let featuresList = '-';
+              try {
+                const arr = Array.isArray(chapel.features) ? chapel.features : JSON.parse(chapel.features);
+                if (arr.length) featuresList = '<ul>' + arr.map(f => `<li>${f}</li>`).join('') + '</ul>';
+              } catch {
+                if (chapel.features) featuresList = chapel.features;
+              }
+
+              const actionsHTML = `
+            <button class="icon-btn edit-btn" title="Edit" onclick="editChapel(${chapel.id})">✏️</button>
+            <button class="icon-btn delete-btn" title="Delete" onclick="deleteChapel(this, ${chapel.id})">🗑️</button>
+          `;
+
+              const row = tableBody.insertRow();
+              row.innerHTML = `
+                <td>${chapel.id}</td>
+                <td>${chapel.name}</td>
+                <td class="details">${chapel.description}</td>
+                <td>${chapel.capacity}</td>
+                <td>${chapel.capacity_type}</td>
+                <td>${featuresList}</td>
+                <td>${chapel.badge || '-'}</td>
+                <td>${chapel.image ? `<img src="../uploads/packages/${chapel.image}" alt="${chapel.name}" />` : ''}</td>
+                <td>${actionsHTML}</td>
+              `;
+            });
+          })
+          .catch(err => console.error("Error loading chapels:", err));
+      }
+
+      loadChapels();
+      reloadBtn.addEventListener("click", loadChapels);
+
+      // Search filter
+      searchInput.addEventListener("input", () => {
+        const filter = searchInput.value.toLowerCase();
+        tableBody.querySelectorAll("tr").forEach(row => {
+          row.style.display = row.textContent.toLowerCase().includes(filter) ? "" : "none";
+        });
+      });
+
+      // Submit form
+      form.addEventListener("submit", e => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        fetch("../PHP/addChapel.php", { method: "POST", body: formData })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === "success") {
+              loadChapels();
+              chapelModal.style.display = "none";
+              form.reset();
+              resetFeatureInputs();
+            } else alert("Error: " + data.message);
+          });
+      });
+    }
+
+    // Initialize
+    window.addEventListener("DOMContentLoaded", initChapelPage);
+
+    // Dummy edit/delete
+    function editChapel(id) { alert("Edit chapel ID: " + id); }
+    function deleteChapel(btn, id) {
+      if (!confirm("Are you sure you want to delete this chapel?")) return;
+      fetch(`../PHP/deleteChapel.php?id=${id}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") btn.closest("tr").remove();
+          else alert("Error: " + data.message);
+        });
+    }
+
+
   </script>
 </body>
 
