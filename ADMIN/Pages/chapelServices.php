@@ -139,7 +139,7 @@ $currentPage = 'Products'; // Set the current page
         <div class="content-container">
           <!-- Controls -->
           <div class="package-controls">
-            <button class="add-package-btn" id="openChapelModal">+ Add Chapel</button>
+            <button class="add-package-btn" id="openChapelModal">+ Add Home Service Package</button>
             <input type="text" class="search-box" placeholder="Search chapels..." id="searchInput" />
             <button class="add-package-btn" id="reloadTable" style="background:#555;">⟳ Reload Table</button>
           </div>
@@ -165,7 +165,7 @@ $currentPage = 'Products'; // Set the current page
           <div class="unique-package-modal" id="chapelModal">
             <div class="modal-content">
               <span class="close-modal">&times;</span>
-              <h2>Add Chapel</h2>
+              <h2>Add Package</h2>
               <form id="addChapelForm">
                 <input type="text" name="name" placeholder="Chapel Name" required />
 
