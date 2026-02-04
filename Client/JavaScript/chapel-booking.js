@@ -1,12 +1,11 @@
 ﻿// DULCE - Chapel Booking Page JavaScript
 
 const chapelServiceNameById = new Map();
-const funeralPackageNameById = new Map();
-const funeralPackageDetailsById = new Map();
+const chapelServiceFeaturesById = new Map();
 
 document.addEventListener("DOMContentLoaded", () => {
   loadChapelServices();
-  loadFuneralPackages();
+  setupDateRestrictions();
   setupBookingForm();
 });
 
@@ -25,57 +24,21 @@ function loadChapelServices() {
     .then((data) => {
       data.forEach((chapel) => {
         chapelServiceNameById.set(String(chapel.id), chapel.name);
+        chapelServiceFeaturesById.set(
+          String(chapel.id),
+          Array.isArray(chapel.features) ? chapel.features : [],
+        );
       });
 
       syncChapelName();
+      renderHomeServiceFeatures();
     })
     .catch((error) => {
       console.error("Error loading chapel services:", error);
       if (chapelInput) {
         chapelInput.value = "";
       }
-    });
-}
-
-function loadFuneralPackages() {
-  const select = document.getElementById("funeralPackageId");
-  if (!select) return;
-
-  fetch("http://localhost/DULCESYSTEM1/Client/PHP/fetchPackages.php")
-    .then((response) => response.json())
-    .then((data) => {
-      select.innerHTML = "";
-      const placeholder = document.createElement("option");
-      placeholder.value = "";
-      placeholder.textContent = "Select a package";
-      select.appendChild(placeholder);
-
-      if (data.status !== "success" || !data.packages) {
-        return;
-      }
-
-      Object.values(data.packages).forEach((pkg) => {
-        const option = document.createElement("option");
-        option.value = pkg.id;
-        option.textContent = pkg.name;
-        funeralPackageNameById.set(String(pkg.id), pkg.name);
-        funeralPackageDetailsById.set(
-          String(pkg.id),
-          Array.isArray(pkg.details) ? pkg.details : [],
-        );
-        select.appendChild(option);
-      });
-
-      select.addEventListener("change", renderPackageInclusions);
-      renderPackageInclusions();
-    })
-    .catch((error) => {
-      console.error("Error loading funeral packages:", error);
-      select.innerHTML = "";
-      const fallback = document.createElement("option");
-      fallback.value = "";
-      fallback.textContent = "Unable to load packages";
-      select.appendChild(fallback);
+      renderHomeServiceFeatures();
     });
 }
 
@@ -135,31 +98,65 @@ function setupBookingForm() {
   });
 }
 
-function renderPackageInclusions() {
-  const select = document.getElementById("funeralPackageId");
-  const list = document.getElementById("packageInclusions");
-  if (!select || !list) return;
+function setupDateRestrictions() {
+  const today = new Date();
+  const todayStr = today.toISOString().split("T")[0];
 
-  const selectedId = select.value;
-  const inclusions = funeralPackageDetailsById.get(selectedId) || [];
+  const birthDate = document.getElementById("birthDate");
+  const deathDate = document.getElementById("deathDate");
+  const wakeStart = document.getElementById("wakeStartDate");
+  const wakeEnd = document.getElementById("wakeEndDate");
+  const intermentDate = document.getElementById("intermentDate");
 
-  if (!selectedId || inclusions.length === 0) {
-    list.innerHTML =
-      '<li class="text-muted">Select a package to view inclusions.</li>';
+  if (birthDate) birthDate.max = todayStr;
+  if (deathDate) deathDate.min = todayStr;
+  if (wakeStart) wakeStart.min = todayStr;
+  if (wakeEnd) wakeEnd.min = todayStr;
+  if (intermentDate) intermentDate.min = todayStr;
+
+  if (wakeStart && wakeEnd) {
+    wakeStart.addEventListener("change", () => {
+      if (wakeStart.value) {
+        wakeEnd.min = wakeStart.value;
+      }
+    });
+  }
+
+  const viewingStart = document.getElementById("viewingStartTime");
+  const viewingEnd = document.getElementById("viewingEndTime");
+  if (viewingStart && viewingEnd) {
+    viewingStart.addEventListener("change", () => {
+      if (viewingStart.value) {
+        viewingEnd.min = viewingStart.value;
+      }
+    });
+  }
+}
+
+function renderHomeServiceFeatures() {
+  const container = document.getElementById("homeServiceFeatures");
+  const hiddenChapelId = document.getElementById("chapelServiceId");
+  if (!container || !hiddenChapelId) return;
+
+  const selectedId = hiddenChapelId.value;
+  const features = chapelServiceFeaturesById.get(selectedId) || [];
+
+  if (!selectedId || features.length === 0) {
+    container.innerHTML =
+      '<div class="col-12 text-muted">Features will load once the home service is selected.</div>';
     return;
   }
 
-  list.innerHTML = inclusions
+  container.innerHTML = features
     .map(
       (item) =>
-        `<li><i class="bi bi-check-circle-fill"></i> ${item}</li>`,
+        `<div class="col-6"><div class="feature-item">${item}</div></div>`,
     )
     .join("");
 }
 
 function buildBookingFormData() {
   const chapelServiceId = document.getElementById("chapelServiceId").value;
-  const funeralPackageId = document.getElementById("funeralPackageId").value;
   const chapelName = chapelServiceNameById.get(chapelServiceId) ||
     document.getElementById("chapel").value ||
     "";
@@ -173,7 +170,6 @@ function buildBookingFormData() {
   formData.append("session_address", document.getElementById("sessionAddress").value.trim());
 
   formData.append("chapel_id", chapelServiceId);
-  formData.append("package_id", funeralPackageId);
   formData.append("service_date", document.getElementById("serviceDate").value);
   formData.append("service_time", document.getElementById("serviceTime").value);
 
@@ -182,10 +178,26 @@ function buildBookingFormData() {
   formData.append("death_date", document.getElementById("deathDate").value);
   formData.append("excerpt", document.getElementById("excerpt").value.trim());
   formData.append("full_biography", document.getElementById("fullBiography").value.trim());
-  formData.append("wake_schedule", document.getElementById("wakeSchedule").value.trim());
+  const wakeStartDate = document.getElementById("wakeStartDate").value;
+  const wakeEndDate = document.getElementById("wakeEndDate").value;
+  const wakeSchedule = wakeStartDate && wakeEndDate
+    ? `${wakeStartDate} to ${wakeEndDate}`
+    : "";
+  formData.append("wake_schedule", wakeSchedule);
   formData.append("chapel", chapelName);
-  formData.append("viewing_hours", document.getElementById("viewingHours").value.trim());
-  formData.append("interment", document.getElementById("interment").value.trim());
+  const viewingStart = document.getElementById("viewingStartTime").value;
+  const viewingEnd = document.getElementById("viewingEndTime").value;
+  const viewingHours = viewingStart && viewingEnd
+    ? `${viewingStart} - ${viewingEnd}`
+    : "";
+  formData.append("viewing_hours", viewingHours);
+
+  const intermentDate = document.getElementById("intermentDate").value;
+  const intermentTime = document.getElementById("intermentTime").value;
+  const intermentValue = intermentDate && intermentTime
+    ? `${intermentDate} ${intermentTime}`
+    : intermentDate || "";
+  formData.append("interment", intermentValue);
 
   const imageFile = document.getElementById("imageFile").files[0];
   if (imageFile) {

@@ -221,36 +221,13 @@
               <div class="dashboard-card">
                 <div class="card-header">
                   <h4 class="card-title">
-                    <i class="bi bi-box-seam"></i> Funeral Package
+                    <i class="bi bi-stars"></i> Home Service Features
                   </h4>
                 </div>
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-6 mb-3">
-                      <label for="funeralPackageId" class="form-label">
-                        <i class="bi bi-card-list"></i> Select Package
-                      </label>
-                      <select
-                        class="form-select"
-                        id="funeralPackageId"
-                        required
-                      >
-                        <option value="">Loading packages...</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="dashboard-card mt-2">
-                        <div class="card-body">
-                          <h6 class="mb-3 text-secondary">
-                            <i class="bi bi-check-square"></i> Package Inclusions
-                          </h6>
-                          <ul class="package-inclusions list-unstyled mb-0" id="packageInclusions">
-                            <li class="text-muted">Select a package to view inclusions.</li>
-                          </ul>
-                        </div>
-                      </div>
+                  <div class="row g-2" id="homeServiceFeatures">
+                    <div class="col-12 text-muted">
+                      Features will load once the home service is selected.
                     </div>
                   </div>
                 </div>
@@ -351,16 +328,31 @@
                       <label for="wakeSchedule" class="form-label">
                         <i class="bi bi-calendar2-week"></i> Wake Schedule
                       </label>
-                      <textarea
-                        class="form-control"
-                        id="wakeSchedule"
-                        rows="3"
-                        placeholder="Dates and schedule"
-                      ></textarea>
+                      <div class="row g-2">
+                        <div class="col-6">
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="wakeStartDate"
+                            required
+                          />
+                        </div>
+                        <div class="col-6">
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="wakeEndDate"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <small class="text-muted"
+                        >Select a continuous date range.</small
+                      >
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="chapel" class="form-label">
-                        <i class="bi bi-building"></i> Chapel
+                        <i class="bi bi-building"></i> Home Service
                       </label>
                       <input
                         type="text"
@@ -374,26 +366,54 @@
 
                   <div class="row">
                     <div class="col-md-6 mb-3">
-                      <label for="viewingHours" class="form-label">
+                      <label class="form-label">
                         <i class="bi bi-clock-history"></i> Viewing Hours
                       </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="viewingHours"
-                        placeholder="e.g., 9:00 AM - 9:00 PM"
-                      />
+                      <div class="row g-2">
+                        <div class="col-6">
+                          <input
+                            type="time"
+                            class="form-control"
+                            id="viewingStartTime"
+                            step="1800"
+                            required
+                          />
+                        </div>
+                        <div class="col-6">
+                          <input
+                            type="time"
+                            class="form-control"
+                            id="viewingEndTime"
+                            step="1800"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <small class="text-muted"
+                        >Select start and end time (30-min intervals).</small
+                      >
                     </div>
                     <div class="col-md-6 mb-3">
-                      <label for="interment" class="form-label">
+                      <label class="form-label">
                         <i class="bi bi-pin-map"></i> Interment
                       </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="interment"
-                        placeholder="Location and schedule"
-                      />
+                      <div class="row g-2">
+                        <div class="col-6">
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="intermentDate"
+                          />
+                        </div>
+                        <div class="col-6">
+                          <input
+                            type="time"
+                            class="form-control"
+                            id="intermentTime"
+                            step="1800"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
 
