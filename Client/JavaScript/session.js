@@ -21,6 +21,8 @@ function checkUserSession() {
         updateNavbarForLoggedInUser(data.user);
         hideRegistrationCTAs();
         disableBackButton();
+        populateSessionedDetails(data.user);
+        loadSessionProfileDetails();
       } else {
         const protectedPages = [
           "client-dashboard.html",
@@ -38,6 +40,60 @@ function checkUserSession() {
     })
     .catch((err) => {
       console.error("Session: Unknown (network/runtime error)", err.message);
+    });
+}
+
+function getUserDisplayName(user) {
+  if (!user) return "";
+  return user.full_name || user.name || "";
+}
+
+function setInputValue(inputId, value) {
+  const input = document.getElementById(inputId);
+  if (input && value !== undefined && value !== null) {
+    input.value = value;
+  }
+}
+
+function populateSessionedDetails(user) {
+  if (!user) return;
+
+  const displayName = getUserDisplayName(user);
+  const contactNumber = user.contact_number || user.mobile || user.phone || "";
+  const email = user.email || "";
+  const address = user.address || "";
+
+  // Primary contact fields
+  setInputValue("contactName", displayName);
+  setInputValue("contactMobile", contactNumber);
+
+  // Sessioned preview fields
+  setInputValue("sessionName", displayName);
+  setInputValue("sessionNumber", contactNumber);
+  setInputValue("sessionEmail", email);
+  setInputValue("sessionAddress", address);
+}
+
+function loadSessionProfileDetails() {
+  const needsContact =
+    !document.getElementById("contactMobile")?.value &&
+    !document.getElementById("sessionNumber")?.value;
+  const needsAddress = !document.getElementById("sessionAddress")?.value;
+  const needsName = !document.getElementById("contactName")?.value;
+
+  if (!needsContact && !needsAddress && !needsName) {
+    return;
+  }
+
+  fetch("http://localhost/DULCESYSTEM1/Client/api/get-profile.php")
+    .then((response) => response.json())
+    .then((data) => {
+      if (!data.success || !data.user) return;
+
+      populateSessionedDetails(data.user);
+    })
+    .catch((error) => {
+      console.error("Session profile load error:", error);
     });
 }
 
@@ -96,7 +152,7 @@ function updateNavbarForLoggedInUser(user) {
     userDropdown.innerHTML = `
             <a class="nav-link dropdown-toggle user-dropdown" href="#" id="userDropdown" role="button" 
                data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-person-circle"></i> ${user.name}
+                <i class="bi bi-person-circle"></i> ${getUserDisplayName(user)}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="client-dashboard.html">

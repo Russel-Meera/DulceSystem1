@@ -91,7 +91,7 @@ async function loadChapels() {
 
               <div class="chapel-actions">
                 <button onclick="selectChapel(${chapel.id})" class="btn btn-select-chapel">
-                  Select Chapel
+                  Select Home Service
                 </button>
               </div>
             </div>

@@ -1,0 +1,474 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapel Booking - DULCE</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css" />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="Index.html">
+          <i class="bi bi-heart-pulse-fill"></i> DULCE
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="Index.html">Home</a>
+            </li>
+<li class="nav-item">
+              <a class="nav-link active" href="chapel-services.html"
+                >Home Services</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="announcements.html">Announcements</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="obituaries.html">Obituaries</a>
+            </li>
+            <!-- User dropdown will be inserted here by session.js -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="page-title">Chapel Booking</h1>
+            <p class="page-subtitle">
+              Complete your booking details and provide the obituary information
+              for your loved one.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section class="dashboard-content">
+      <div class="container">
+        <form id="chapelBookingForm">
+          <div class="row g-4">
+            <div class="col-12">
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <i class="bi bi-telephone"></i> Contact Information
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="contactName" class="form-label">
+                        <i class="bi bi-person"></i> Name (Logged In)
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="contactName"
+                        placeholder="Your full name"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="contactMobile" class="form-label">
+                        <i class="bi bi-phone"></i> Mobile Number
+                      </label>
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="contactMobile"
+                        placeholder="09xx-xxx-xxxx"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <i class="bi bi-person-badge"></i> Sessioned Information
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="alert alert-info mb-4" role="alert">
+                    If you want to edit or keep this information, you can update
+                    it below.
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="sessionName" class="form-label">
+                        <i class="bi bi-person"></i> Name
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="sessionName"
+                        placeholder="Full name"
+                      />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="sessionNumber" class="form-label">
+                        <i class="bi bi-telephone"></i> Number
+                      </label>
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="sessionNumber"
+                        placeholder="Contact number"
+                      />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="sessionEmail" class="form-label">
+                        <i class="bi bi-envelope"></i> Email Address
+                      </label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="sessionEmail"
+                        placeholder="name@email.com"
+                      />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="sessionAddress" class="form-label">
+                        <i class="bi bi-geo-alt"></i> Address
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="sessionAddress"
+                        placeholder="Street, City, Province"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <input type="hidden" id="chapelServiceId" />
+
+            <div class="col-12">
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <i class="bi bi-calendar-check"></i> Service Schedule
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="serviceDate" class="form-label">
+                        <i class="bi bi-calendar-check"></i> Service Date
+                      </label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="serviceDate"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="serviceTime" class="form-label">
+                        <i class="bi bi-clock"></i> Service Time
+                      </label>
+                      <input
+                        type="time"
+                        class="form-control"
+                        id="serviceTime"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <i class="bi bi-box-seam"></i> Funeral Package
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="funeralPackageId" class="form-label">
+                        <i class="bi bi-card-list"></i> Select Package
+                      </label>
+                      <select
+                        class="form-select"
+                        id="funeralPackageId"
+                        required
+                      >
+                        <option value="">Loading packages...</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="dashboard-card mt-2">
+                        <div class="card-body">
+                          <h6 class="mb-3 text-secondary">
+                            <i class="bi bi-check-square"></i> Package Inclusions
+                          </h6>
+                          <ul class="package-inclusions list-unstyled mb-0" id="packageInclusions">
+                            <li class="text-muted">Select a package to view inclusions.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h4 class="card-title">
+                    <i class="bi bi-flower1"></i> Deceased Information
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 mb-3">
+                      <label for="obituaryName" class="form-label">
+                        <i class="bi bi-person"></i> Full Name
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="obituaryName"
+                        placeholder="Full name of the deceased"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="birthDate" class="form-label">
+                        <i class="bi bi-calendar"></i> Birth Date
+                      </label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="birthDate"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="deathDate" class="form-label">
+                        <i class="bi bi-calendar-x"></i> Death Date
+                      </label>
+                      <input
+                        type="date"
+                        class="form-control"
+                        id="deathDate"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12 mb-3">
+                      <label for="imageFile" class="form-label">
+                        <i class="bi bi-image"></i> Upload Image
+                      </label>
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="imageFile"
+                        accept="image/*"
+                      />
+                      <small class="text-muted"
+                        >Choose a photo from your device.</small
+                      >
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="excerpt" class="form-label">
+                      <i class="bi bi-quote"></i> Excerpt
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="excerpt"
+                      rows="3"
+                      placeholder="Short tribute or summary"
+                    ></textarea>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="fullBiography" class="form-label">
+                      <i class="bi bi-journal-text"></i> Full Biography
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="fullBiography"
+                      rows="5"
+                      placeholder="Complete obituary content"
+                    ></textarea>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="wakeSchedule" class="form-label">
+                        <i class="bi bi-calendar2-week"></i> Wake Schedule
+                      </label>
+                      <textarea
+                        class="form-control"
+                        id="wakeSchedule"
+                        rows="3"
+                        placeholder="Dates and schedule"
+                      ></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="chapel" class="form-label">
+                        <i class="bi bi-building"></i> Chapel
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="chapel"
+                        placeholder="Selected home service"
+                        readonly
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="viewingHours" class="form-label">
+                        <i class="bi bi-clock-history"></i> Viewing Hours
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="viewingHours"
+                        placeholder="e.g., 9:00 AM - 9:00 PM"
+                      />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="interment" class="form-label">
+                        <i class="bi bi-pin-map"></i> Interment
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="interment"
+                        placeholder="Location and schedule"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="text-end">
+                    <button type="submit" class="btn btn-primary-custom">
+                      <i class="bi bi-check-circle"></i> Submit Booking
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">
+              <i class="bi bi-heart-pulse-fill"></i> DULCE Funeral Services
+            </h5>
+            <p style="color: rgba(255, 255, 255, 0.8)">
+              Providing compassionate and professional funeral services with
+              modern digital convenience.
+            </p>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Quick Links</h5>
+            <ul class="footer-links">
+<li><a href="chapel-services.html">Home Services</a></li>
+              <li><a href="announcements.html">Announcements</a></li>
+              <li><a href="obituaries.html">Obituaries</a></li>
+            </ul>
+          </div>
+
+          <div class="col-md-4 mb-4">
+            <h5 class="footer-title">Contact Information</h5>
+            <ul class="footer-links">
+              <li>
+                <i class="bi bi-geo-alt-fill"></i> MH Del Pilar St., Brgy. 1
+              </li>
+              <li>Alaminos, Laguna</li>
+              <li><i class="bi bi-envelope-fill"></i> info@dulcefuneral.com</li>
+              <li><i class="bi bi-telephone-fill"></i> Available 24/7</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2025 DULCE: Integrated Funeral Service Management System. All
+            rights reserved.
+          </p>
+          <p>
+            Developed by Geejay M. Ramos & Gerico C. Navarez | Tanauan
+            Institute, Inc.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="../JavaScript/main.js"></script>
+    <script src="../JavaScript/session.js"></script>
+    <script src="../JavaScript/chapel-booking.js"></script>
+  </body>
+</html>
+
+
+
+
