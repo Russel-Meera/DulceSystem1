@@ -10,9 +10,7 @@ $currentPage = 'Products'; // Set the current page
   <title>Admin Dashboard - Chapel Services</title>
   <link rel="stylesheet" href="../CSS/adminPage.css">
   <link rel="stylesheet" href="../CSS/funeralService.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -58,6 +56,16 @@ $currentPage = 'Products'; // Set the current page
               d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
           </svg>
           <span class="menu-label">Chapel Services</span>
+        </button>
+
+        <button class="menu-item <?php echo $currentPage == 'Announcements' ? 'active' : ''; ?>"
+          onclick="location.href='announcementCrud.php'">
+          <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 5h2m-1-1v2m7 4V9a5 5 0 00-10 0v1m-2 0a2 2 0 00-2 2v1a2 2 0 002 2h12a2 2 0 002-2v-1a2 2 0 00-2-2H7z">
+            </path>
+          </svg>
+          <span class="menu-label">Announcements</span>
         </button>
 
         <button class="menu-item <?php echo $currentPage == 'Orders' ? 'active' : ''; ?>"
@@ -138,28 +146,25 @@ $currentPage = 'Products'; // Set the current page
       <main class="content-area">
         <div class="content-container">
           <!-- Controls -->
-          <div class="package-controls">
+                    <div class="package-controls">
             <button class="add-package-btn" id="openChapelModal">+ Add Home Service Package</button>
             <input type="text" class="search-box" placeholder="Search chapels..." id="searchInput" />
-            <button class="add-package-btn" id="reloadTable" style="background:#555;">⟳ Reload Table</button>
+            
+            <button class="add-package-btn" id="reloadTable" style="background:#555;">? Reload Table</button>
           </div>
 
-          <table id="packagesTable">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th> <!-- make sure this exists -->
-                <th>Capacity</th>
-                <th>Capacity Type</th>
-                <th>Features</th>
-                <th>Badge</th>
-                <th>Image</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+          <section class="admin-announcements">
+            <div class="admin-announcements-header">
+              <h3>Chapel Services</h3>
+              <p>Manage chapel listings in a clean grid view.</p>
+            </div>
+            <div class="admin-chapels-grid" id="chapelGrid"></div>
+            <div id="no-results-chapels" class="text-center mt-4" style="display: none">
+              <i class="bi bi-search" style="font-size: 3rem; color: #7f8c8d"></i>
+              <h3 class="mt-3">No Chapels Found</h3>
+              <p class="text-muted">Try adjusting your search to see more results.</p>
+            </div>
+          </section>
 
           <!-- Add/Edit Chapel Modal -->
           <div class="unique-package-modal" id="chapelModal">
@@ -203,8 +208,7 @@ $currentPage = 'Products'; // Set the current page
     </div>
   </div>
 
-  <script>
-    // Toggle sidebar
+  <script>    // Toggle sidebar
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const menuIcon = document.getElementById('menuIcon');
@@ -212,29 +216,22 @@ $currentPage = 'Products'; // Set the current page
       menuIcon.innerHTML = sidebar.classList.contains('collapsed') ?
         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>' :
         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
-    }
-
-    // Logout
+    }    // Logout
     function logout() {
       if (confirm('Are you sure you want to logout?')) {
         alert('Logged out successfully!');
       }
-    }
-
-    // Init page
+    }    // Init page
     function initChapelPage() {
       const chapelModal = document.getElementById("chapelModal");
       const form = document.getElementById("addChapelForm");
       const reloadBtn = document.getElementById("reloadTable");
       const searchInput = document.getElementById("searchInput");
-      const tableBody = document.querySelector("#packagesTable tbody"); // keep same as funeral
-
-      // Open modal
+      const chapelGrid = document.getElementById("chapelGrid");
+      const noResults = document.getElementById("no-results-chapels");      // Open modal
       document.getElementById("openChapelModal").addEventListener("click", () => {
         chapelModal.style.display = "block";
-      });
-
-      // Close modal
+      });      // Close modal
       chapelModal.querySelector(".close-modal").addEventListener("click", () => {
         chapelModal.style.display = "none";
         form.reset();
@@ -249,9 +246,8 @@ $currentPage = 'Products'; // Set the current page
         }
       });
 
-      // ======================
-      // Dynamic Features Logic
-      // ======================
+       // ======================      // Dynamic Features Logic
+        // ======================
       const featuresContainer = document.getElementById("featuresContainer");
       document.getElementById("addFeature").addEventListener("click", () => {
         const div = document.createElement("div");
@@ -261,17 +257,14 @@ $currentPage = 'Products'; // Set the current page
       <button type="button" class="removeDetail" title="Remove item">−</button>
     `;
         featuresContainer.insertBefore(div, document.getElementById("addFeature"));
-      });
-
-      // Remove dynamically added feature
+      });      // Remove dynamically added feature
       featuresContainer.addEventListener("click", e => {
         if (e.target.classList.contains("removeDetail")) {
           e.target.parentElement.remove();
         }
       });
 
-      function resetFeatureInputs() {
-        // Keep one empty input
+      function resetFeatureInputs() {        // Keep one empty input
         featuresContainer.querySelectorAll(".detail-item").forEach((div, index) => {
           if (index === 0) div.querySelector("input").value = "";
           else div.remove();
@@ -285,56 +278,72 @@ $currentPage = 'Products'; // Set the current page
         fetch("../PHP/fetchChapels.php")
           .then(res => res.json())
           .then(data => {
-            tableBody.innerHTML = "";
+            chapelGrid.innerHTML = "";
             if (!data.length) {
-              tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:#888;">No chapels found</td></tr>`;
+              noResults.style.display = "block";
               return;
             }
 
+            noResults.style.display = "none";
+
             data.forEach(chapel => {
-              // Convert features JSON array to list
-              let featuresList = '-';
+              let featuresList = "";
               try {
                 const arr = Array.isArray(chapel.features) ? chapel.features : JSON.parse(chapel.features);
-                if (arr.length) featuresList = '<ul>' + arr.map(f => `<li>${f}</li>`).join('') + '</ul>';
+                if (arr.length) {
+                  featuresList = arr.map(f => `<span class="admin-chip">${f}</span>`).join("");
+                }
               } catch {
-                if (chapel.features) featuresList = chapel.features;
+                if (chapel.features) featuresList = `<span class="admin-chip">${chapel.features}</span>`;
               }
 
-              const actionsHTML = `
-            <button class="icon-btn edit-btn" title="Edit" onclick="editChapel(${chapel.id})">✏️</button>
-            <button class="icon-btn delete-btn" title="Delete" onclick="deleteChapel(this, ${chapel.id})">🗑️</button>
-          `;
+              const imageHtml = chapel.image
+                ? `<div class="admin-chapel-image" style="background-image:url('../uploads/packages/${chapel.image}')"></div>`
+                : `<div class="admin-chapel-image placeholder"></div>`;
 
-              const row = tableBody.insertRow();
-              row.innerHTML = `
-                <td>${chapel.id}</td>
-                <td>${chapel.name}</td>
-                <td class="details">${chapel.description}</td>
-                <td>${chapel.capacity}</td>
-                <td>${chapel.capacity_type}</td>
-                <td>${featuresList}</td>
-                <td>${chapel.badge || '-'}</td>
-                <td>${chapel.image ? `<img src="../uploads/packages/${chapel.image}" alt="${chapel.name}" />` : ''}</td>
-                <td>${actionsHTML}</td>
+              const badgeHtml = chapel.badge ? `<span class="admin-announce-badge service">${chapel.badge}</span>` : "";
+
+              const card = document.createElement("div");
+              card.className = "admin-chapel-card";
+              card.innerHTML = `
+                ${imageHtml}
+                <div class="admin-chapel-body">
+                  <div class="admin-announce-top">
+                    <span class="admin-announce-badge general">${chapel.capacity_type}</span>
+                    ${badgeHtml}
+                  </div>
+                  <h4 class="admin-announce-title">${chapel.name}</h4>
+                  <div class="admin-announce-meta">
+                    <span><i class="bi bi-people"></i> ${chapel.capacity}</span>
+                  </div>
+                  <p class="admin-announce-content">${chapel.description}</p>
+                  <div class="admin-chip-row">${featuresList}</div>
+                  <div class="admin-announce-actions">
+                    <button class="icon-btn edit-btn" title="Edit" onclick="editChapel(${chapel.id})"><i class="bi bi-pencil"></i></button>
+                    <button class="icon-btn delete-btn" title="Delete" onclick="deleteChapel(${chapel.id})"><i class="bi bi-trash"></i></button>
+                  </div>
+                </div>
               `;
+              chapelGrid.appendChild(card);
             });
           })
           .catch(err => console.error("Error loading chapels:", err));
       }
 
-      loadChapels();
-      reloadBtn.addEventListener("click", loadChapels);
 
-      // Search filter
+      loadChapels();
+      reloadBtn.addEventListener("click", loadChapels);      // Search filter
       searchInput.addEventListener("input", () => {
         const filter = searchInput.value.toLowerCase();
-        tableBody.querySelectorAll("tr").forEach(row => {
-          row.style.display = row.textContent.toLowerCase().includes(filter) ? "" : "none";
+        const items = document.querySelectorAll(".admin-chapel-card");
+        let visibleCount = 0;
+        items.forEach(item => {
+          const matches = item.textContent.toLowerCase().includes(filter);
+          item.style.display = matches ? "" : "none";
+          if (matches) visibleCount++;
         });
-      });
-
-      // Submit form
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+      });      // Submit form
       form.addEventListener("submit", e => {
         e.preventDefault();
         const formData = new FormData(form);
@@ -349,19 +358,17 @@ $currentPage = 'Products'; // Set the current page
             } else alert("Error: " + data.message);
           });
       });
-    }
-
-    // Initialize
+    }    // Initialize
     window.addEventListener("DOMContentLoaded", initChapelPage);
 
-    // Dummy edit/delete
+    // Dummy edit / delete
     function editChapel(id) { alert("Edit chapel ID: " + id); }
-    function deleteChapel(btn, id) {
+    function deleteChapel(id) {
       if (!confirm("Are you sure you want to delete this chapel?")) return;
       fetch(`../PHP/deleteChapel.php?id=${id}`)
         .then(res => res.json())
         .then(data => {
-          if (data.status === "success") btn.closest("tr").remove();
+          if (data.status === "success") window.location.reload();
           else alert("Error: " + data.message);
         });
     }
@@ -371,3 +378,10 @@ $currentPage = 'Products'; // Set the current page
 </body>
 
 </html>
+
+
+
+
+
+
+

@@ -28,11 +28,18 @@ function renderPackages() {
     const typeLower = pkg.type.toLowerCase();
 
     const detailsArray = Array.isArray(pkg.details) ? pkg.details : [pkg.details || ''];
+    const cardImage =
+      pkg.image || "https://via.placeholder.com/800x600/2c3e50/ffffff?text=No+Image";
 
     container.innerHTML += `
       <div class="col-md-6 col-lg-4 package-item" data-price="${pkg.price}" data-type="${typeLower}">
         <div class="package-card ${typeLower}">
           <div class="package-badge">${pkg.type}</div>
+          <div
+            class="package-image-wrapper"
+            style="--package-bg-image: url('${cardImage}')"
+            aria-label="${pkg.name}"
+          ></div>
           <div class="package-header">
             <h3 class="package-name">${pkg.name}</h3>
             <div class="package-price">${price}</div>
@@ -123,21 +130,19 @@ function viewPackageDetails(packageId) {
   modalBody.innerHTML = `
     <div class="package-detail-view">
       <div class="row g-4">
-        <!-- Left Side - Package Image -->
-        <div class="col-lg-5">
-          <div class="package-modal-image-wrapper">
+        <div class="col-12">
+          <div class="package-modal-image-wrapper package-modal-image-wide">
             <img src="${imageUrl}" 
                  alt="${pkg.name}" 
                  class="package-modal-image img-fluid"
-                 onerror="this.src='https://via.placeholder.com/800x600/2c3e50/ffffff?text=No+Image'">
+                 onerror="this.src='https://via.placeholder.com/1200x600/2c3e50/ffffff?text=No+Image'">
             <div class="package-modal-badge">
               <span class="badge bg-primary">${pkg.type} Package</span>
             </div>
           </div>
         </div>
 
-        <!-- Right Side - Package Details -->
-        <div class="col-lg-7">
+        <div class="col-12">
           <div class="package-modal-info">
             <h3 class="package-modal-title">${pkg.name}</h3>
             <div class="package-modal-price">${pkg.price}</div>
@@ -175,6 +180,16 @@ function viewPackageDetails(packageId) {
 // Initialize on page load
 document.addEventListener("DOMContentLoaded", function () {
   loadPackages();
+
+  const modalEl = document.getElementById("packageModal");
+  if (modalEl) {
+    modalEl.addEventListener("hidden.bs.modal", function () {
+      const active = document.activeElement;
+      if (active && modalEl.contains(active)) {
+        active.blur();
+      }
+    });
+  }
 
   // Add enter key support for filters
   document.getElementById("priceFilter").addEventListener("keypress", function (e) {

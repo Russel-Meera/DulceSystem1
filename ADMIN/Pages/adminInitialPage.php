@@ -28,7 +28,7 @@ $currentPage = 'Dashboard'; // Set the current page
       <!-- Menu Items -->
       <div class="menu">
         <button class="menu-item <?php echo $currentPage == 'Dashboard' ? 'active' : ''; ?>"
-          onclick="location.href='#'">
+          onclick="location.href='adminInitialPage.php'">
           <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
@@ -54,6 +54,16 @@ $currentPage = 'Dashboard'; // Set the current page
               d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
           </svg>
           <span class="menu-label">Chapel Services</span>
+        </button>
+
+        <button class="menu-item <?php echo $currentPage == 'Announcements' ? 'active' : ''; ?>"
+          onclick="location.href='announcementCrud.php'">
+          <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 5h2m-1-1v2m7 4V9a5 5 0 00-10 0v1m-2 0a2 2 0 00-2 2v1a2 2 0 002 2h12a2 2 0 002-2v-1a2 2 0 00-2-2H7z">
+            </path>
+          </svg>
+          <span class="menu-label">Announcements</span>
         </button>
 
         <button class="menu-item <?php echo $currentPage == 'Orders' ? 'active' : ''; ?>"

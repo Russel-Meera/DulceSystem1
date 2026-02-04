@@ -10,9 +10,7 @@ $currentPage = 'Users'; // Set the current page
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="../CSS/adminPage.css">
   <link rel="stylesheet" href="../CSS/funeralService.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -57,6 +55,16 @@ $currentPage = 'Users'; // Set the current page
               d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
           </svg>
           <span class="menu-label">Chapel Services</span>
+        </button>
+
+        <button class="menu-item <?php echo $currentPage == 'Announcements' ? 'active' : ''; ?>"
+          onclick="location.href='announcementCrud.php'">
+          <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 5h2m-1-1v2m7 4V9a5 5 0 00-10 0v1m-2 0a2 2 0 00-2 2v1a2 2 0 002 2h12a2 2 0 002-2v-1a2 2 0 00-2-2H7z">
+            </path>
+          </svg>
+          <span class="menu-label">Announcements</span>
         </button>
 
         <button class="menu-item <?php echo $currentPage == 'Orders' ? 'active' : ''; ?>"
@@ -137,28 +145,34 @@ $currentPage = 'Users'; // Set the current page
       <main class="content-area">
         <div class="content-container">
           <!-- Package Controls -->
-          <div class="package-controls">
+                    <div class="package-controls">
             <button class="add-package-btn" id="openPackageModal">+ Add Package</button>
             <input type="text" class="search-box" placeholder="Search packages..." id="searchInput" />
+            <div class="filter-controls">
+              <select class="search-box" id="typeFilter">
+                <option value="">All Types</option>
+              </select>
+              <select class="search-box" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
             <button class="add-package-btn" id="reloadTable" style="background:#555;">⟳ Reload Table</button>
           </div>
 
-          <!-- Packages Table -->
-          <table id="packagesTable">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th>Details</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+          <section class="admin-announcements">
+            <div class="admin-announcements-header">
+              <h3>Funeral Packages</h3>
+              <p>Manage package listings in a clean grid view.</p>
+            </div>
+            <div class="admin-packages-grid" id="packageGrid"></div>
+            <div id="no-results-packages" class="text-center mt-4" style="display: none">
+              <i class="bi bi-search" style="font-size: 3rem; color: #7f8c8d"></i>
+              <h3 class="mt-3">No Packages Found</h3>
+              <p class="text-muted">Try adjusting your search to see more results.</p>
+            </div>
+          </section>
 
           <!-- Add/Edit Package Modal -->
           <div class="unique-package-modal" id="packageModal">
@@ -251,7 +265,11 @@ $currentPage = 'Users'; // Set the current page
       const addForm = document.getElementById("addPackageForm");
       const reloadBtn = document.getElementById("reloadTable");
       const searchInput = document.getElementById("searchInput");
-      const tableBody = document.querySelector("#packagesTable tbody");
+      const typeFilter = document.getElementById("typeFilter");
+      const statusFilter = document.getElementById("statusFilter");
+      const packageGrid = document.getElementById("packageGrid");
+      const noResults = document.getElementById("no-results-packages");
+      let allPackages = [];
 
       // Open modal
       document.getElementById("openPackageModal").addEventListener("click", () => {
@@ -299,62 +317,158 @@ $currentPage = 'Users'; // Set the current page
         });
       }
 
-      // Load packages
+      function normalizeStatus(value) {
+        const str = String(value ?? "").toLowerCase();
+        if (str === "1" || str === "true" || str === "active" || str === "enabled") return "active";
+        if (str === "0" || str === "false" || str === "inactive" || str === "disabled") return "inactive";
+        return str || "active";
+      }
+
+      function populateFilterOptions(data) {
+        const typeValues = new Set();
+        data.forEach(pkg => {
+          if (pkg.type) typeValues.add(pkg.type);
+        });
+
+        typeFilter.innerHTML = `<option value="">All Types</option>` +
+          Array.from(typeValues).sort().map(t => `<option value="${t}">${t}</option>`).join("");
+
+      }
+
+      function renderPackages(list) {
+        packageGrid.innerHTML = "";
+        if (!list.length) {
+          noResults.style.display = "block";
+          return;
+        }
+
+        noResults.style.display = "none";
+
+        list.forEach(pkg => {
+          let detailsList = "";
+          try {
+            const detailsArr = Array.isArray(pkg.details) ? pkg.details : JSON.parse(pkg.details);
+            if (detailsArr.length) {
+              detailsList = detailsArr.map(d => `<span class="admin-chip">${d}</span>`).join("");
+            }
+          } catch {
+            if (pkg.details) detailsList = `<span class="admin-chip">${pkg.details}</span>`;
+          }
+
+          const imageHtml = pkg.image
+            ? `<div class="admin-package-image" style="background-image:url('../uploads/packages/${pkg.image}')"></div>`
+            : `<div class="admin-package-image placeholder"></div>`;
+
+          const card = document.createElement("div");
+          card.className = "admin-package-card";
+          card.innerHTML = `
+            ${imageHtml}
+            <div class="admin-package-body">
+              <div class="admin-announce-top">
+                <span class="admin-announce-badge service">${pkg.type ?? "Uncategorized"}</span>
+              </div>
+              <h4 class="admin-announce-title">${pkg.name}</h4>
+              <div class="admin-announce-meta">
+                <span><i class="bi bi-cash-coin"></i> ₱${Number(pkg.price).toLocaleString()}</span>
+              </div>
+              <p class="admin-announce-content">${pkg.description}</p>
+              <div class="admin-chip-row">${detailsList}</div>
+              <div class="admin-announce-actions">
+                <button class="icon-btn edit-btn" title="Edit" onclick="editPackage(${pkg.id})"><i class="bi bi-pencil"></i></button>
+                <button class="icon-btn delete-btn" title="Delete" onclick="deletePackage(${pkg.id})"><i class="bi bi-trash"></i></button>
+              </div>
+            </div>
+          `;
+          packageGrid.appendChild(card);
+        });
+      }
+
+      function applyFilters() {
+        const searchValue = searchInput.value.toLowerCase().trim();
+        const typeValue = typeFilter.value;
+        const statusValue = statusFilter.value;
+
+        const filtered = allPackages.filter(pkg => {
+          const matchesSearch = !searchValue || [
+            pkg.name,
+            pkg.type,
+            pkg.description,
+          ].some(field => String(field ?? "").toLowerCase().includes(searchValue));
+
+          const matchesType = !typeValue || pkg.type === typeValue;
+          const status = normalizeStatus(pkg.status ?? pkg.is_active);
+          const matchesStatus = !statusValue || status === statusValue;
+
+          return matchesSearch && matchesType && matchesStatus;
+        });
+
+        renderPackages(filtered);
+      }
+
       function loadPackages() {
         fetch("../PHP/fetchPackages.php")
           .then(res => res.json())
           .then(data => {
-            tableBody.innerHTML = "";
-            if (data.length === 0) {
-              tableBody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#888;">No packages found</td></tr>`;
-              return;
-            }
+            allPackages = Array.isArray(data) ? data : [];
+            populateFilterOptions(allPackages);
+            applyFilters();
+          })
+          .catch(err => console.error("Error loading packages:", err));
+      }
+
+      /*
+      
+            noResults.style.display = "none";
 
             data.forEach(pkg => {
-              const imageHTML = pkg.image ? `<img src="../uploads/packages/${pkg.image}" alt="${pkg.name}" />` : '';
-
-              const actionHTML = `
-            <button class="icon-btn edit-btn" title="Edit" onclick="editPackage(${pkg.id})">✏️</button>
-            <button class="icon-btn delete-btn" title="Delete" onclick="deletePackage(this, ${pkg.id})">🗑️</button>
-          `;
-
-              // Convert details JSON array into a list
-              let detailsList = '-';
+              let detailsList = "";
               try {
                 const detailsArr = Array.isArray(pkg.details) ? pkg.details : JSON.parse(pkg.details);
                 if (detailsArr.length) {
-                  detailsList = '<ul>' + detailsArr.map(d => `<li>${d}</li>`).join('') + '</ul>';
+                  detailsList = detailsArr.map(d => `<span class="admin-chip">${d}</span>`).join("");
                 }
               } catch {
-                if (pkg.details) detailsList = pkg.details;
+                if (pkg.details) detailsList = `<span class="admin-chip">${pkg.details}</span>`;
               }
 
-              const row = tableBody.insertRow();
-              row.innerHTML = `
-            <td>${pkg.id}</td>
-            <td>${pkg.name}</td>
-            <td>${pkg.type}</td>
-            <td class="details" title="${pkg.description}">${pkg.description}</td>
-            <td class="details">${detailsList}</td>
-            <td>₱${Number(pkg.price).toLocaleString()}</td>
-            <td>${imageHTML}</td>
-            <td>${actionHTML}</td>
-          `;
+              const imageHtml = pkg.image
+                ? `<div class="admin-package-image" style="background-image:url('../uploads/packages/${pkg.image}')"></div>`
+                : `<div class="admin-package-image placeholder"></div>`;
+
+              const card = document.createElement("div");
+              card.className = "admin-package-card";
+              card.innerHTML = `
+                ${imageHtml}
+                <div class="admin-package-body">
+                  <div class="admin-announce-top">
+                    <span class="admin-announce-badge service">${pkg.type}</span>
+                  </div>
+                  <h4 class="admin-announce-title">${pkg.name}</h4>
+                  <div class="admin-announce-meta">
+                    <span><i class="bi bi-cash-coin"></i> ₱${Number(pkg.price).toLocaleString()}</span>
+                  </div>
+                  <p class="admin-announce-content">${pkg.description}</p>
+                  <div class="admin-chip-row">${detailsList}</div>
+                  <div class="admin-announce-actions">
+                    <button class="icon-btn edit-btn" title="Edit" onclick="editPackage(${pkg.id})"><i class="bi bi-pencil"></i></button>
+                    <button class="icon-btn delete-btn" title="Delete" onclick="deletePackage(${pkg.id})"><i class="bi bi-trash"></i></button>
+                  </div>
+                </div>
+              `;
+              packageGrid.appendChild(card);
             });
           })
           .catch(err => console.error("Error loading packages:", err));
       }
 
+      */
       loadPackages();
       reloadBtn.addEventListener("click", loadPackages);
 
-      // Search filter
-      searchInput.addEventListener("input", () => {
-        const filter = searchInput.value.toLowerCase();
-        tableBody.querySelectorAll("tr").forEach(row => {
-          row.style.display = row.textContent.toLowerCase().includes(filter) ? "" : "none";
-        });
-      });
+      // Search + filter handlers
+      searchInput.addEventListener("input", applyFilters);
+      typeFilter.addEventListener("change", applyFilters);
+      statusFilter.addEventListener("change", applyFilters);
 
       // Add package
       addForm.addEventListener("submit", e => {
@@ -377,12 +491,12 @@ $currentPage = 'Users'; // Set the current page
 
     // Dummy edit/delete functions
     function editPackage(id) { alert("Edit package ID: " + id); }
-    function deletePackage(btn, id) {
+    function deletePackage(id) {
       if (!confirm("Are you sure you want to delete this package?")) return;
       fetch(`../PHP/deletePackage.php?id=${id}`)
         .then(res => res.json())
         .then(data => {
-          if (data.status === "success") btn.closest("tr").remove();
+          if (data.status === "success") window.location.reload();
           else alert("Error: " + data.message);
         });
     }
@@ -391,3 +505,6 @@ $currentPage = 'Users'; // Set the current page
 </body>
 
 </html>
+
+
+

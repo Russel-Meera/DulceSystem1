@@ -348,6 +348,10 @@ body {
   object-position: center;
 }
 
+.package-modal-image-wide {
+  min-height: 520px;
+}
+
 .package-modal-badge {
   position: absolute;
   top: 20px;
@@ -438,6 +442,10 @@ body {
   .package-modal-image-wrapper {
     min-height: 300px;
     margin-bottom: 1.5rem;
+  }
+
+  .package-modal-image-wide {
+    min-height: 360px;
   }
 
   .package-modal-image {
@@ -541,6 +549,32 @@ body {
 
 .package-card.custom {
   border: 2px dashed var(--accent-color);
+}
+
+/* Package Image (Card) */
+.package-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background-color: var(--light-bg);
+}
+
+.package-image-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--package-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+}
+
+@media (max-width: 768px) {
+  .package-image-wrapper {
+    height: 200px;
+  }
 }
 
 /* Package Badge */
