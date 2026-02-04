@@ -85,7 +85,7 @@ async function loadChapels() {
             <div class="chapel-content">
               <h3>${chapel.name}</h3>
               <div><i class="bi bi-people-fill"></i> Capacity: ${chapel.capacity}</div>
-              <p>${chapel.description}</p>
+              <div class="chapel-description">${chapel.description || ""}</div>
 
               <div class="row g-2">${featuresHTML}</div>
 

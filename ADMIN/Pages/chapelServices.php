@@ -11,6 +11,9 @@ $currentPage = 'Products'; // Set the current page
   <link rel="stylesheet" href="../CSS/adminPage.css">
   <link rel="stylesheet" href="../CSS/funeralService.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css">
+  <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -150,7 +153,7 @@ $currentPage = 'Products'; // Set the current page
             <button class="add-package-btn" id="openChapelModal">+ Add Home Service Package</button>
             <input type="text" class="search-box" placeholder="Search chapels..." id="searchInput" />
             
-            <button class="add-package-btn" id="reloadTable" style="background:#555;">? Reload Table</button>
+            <button class="add-package-btn" id="reloadTable" style="background:#555;">⟳ Reload Table</button>
           </div>
 
           <section class="admin-announcements">
@@ -170,11 +173,14 @@ $currentPage = 'Products'; // Set the current page
           <div class="unique-package-modal" id="chapelModal">
             <div class="modal-content">
               <span class="close-modal">&times;</span>
-              <h2>Add Package</h2>
+              <h2 id="chapelModalTitle">Add Package</h2>
               <form id="addChapelForm">
+                <input type="hidden" name="id" id="chapelId" />
                 <input type="text" name="name" placeholder="Chapel Name" required />
 
-                <textarea name="description" placeholder="Description" required></textarea> <!-- added -->
+                <input type="hidden" name="description" id="chapelDescriptionInput" />
+                <div class="quill-toolbar" id="chapelDescriptionToolbar"></div>
+                <div id="chapelDescriptionEditor" class="quill-editor"></div>
 
                 <input type="number" name="capacity" placeholder="Capacity" required />
                 <select name="capacity_type" required>
@@ -199,7 +205,7 @@ $currentPage = 'Products'; // Set the current page
 
                 <input type="text" name="badge" placeholder="Badge / Special Label" />
                 <input type="file" name="image" accept="image/*" />
-                <button type="submit" class="submit-btn">Add Chapel</button>
+                <button type="submit" class="submit-btn" id="chapelSubmitBtn">Add Chapel</button>
               </form>
             </div>
           </div>
@@ -208,7 +214,9 @@ $currentPage = 'Products'; // Set the current page
     </div>
   </div>
 
-  <script>    // Toggle sidebar
+  <script>
+    let chapelDescriptionEditor;
+    // Toggle sidebar
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const menuIcon = document.getElementById('menuIcon');
@@ -216,26 +224,51 @@ $currentPage = 'Products'; // Set the current page
       menuIcon.innerHTML = sidebar.classList.contains('collapsed') ?
         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>' :
         '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
-    }    // Logout
+    }
+    // Logout
     function logout() {
       if (confirm('Are you sure you want to logout?')) {
         alert('Logged out successfully!');
       }
-    }    // Init page
+    }
+    // Init page
     function initChapelPage() {
       const chapelModal = document.getElementById("chapelModal");
       const form = document.getElementById("addChapelForm");
       const reloadBtn = document.getElementById("reloadTable");
       const searchInput = document.getElementById("searchInput");
       const chapelGrid = document.getElementById("chapelGrid");
-      const noResults = document.getElementById("no-results-chapels");      // Open modal
+      const noResults = document.getElementById("no-results-chapels");
+      const descriptionInput = document.getElementById("chapelDescriptionInput");
+      const modalTitle = document.getElementById("chapelModalTitle");
+      const submitBtn = document.getElementById("chapelSubmitBtn");
+      const idInput = document.getElementById("chapelId");
+      chapelDescriptionEditor = new Quill("#chapelDescriptionEditor", {
+        theme: "snow",
+        placeholder: "Write chapel description...",
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, 3, false] }],
+            ["bold", "italic", "underline"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link", "clean"]
+          ]
+        }
+      });
+      // Open modal
       document.getElementById("openChapelModal").addEventListener("click", () => {
+        if (idInput) idInput.value = "";
+        if (modalTitle) modalTitle.textContent = "Add Package";
+        if (submitBtn) submitBtn.textContent = "Add Chapel";
+        if (chapelDescriptionEditor) chapelDescriptionEditor.setText("");
         chapelModal.style.display = "block";
-      });      // Close modal
+      });
+      // Close modal
       chapelModal.querySelector(".close-modal").addEventListener("click", () => {
         chapelModal.style.display = "none";
         form.reset();
         resetFeatureInputs();
+        if (chapelDescriptionEditor) chapelDescriptionEditor.setText("");
       });
 
       window.addEventListener("click", e => {
@@ -243,10 +276,12 @@ $currentPage = 'Products'; // Set the current page
           chapelModal.style.display = "none";
           form.reset();
           resetFeatureInputs();
+          if (chapelDescriptionEditor) chapelDescriptionEditor.setText("");
         }
       });
 
-       // ======================      // Dynamic Features Logic
+       // ======================
+      // Dynamic Features Logic
         // ======================
       const featuresContainer = document.getElementById("featuresContainer");
       document.getElementById("addFeature").addEventListener("click", () => {
@@ -257,14 +292,16 @@ $currentPage = 'Products'; // Set the current page
       <button type="button" class="removeDetail" title="Remove item">−</button>
     `;
         featuresContainer.insertBefore(div, document.getElementById("addFeature"));
-      });      // Remove dynamically added feature
+      });
+      // Remove dynamically added feature
       featuresContainer.addEventListener("click", e => {
         if (e.target.classList.contains("removeDetail")) {
           e.target.parentElement.remove();
         }
       });
 
-      function resetFeatureInputs() {        // Keep one empty input
+      function resetFeatureInputs() {
+        // Keep one empty input
         featuresContainer.querySelectorAll(".detail-item").forEach((div, index) => {
           if (index === 0) div.querySelector("input").value = "";
           else div.remove();
@@ -332,7 +369,8 @@ $currentPage = 'Products'; // Set the current page
 
 
       loadChapels();
-      reloadBtn.addEventListener("click", loadChapels);      // Search filter
+      reloadBtn.addEventListener("click", loadChapels);
+      // Search filter
       searchInput.addEventListener("input", () => {
         const filter = searchInput.value.toLowerCase();
         const items = document.querySelectorAll(".admin-chapel-card");
@@ -343,11 +381,17 @@ $currentPage = 'Products'; // Set the current page
           if (matches) visibleCount++;
         });
         noResults.style.display = visibleCount === 0 ? "block" : "none";
-      });      // Submit form
+      });
+      // Submit form
       form.addEventListener("submit", e => {
         e.preventDefault();
+        if (chapelDescriptionEditor && descriptionInput) {
+          descriptionInput.value = chapelDescriptionEditor.root.innerHTML.trim();
+        }
         const formData = new FormData(form);
-        fetch("../PHP/addChapel.php", { method: "POST", body: formData })
+        const isEdit = Boolean(idInput && idInput.value);
+        const endpoint = isEdit ? "../PHP/updateChapel.php" : "../PHP/addChapel.php";
+        fetch(endpoint, { method: "POST", body: formData })
           .then(res => res.json())
           .then(data => {
             if (data.status === "success") {
@@ -355,22 +399,110 @@ $currentPage = 'Products'; // Set the current page
               chapelModal.style.display = "none";
               form.reset();
               resetFeatureInputs();
+              if (chapelDescriptionEditor) chapelDescriptionEditor.setText("");
+              Swal.fire({
+                icon: "success",
+                title: isEdit ? "Chapel Updated" : "Chapel Added",
+                timer: 1200,
+                showConfirmButton: false
+              });
             } else alert("Error: " + data.message);
           });
       });
-    }    // Initialize
+    }
+    // Initialize
     window.addEventListener("DOMContentLoaded", initChapelPage);
 
-    // Dummy edit / delete
-    function editChapel(id) { alert("Edit chapel ID: " + id); }
-    function deleteChapel(id) {
-      if (!confirm("Are you sure you want to delete this chapel?")) return;
-      fetch(`../PHP/deleteChapel.php?id=${id}`)
+    // Edit / delete
+    function editChapel(id) {
+      fetch("../PHP/fetchChapels.php")
         .then(res => res.json())
         .then(data => {
-          if (data.status === "success") window.location.reload();
-          else alert("Error: " + data.message);
+          const chapel = data.find(item => Number(item.id) === Number(id));
+          if (!chapel) return;
+
+          const form = document.getElementById("addChapelForm");
+          const idInput = document.getElementById("chapelId");
+          const modalTitle = document.getElementById("chapelModalTitle");
+          const submitBtn = document.getElementById("chapelSubmitBtn");
+
+          if (idInput) idInput.value = chapel.id;
+          if (form.name) form.name.value = chapel.name || "";
+          if (form.capacity) form.capacity.value = chapel.capacity || "";
+          if (form.capacity_type) form.capacity_type.value = chapel.capacity_type || "";
+          if (form.badge) form.badge.value = chapel.badge || "";
+
+          if (chapelDescriptionEditor) {
+            chapelDescriptionEditor.root.innerHTML = chapel.description || "";
+          }
+
+          const featuresContainer = document.getElementById("featuresContainer");
+          if (featuresContainer) {
+            const items = Array.from(featuresContainer.querySelectorAll(".detail-item"));
+            items.forEach((item, index) => {
+              if (index === 0) {
+                const input = item.querySelector("input");
+                if (input) input.value = "";
+              } else {
+                item.remove();
+              }
+            });
+
+            let features = [];
+            try {
+              features = Array.isArray(chapel.features) ? chapel.features : JSON.parse(chapel.features || "[]");
+            } catch {
+              features = chapel.features ? [chapel.features] : [];
+            }
+
+            if (features.length) {
+              const firstInput = featuresContainer.querySelector(".detail-item input");
+              if (firstInput) firstInput.value = features[0];
+              for (let i = 1; i < features.length; i++) {
+                const div = document.createElement("div");
+                div.classList.add("detail-item");
+                div.innerHTML = `
+      <input type="text" name="features[]" placeholder="Enter feature" value="${features[i]}" />
+      <button type="button" class="removeDetail" title="Remove item">−</button>
+    `;
+                featuresContainer.insertBefore(div, document.getElementById("addFeature"));
+              }
+            }
+          }
+
+          if (modalTitle) modalTitle.textContent = "Edit Chapel";
+          if (submitBtn) submitBtn.textContent = "Save Changes";
+          document.getElementById("chapelModal").style.display = "block";
         });
+    }
+
+    function deleteChapel(id) {
+      Swal.fire({
+        title: "Delete this chapel?",
+        text: "This action cannot be undone.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dc3545",
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel"
+      }).then(result => {
+        if (!result.isConfirmed) return;
+        fetch(`../PHP/deleteChapel.php?id=${id}`)
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === "success") {
+              Swal.fire({
+                icon: "success",
+                title: "Deleted",
+                timer: 1000,
+                showConfirmButton: false
+              });
+              window.location.reload();
+            } else {
+              Swal.fire("Error", data.message || "Delete failed.", "error");
+            }
+          });
+      });
     }
 
 
@@ -378,6 +510,8 @@ $currentPage = 'Products'; // Set the current page
 </body>
 
 </html>
+
+
 
 
 
