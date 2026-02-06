@@ -20,41 +20,41 @@ try {
     // Get filter parameter
     $filter = $_GET['filter'] ?? 'all';
     
-    // For now, returning empty array since bookings table doesn't exist yet
-    // TODO: Uncomment when bookings table is created
-    /*
-    $sql = "SELECT b.*, p.package_name, c.chapel_name 
+    $statusFilter = $filter;
+    if ($statusFilter === 'approved') {
+        $statusFilter = 'confirmed';
+    }
+
+    $sql = "SELECT b.booking_id, b.booking_status, b.service_date, b.service_time,
+                   b.created_at, b.total_amount, c.name AS chapel_name
             FROM bookings b
-            LEFT JOIN funeral_packages p ON b.package_id = p.package_id
-            LEFT JOIN chapel_services c ON b.chapel_id = c.chapel_id
+            LEFT JOIN chapel_services c ON b.chapel_id = c.id
             WHERE b.client_id = ?";
-    
-    if ($filter !== 'all') {
+
+    if ($statusFilter !== 'all') {
         $sql .= " AND b.booking_status = ?";
     }
-    
+
     $sql .= " ORDER BY b.created_at DESC";
-    
-    if ($filter !== 'all') {
+
+    if ($statusFilter !== 'all') {
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("is", $userId, $filter);
+        $stmt->bind_param("is", $userId, $statusFilter);
     } else {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $userId);
     }
-    
+
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     $bookings = [];
     while ($row = $result->fetch_assoc()) {
+        $row['booking_status'] = ucfirst($row['booking_status']);
         $bookings[] = $row;
     }
-    
+
     $stmt->close();
-    */
-    
-    $bookings = []; // Empty for now
     
     echo json_encode([
         'success' => true,

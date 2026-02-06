@@ -79,10 +79,23 @@ function setupBookingForm() {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          alert("Booking and obituary saved successfully.");
-          form.reset();
-          document.getElementById("chapelServiceId").value = "";
-          document.getElementById("chapel").value = "";
+          const bookingId = data.booking_id;
+          const clientId = data.client_id;
+          if (bookingId && clientId) {
+            const modalEl = document.getElementById("selectPaymentModal");
+            const proceedBtn = document.getElementById("proceedToPayment");
+            if (modalEl && proceedBtn && window.bootstrap) {
+              const modal = new bootstrap.Modal(modalEl);
+              proceedBtn.onclick = () => {
+                window.location.href = `selectPayment.php?booking_id=${bookingId}&client_id=${clientId}`;
+              };
+              modal.show();
+              return;
+            }
+            window.location.href = `selectPayment.php?booking_id=${bookingId}&client_id=${clientId}`;
+            return;
+          }
+          alert("Booking saved, but payment selection could not start.");
         } else {
           alert(data.message || "Failed to save booking.");
         }

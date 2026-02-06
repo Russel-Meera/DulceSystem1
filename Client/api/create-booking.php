@@ -151,7 +151,8 @@ try {
         'success' => true,
         'message' => 'Booking and obituary saved successfully.',
         'obituary_id' => $obituaryId,
-        'booking_id' => $bookingId
+        'booking_id' => $bookingId,
+        'client_id' => $clientId
     ]);
 
     $stmtObituary->close();

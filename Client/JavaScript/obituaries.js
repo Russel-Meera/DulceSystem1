@@ -30,8 +30,14 @@ function renderObituaries(items) {
     card.setAttribute("data-date", obituary.deathDateISO || "");
 
     const initials = encodeURIComponent(getInitials(obituary.name));
-    const imageUrl = obituary.image
-      ? obituary.image
+    const rawImage = obituary.image || "";
+    const isAbsolute = /^(https?:)?\/\//i.test(rawImage) || rawImage.startsWith("/");
+    const imageUrl = rawImage
+      ? (isAbsolute
+          ? rawImage
+          : rawImage.startsWith("uploads/")
+            ? `../${rawImage}`
+            : `../../${rawImage}`)
       : `https://via.placeholder.com/400x400/2c3e50/ffffff?text=${initials}`;
 
     card.innerHTML = `
@@ -179,10 +185,19 @@ function viewObituaryDetails(obituaryId) {
     ? biographyRaw
     : `<p>${escapeHtml(biographyRaw)}</p>`;
   const modalInitials = encodeURIComponent(getInitials(obituary.name));
+  const rawImage = obituary.image || "";
+  const isAbsolute = /^(https?:)?\/\//i.test(rawImage) || rawImage.startsWith("/");
+  const modalImageUrl = rawImage
+    ? (isAbsolute
+        ? rawImage
+        : rawImage.startsWith("uploads/")
+          ? `../${rawImage}`
+          : `../../${rawImage}`)
+    : `https://via.placeholder.com/300x300/2c3e50/ffffff?text=${modalInitials}`;
 
   modalBody.innerHTML = `
         <div class="obituary-detail-view">
-            <img src="${escapeHtml(obituary.image)}" 
+            <img src="${escapeHtml(modalImageUrl)}" 
                  alt="${escapeHtml(obituary.name)}" 
                  class="obituary-modal-image"
                  onerror="this.src='https://via.placeholder.com/300x300/2c3e50/ffffff?text=${modalInitials}'">

@@ -55,6 +55,10 @@ function displayBookings(bookings) {
 
   emptyState.style.display = "none";
 
+  // Clear previously rendered bookings (keep empty state node)
+  const rendered = container.querySelectorAll(".booking-item.rendered");
+  rendered.forEach((card) => card.remove());
+
   // Display fetched bookings
   bookings.forEach((booking) => {
     const bookingCard = createBookingCard(booking);
@@ -65,7 +69,7 @@ function displayBookings(bookings) {
 // Create booking card HTML
 function createBookingCard(booking) {
   return `
-        <div class="col-lg-6 booking-item" data-status="${booking.booking_status.toLowerCase()}">
+        <div class="col-lg-6 booking-item rendered" data-status="${booking.booking_status.toLowerCase()}">
             <div class="booking-card">
                 <div class="booking-header">
                     <div class="booking-id">#DULCE-${booking.booking_id}</div>
@@ -75,19 +79,23 @@ function createBookingCard(booking) {
                 </div>
                 <div class="booking-body">
                     <div class="booking-detail">
-                        <i class="bi bi-box-seam"></i>
-                        <div>
-                            <strong>Package:</strong>
-                            <span>${booking.package_name}</span>
-                        </div>
-                    </div>
-                    <div class="booking-detail">
                         <i class="bi bi-building"></i>
                         <div>
-                            <strong>Chapel:</strong>
-                            <span>${booking.chapel_name}</span>
+                            <strong>Home Service:</strong>
+                            <span>${booking.chapel_name || "N/A"}</span>
                         </div>
                     </div>
+                    ${
+                      booking.total_amount
+                        ? `<div class="booking-detail">
+                             <i class="bi bi-cash-stack"></i>
+                             <div>
+                               <strong>Amount:</strong>
+                               <span>₱${Number(booking.total_amount).toFixed(2)}</span>
+                             </div>
+                           </div>`
+                        : ""
+                    }
                     <div class="booking-detail">
                         <i class="bi bi-calendar-event"></i>
                         <div>
@@ -167,6 +175,7 @@ function getStatusIcon(status) {
   const icons = {
     Pending: "bi-clock-history",
     Approved: "bi-check-circle",
+    Confirmed: "bi-check-circle",
     Completed: "bi-check-circle-fill",
     Cancelled: "bi-x-circle",
   };
