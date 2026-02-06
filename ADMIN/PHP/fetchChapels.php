@@ -4,7 +4,7 @@ include 'dbConfig.php';
 
 $response = [];
 
-$sql = "SELECT id, name, description, capacity, capacity_type, features, image, badge FROM chapel_services WHERE is_active = 1 ORDER BY id DESC";
+$sql = "SELECT id, name, description, price, capacity_type, features, image, badge FROM chapel_services WHERE is_active = 1 ORDER BY id DESC";
 $result = $conn->query($sql);
 
 if ($result) {
@@ -21,8 +21,8 @@ if ($result) {
             'id' => $row['id'],
             'name' => $row['name'],
             'description' => $row['description'], // added
-            'capacity' => $row['capacity'],
-            'capacity_type' => $row['capacity_type'],
+            'price' => $row['price'],
+            'price_type' => $row['capacity_type'],
             'features' => $featuresArr,
             'badge' => $row['badge'],
             'image' => $row['image'] ?? ''

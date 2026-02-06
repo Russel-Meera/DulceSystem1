@@ -7,7 +7,7 @@ $currentPage = 'Products'; // Set the current page
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard - Chapel Services</title>
+  <title>Admin Dashboard - Home Services</title>
   <link rel="stylesheet" href="../CSS/adminPage.css">
   <link rel="stylesheet" href="../CSS/funeralService.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -58,7 +58,7 @@ $currentPage = 'Products'; // Set the current page
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
           </svg>
-          <span class="menu-label">Chapel Services</span>
+          <span class="menu-label">Home Services</span>
         </button>
 
         <button class="menu-item <?php echo $currentPage == 'Announcements' ? 'active' : ''; ?>"
@@ -70,6 +70,19 @@ $currentPage = 'Products'; // Set the current page
           </svg>
           <span class="menu-label">Announcements</span>
         </button>
+
+        <button class="menu-item billing-toggle" onclick="toggleSubmenu('billingSubmenu')">
+          <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 7h18M5 11h14M5 15h6m-8-8h18v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z">
+            </path>
+          </svg>
+          <span class="menu-label">Billing</span>
+        </button>
+        <div class="submenu" id="billingSubmenu">
+          <button class="submenu-item" onclick="location.href='paymentMethod.php'">Payment Method</button>
+          <button class="submenu-item" onclick="location.href='transactions.php'">Transactions</button>
+        </div>
 
         <button class="menu-item <?php echo $currentPage == 'Orders' ? 'active' : ''; ?>"
           onclick="location.href='orders.php'">
@@ -132,8 +145,8 @@ $currentPage = 'Products'; // Set the current page
       <header class="header">
         <div class="header-content">
           <div class="header-title">
-            <h2 id="pageTitle">Chapel Services</h2>
-            <p>Manage your Chapel Services Contents</p>
+            <h2 id="pageTitle">Home Services</h2>
+            <p>Manage your Home Services Contents</p>
           </div>
           <div class="user-info">
             <div class="user-details">
@@ -149,18 +162,14 @@ $currentPage = 'Products'; // Set the current page
       <main class="content-area">
         <div class="content-container">
           <!-- Controls -->
-                    <div class="package-controls">
+          <div class="package-controls">
             <button class="add-package-btn" id="openChapelModal">+ Add Home Service Package</button>
             <input type="text" class="search-box" placeholder="Search chapels..." id="searchInput" />
-            
+
             <button class="add-package-btn" id="reloadTable" style="background:#555;">⟳ Reload Table</button>
           </div>
 
           <section class="admin-announcements">
-            <div class="admin-announcements-header">
-              <h3>Chapel Services</h3>
-              <p>Manage chapel listings in a clean grid view.</p>
-            </div>
             <div class="admin-chapels-grid" id="chapelGrid"></div>
             <div id="no-results-chapels" class="text-center mt-4" style="display: none">
               <i class="bi bi-search" style="font-size: 3rem; color: #7f8c8d"></i>
@@ -182,13 +191,13 @@ $currentPage = 'Products'; // Set the current page
                 <div class="quill-toolbar" id="chapelDescriptionToolbar"></div>
                 <div id="chapelDescriptionEditor" class="quill-editor"></div>
 
-                <input type="number" name="capacity" placeholder="Capacity" required />
-                <select name="capacity_type" required>
-                  <option value="">Select Capacity Type</option>
-                  <option value="small">Small</option>
-                  <option value="medium">Medium</option>
-                  <option value="large">Large</option>
-                  <option value="xlarge">X-Large</option>
+                <input type="number" name="price" placeholder="Price" required />
+                <select name="price_type" required>
+                  <option value="">Select Price Type</option>
+                  <option value="small">Budget (₱0-10k)</option>
+                  <option value="medium">Standard (₱10k-20k)</option>
+                  <option value="large">Premium (₱20k-35k)</option>
+                  <option value="xlarge">Elite (₱35k+)</option>
                 </select>
 
                 <!-- Dynamic Features -->
@@ -230,6 +239,12 @@ $currentPage = 'Products'; // Set the current page
       if (confirm('Are you sure you want to logout?')) {
         alert('Logged out successfully!');
       }
+    }
+    // Submenu toggle
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      if (!submenu) return;
+      submenu.classList.toggle("open");
     }
     // Init page
     function initChapelPage() {
@@ -280,9 +295,9 @@ $currentPage = 'Products'; // Set the current page
         }
       });
 
-       // ======================
+      // ======================
       // Dynamic Features Logic
-        // ======================
+      // ======================
       const featuresContainer = document.getElementById("featuresContainer");
       document.getElementById("addFeature").addEventListener("click", () => {
         const div = document.createElement("div");
@@ -346,12 +361,12 @@ $currentPage = 'Products'; // Set the current page
                 ${imageHtml}
                 <div class="admin-chapel-body">
                   <div class="admin-announce-top">
-                    <span class="admin-announce-badge general">${chapel.capacity_type}</span>
+                    <span class="admin-announce-badge general">${chapel.price_type}</span>
                     ${badgeHtml}
                   </div>
                   <h4 class="admin-announce-title">${chapel.name}</h4>
                   <div class="admin-announce-meta">
-                    <span><i class="bi bi-people"></i> ${chapel.capacity}</span>
+                    <span><i class="bi bi-cash-stack"></i> ₱${chapel.price}</span>
                   </div>
                   <p class="admin-announce-content">${chapel.description}</p>
                   <div class="admin-chip-row">${featuresList}</div>
@@ -428,8 +443,8 @@ $currentPage = 'Products'; // Set the current page
 
           if (idInput) idInput.value = chapel.id;
           if (form.name) form.name.value = chapel.name || "";
-          if (form.capacity) form.capacity.value = chapel.capacity || "";
-          if (form.capacity_type) form.capacity_type.value = chapel.capacity_type || "";
+          if (form.price) form.price.value = chapel.price || "";
+          if (form.price_type) form.price_type.value = chapel.price_type || "";
           if (form.badge) form.badge.value = chapel.badge || "";
 
           if (chapelDescriptionEditor) {
@@ -510,12 +525,3 @@ $currentPage = 'Products'; // Set the current page
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-

@@ -236,14 +236,14 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// DULCE - Chapel Services Page JavaScript
+// DULCE - Home Services Page JavaScript
 
 // Sample chapel data (In production, this will come from database via admin panel)
 const chapelsData = {
   1: {
     name: "Serenity Chapel",
-    capacity: "80 people",
-    capacityCategory: "medium",
+    price: "8500",
+    priceCategory: "medium",
     image:
       "https://images.unsplash.com/photo-1438032005730-c779502df39b?w=800&h=500&fit=crop",
     description:
@@ -265,8 +265,8 @@ const chapelsData = {
   },
   2: {
     name: "Harmony Hall",
-    capacity: "150 people",
-    capacityCategory: "large",
+    price: "15000",
+    priceCategory: "large",
     image:
       "https://images.unsplash.com/photo-1519167758804-f8bcda37c6a0?w=800&h=500&fit=crop",
     description:
@@ -294,8 +294,8 @@ const chapelsData = {
   },
   3: {
     name: "Grace Chapel",
-    capacity: "50 people",
-    capacityCategory: "small",
+    price: "6500",
+    priceCategory: "small",
     image:
       "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=500&fit=crop",
     description:
@@ -315,8 +315,8 @@ const chapelsData = {
   },
   4: {
     name: "Tranquility Suite",
-    capacity: "250 people",
-    capacityCategory: "xlarge",
+    price: "22000",
+    priceCategory: "xlarge",
     image:
       "https://images.unsplash.com/photo-1478860409698-8707f313ee8b?w=800&h=500&fit=crop",
     description:
@@ -356,18 +356,18 @@ const chapelsData = {
 
 // Filter chapels
 function filterChapels() {
-  const capacityFilter = document.getElementById("capacityFilter").value;
+  const priceFilter = document.getElementById("priceFilter").value;
   const featureFilter = document.getElementById("featureFilter").value;
   const chapels = document.querySelectorAll(".chapel-item");
   let visibleCount = 0;
 
   chapels.forEach((chapel) => {
-    const capacity = chapel.getAttribute("data-capacity");
+    const priceType = chapel.getAttribute("data-price-type");
     const features = chapel.getAttribute("data-features").split(",");
     let showChapel = true;
 
-    // Capacity filter
-    if (capacityFilter !== "all" && capacity !== capacityFilter) {
+    // Price filter
+    if (priceFilter !== "all" && priceType !== priceFilter) {
       showChapel = false;
     }
 
@@ -396,7 +396,7 @@ function filterChapels() {
 
 // Reset filters
 function resetChapelFilters() {
-  document.getElementById("capacityFilter").value = "all";
+  document.getElementById("priceFilter").value = "all";
   document.getElementById("featureFilter").value = "all";
   filterChapels();
 }
@@ -431,7 +431,7 @@ function viewChapelDetails(chapelId) {
             <div class="text-center mb-4">
                 <h3 class="text-primary mb-2">${chapel.name}</h3>
                 <div class="h5 text-secondary">
-                    <i class="bi bi-people-fill"></i> Capacity: ${chapel.capacity}
+                    <i class="bi bi-cash-stack"></i> Price: ₱${chapel.price}
                 </div>
             </div>
             
@@ -456,11 +456,11 @@ function viewChapelDetails(chapelId) {
 
 // Initialize on page load
 document.addEventListener("DOMContentLoaded", function () {
-  const capacityFilter = document.getElementById("capacityFilter");
+  const priceFilter = document.getElementById("priceFilter");
   const featureFilter = document.getElementById("featureFilter");
 
-  if (capacityFilter && featureFilter) {
-    capacityFilter.addEventListener("keypress", function (e) {
+  if (priceFilter && featureFilter) {
+    priceFilter.addEventListener("keypress", function (e) {
       if (e.key === "Enter") filterChapels();
     });
 
@@ -469,3 +469,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+

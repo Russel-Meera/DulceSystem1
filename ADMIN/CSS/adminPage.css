@@ -70,6 +70,16 @@
       overflow-y: auto;
     }
 
+    .menu::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    .menu {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
     .menu-item {
       display: flex;
       align-items: center;
@@ -95,6 +105,35 @@
       background: #2563eb;
       color: white;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .submenu {
+      display: none;
+      margin: 0.25rem 0 0.75rem;
+      padding-left: 2.25rem;
+    }
+
+    .submenu.open {
+      display: block;
+    }
+
+    .submenu-item {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      text-align: left;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .submenu-item:hover {
+      background: #374151;
+      color: #ffffff;
     }
 
     .menu-icon {

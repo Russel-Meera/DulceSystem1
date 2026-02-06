@@ -17,6 +17,9 @@ $chapels = [];
 
 while ($row = $result->fetch_assoc()) {
     $row['features'] = json_decode($row['features'], true);
+    $row['price'] = $row['price'] ?? ($row['capacity'] ?? null);
+    $row['price_type'] = $row['capacity_type'] ?? null;
+    unset($row['capacity']);
     $chapels[] = $row;
 }
 

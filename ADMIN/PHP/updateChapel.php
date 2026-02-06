@@ -16,12 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $id = $_POST['id'] ?? '';
 $name = $_POST['name'] ?? '';
 $description = $_POST['description'] ?? '';
-$capacity = $_POST['capacity'] ?? '';
-$capacity_type = $_POST['capacity_type'] ?? '';
+$price = $_POST['price'] ?? '';
+$price_type = $_POST['price_type'] ?? '';
 $features = $_POST['features'] ?? [];
 $badge = $_POST['badge'] ?? '';
 
-if (empty($id) || empty($name) || empty($description) || empty($capacity) || empty($capacity_type)) {
+if (empty($id) || empty($name) || empty($description) || empty($price) || empty($price_type)) {
     $response['message'] = 'Please fill all required fields';
     echo json_encode($response);
     exit;
@@ -84,7 +84,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] !== 4) {
 }
 
 $stmt = $conn->prepare("UPDATE chapel_services 
-SET name = ?, description = ?, capacity = ?, capacity_type = ?, features = ?, image = ?, badge = ?, updated_at = NOW()
+SET name = ?, description = ?, price = ?, capacity_type = ?, features = ?, image = ?, badge = ?, updated_at = NOW()
 WHERE id = ?");
 
 if (!$stmt) {
@@ -93,7 +93,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param("ssissssi", $name, $description, $capacity, $capacity_type, $featuresJson, $imageName, $badge, $id);
+$stmt->bind_param("ssdssssi", $name, $description, $price, $price_type, $featuresJson, $imageName, $badge, $id);
 
 if ($stmt->execute()) {
     $response = ['status' => 'success'];

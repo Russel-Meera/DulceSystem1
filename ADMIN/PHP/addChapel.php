@@ -16,13 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Fetch POST values
 $name = $_POST['name'] ?? '';
 $description = $_POST['description'] ?? '';
-$capacity = $_POST['capacity'] ?? '';
-$capacity_type = $_POST['capacity_type'] ?? '';
+$price = $_POST['price'] ?? '';
+$price_type = $_POST['price_type'] ?? '';
 $features = $_POST['features'] ?? []; // array from features[] inputs
 $badge = $_POST['badge'] ?? '';
 $is_active = 1; // default to active
 
-if (empty($name) || empty($description) || empty($capacity) || empty($capacity_type)) {
+if (empty($name) || empty($description) || empty($price) || empty($price_type)) {
     $response['message'] = 'Please fill all required fields';
     echo json_encode($response);
     exit;
@@ -71,7 +71,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] !== 4) { // 4 = no file
 
 // Insert into database
 $stmt = $conn->prepare("INSERT INTO chapel_services 
-(name, description, capacity, capacity_type, features, image, badge, is_active, created_at, updated_at) 
+(name, description, price, capacity_type, features, image, badge, is_active, created_at, updated_at) 
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())");
 
 if (!$stmt) {
@@ -80,7 +80,7 @@ if (!$stmt) {
     exit;
 }
 
-$stmt->bind_param("ssissssi", $name, $description, $capacity, $capacity_type, $featuresJson, $imageName, $badge, $is_active);
+$stmt->bind_param("ssdssssi", $name, $description, $price, $price_type, $featuresJson, $imageName, $badge, $is_active);
 
 if ($stmt->execute()) {
     $response = [
@@ -88,8 +88,8 @@ if ($stmt->execute()) {
         'id' => $stmt->insert_id,
         'name' => $name,
         'description' => $description,
-        'capacity' => $capacity,
-        'capacity_type' => $capacity_type,
+        'price' => $price,
+        'price_type' => $price_type,
         'features' => $featuresJson,
         'image' => $imageName,
         'badge' => $badge

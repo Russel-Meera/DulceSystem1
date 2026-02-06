@@ -73,7 +73,7 @@ async function loadChapels() {
 
       const cardHTML = `
         <div class="col-lg-6 chapel-item"
-             data-capacity="${chapel.capacity_type}"
+             data-price-type="${chapel.price_type}"
              data-features="${featuresArray.join(",")}">
 
           <div class="chapel-card">
@@ -84,7 +84,7 @@ async function loadChapels() {
 
             <div class="chapel-content">
               <h3>${chapel.name}</h3>
-              <div><i class="bi bi-people-fill"></i> Capacity: ${chapel.capacity}</div>
+              <div class="chapel-price"><i class="bi bi-cash-stack"></i> Price: ₱${chapel.price}</div>
               <div class="chapel-description">${chapel.description || ""}</div>
 
               <div class="row g-2">${featuresHTML}</div>

@@ -56,7 +56,7 @@ These are **all use cases the Client actor can perform**.
 ### B. Service Browsing
 
 5. **View Funeral Packages**
-6. **View Chapel Services**
+6. **View Home Services**
 7. **View Announcements**
 8. **View Obituaries**
 
@@ -66,7 +66,7 @@ These are **all use cases the Client actor can perform**.
 
 9. **Book Funeral Service**
 10. **Select Funeral Package**
-11. **Select Chapel Service**
+11. **Select Home Service**
 12. **Select Schedule (Date & Time)**
 13. **Submit Booking Request**
 14. **View Booking Status**
@@ -132,7 +132,7 @@ This section ensures your diagram is **academically correct**.
 * **Book Funeral Service**
 
   * «include» Select Funeral Package
-  * «include» Select Chapel Service
+  * «include» Select Home Service
   * «include» Select Schedule
   * «include» Provide Deceased Information
   * «include» Submit Booking Request
@@ -212,10 +212,10 @@ Client → Register Account
 Client → Login
 Client → Manage Profile
 Client → View Funeral Packages
-Client → View Chapel Services
+Client → View Home Services
 Client → Book Funeral Service
     «include» Select Funeral Package
-    «include» Select Chapel Service
+    «include» Select Home Service
     «include» Select Schedule
     «include» Provide Deceased Information
     «include» Submit Booking Request
@@ -252,3 +252,4 @@ The natural next move is:
 * OR **Client Use Case Specification** (detailed per use case: preconditions, flow, postconditions)
 
 Tell me which one you want to do next.
+

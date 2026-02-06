@@ -9,6 +9,82 @@ $currentPage = 'Dashboard'; // Set the current page
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="../CSS/adminPage.css">
+  <style>
+    .stats-card {
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .stats-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .stats-header h4 {
+      margin: 0;
+      font-size: 18px;
+      color: #0f172a;
+    }
+
+    .stats-header span {
+      font-size: 12px;
+      color: #64748b;
+      background: #eef2ff;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .bar-chart {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      align-items: end;
+      height: 180px;
+      padding: 10px 0;
+    }
+
+    .bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bar-value {
+      width: 100%;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #60a5fa, #2563eb);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.25);
+    }
+
+    .bar-label {
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    .stats-legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #2563eb;
+      display: inline-block;
+      margin-right: 6px;
+    }
+  </style>
 </head>
 
 <body>
@@ -53,7 +129,7 @@ $currentPage = 'Dashboard'; // Set the current page
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
           </svg>
-          <span class="menu-label">Chapel Services</span>
+          <span class="menu-label">Home Services</span>
         </button>
 
         <button class="menu-item <?php echo $currentPage == 'Announcements' ? 'active' : ''; ?>"
@@ -65,6 +141,19 @@ $currentPage = 'Dashboard'; // Set the current page
           </svg>
           <span class="menu-label">Announcements</span>
         </button>
+
+        <button class="menu-item billing-toggle" onclick="toggleSubmenu('billingSubmenu')">
+          <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 7h18M5 11h14M5 15h6m-8-8h18v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z">
+            </path>
+          </svg>
+          <span class="menu-label">Billing</span>
+        </button>
+        <div class="submenu" id="billingSubmenu">
+          <button class="submenu-item" onclick="location.href='paymentMethod.php'">Payment Method</button>
+          <button class="submenu-item" onclick="location.href='transactions.php'">Transactions</button>
+        </div>
 
         <button class="menu-item <?php echo $currentPage == 'Orders' ? 'active' : ''; ?>"
           onclick="location.href='orders.php'">
@@ -155,23 +244,46 @@ $currentPage = 'Dashboard'; // Set the current page
             <h3 id="emptyTitle">Dashboard Page</h3>
             <p id="emptyDescription">This is where your dashboard content will appear.</p>
             <small>Click on different menu items to navigate between pages.</small>
+
+            <div class="stats-card" style="margin-top: 24px;">
+              <div class="stats-header">
+                <h4>Monthly Service Overview</h4>
+                <span>Static Demo</span>
+              </div>
+              <div class="bar-chart">
+                <div class="bar">
+                  <div class="bar-value" style="height: 60%;"></div>
+                  <div class="bar-label">Jan</div>
+                </div>
+                <div class="bar">
+                  <div class="bar-value" style="height: 75%;"></div>
+                  <div class="bar-label">Feb</div>
+                </div>
+                <div class="bar">
+                  <div class="bar-value" style="height: 45%;"></div>
+                  <div class="bar-label">Mar</div>
+                </div>
+                <div class="bar">
+                  <div class="bar-value" style="height: 90%;"></div>
+                  <div class="bar-label">Apr</div>
+                </div>
+                <div class="bar">
+                  <div class="bar-value" style="height: 70%;"></div>
+                  <div class="bar-label">May</div>
+                </div>
+                <div class="bar">
+                  <div class="bar-value" style="height: 55%;"></div>
+                  <div class="bar-label">Jun</div>
+                </div>
+              </div>
+              <div class="stats-legend">
+                <div><span class="legend-dot"></span>Completed Services</div>
+                <div>Peak Month: Apr</div>
+                <div>Avg Growth: 8%</div>
+              </div>
+            </div>
           </div>
 
-          <!-- Example Cards -->
-          <div class="cards-grid">
-            <div class="card">
-              <h4>Quick Stats</h4>
-              <p>Add your statistics here</p>
-            </div>
-            <div class="card">
-              <h4>Recent Activity</h4>
-              <p>Add recent activity here</p>
-            </div>
-            <div class="card">
-              <h4>Quick Actions</h4>
-              <p>Add action buttons here</p>
-            </div>
-          </div>
         </div>
       </main>
     </div>
@@ -215,6 +327,12 @@ $currentPage = 'Dashboard'; // Set the current page
       iconSvg.id = 'pageIcon';
     }
 
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      if (!submenu) return;
+      submenu.classList.toggle('open');
+    }
+
     // Logout function
     function logout() {
       if (confirm('Are you sure you want to logout?')) {
@@ -226,3 +344,4 @@ $currentPage = 'Dashboard'; // Set the current page
 </body>
 
 </html>
+

@@ -54,7 +54,7 @@ $currentPage = 'Users'; // Set the current page
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
           </svg>
-          <span class="menu-label">Chapel Services</span>
+          <span class="menu-label">Home Services</span>
         </button>
 
         <button class="menu-item <?php echo $currentPage == 'Announcements' ? 'active' : ''; ?>"
@@ -66,6 +66,19 @@ $currentPage = 'Users'; // Set the current page
           </svg>
           <span class="menu-label">Announcements</span>
         </button>
+
+        <button class="menu-item billing-toggle" onclick="toggleSubmenu('billingSubmenu')">
+          <svg class="menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 7h18M5 11h14M5 15h6m-8-8h18v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7z">
+            </path>
+          </svg>
+          <span class="menu-label">Billing</span>
+        </button>
+        <div class="submenu" id="billingSubmenu">
+          <button class="submenu-item" onclick="location.href='paymentMethod.php'">Payment Method</button>
+          <button class="submenu-item" onclick="location.href='transactions.php'">Transactions</button>
+        </div>
 
         <button class="menu-item <?php echo $currentPage == 'Orders' ? 'active' : ''; ?>"
           onclick="location.href='orders.php'">
@@ -258,6 +271,12 @@ $currentPage = 'Users'; // Set the current page
         alert('Logged out successfully!');
         // Add your logout logic here
       }
+    }
+
+    function toggleSubmenu(id) {
+      const submenu = document.getElementById(id);
+      if (!submenu) return;
+      submenu.classList.toggle("open");
     }
 
     function initPackagePage() {
@@ -505,6 +524,7 @@ $currentPage = 'Users'; // Set the current page
 </body>
 
 </html>
+
 
 
 
