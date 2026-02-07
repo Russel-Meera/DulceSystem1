@@ -51,13 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
               window.location.href = "../../Client/Pages/Index.html";
             }, 1000);
           } else {
+            console.error("Login failed:", data.message || "Unknown error");
             showAlert("loginAlert", data.message, "danger");
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
           }
         })
         .catch((error) => {
-          console.error("Error:", error);
+          console.error("Login request error:", error?.message || error);
           showAlert(
             "loginAlert",
             "An error occurred. Please try again.",
