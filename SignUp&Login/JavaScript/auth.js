@@ -41,7 +41,14 @@ document.addEventListener("DOMContentLoaded", function () {
           rememberMe: rememberMe,
         }),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            console.error("Login HTTP error:", response.status);
+          }
+          return response.json().catch(() => {
+            return { success: false, message: "Invalid JSON response" };
+          });
+        })
         .then((data) => {
           if (data.success) {
             showAlert("loginAlert", data.message, "success");
@@ -51,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
               window.location.href = "../../Client/Pages/Index.html";
             }, 1000);
           } else {
-            console.error("Login failed:", data.message || "Unknown error");
+            console.error("Login failed:", data.message || "Unknown error", data);
             showAlert("loginAlert", data.message, "danger");
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
