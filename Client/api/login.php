@@ -64,7 +64,7 @@ try {
         $stmt2->execute();
         $stmt2->close();
         
-        echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
+        echo json_encode(['success' => false, 'message' => 'Email not found in the database.']);
         $stmt->close();
         closeDBConnection($conn);
         exit;
@@ -91,7 +91,7 @@ try {
         $stmt->execute();
         $stmt->close();
         
-        echo json_encode(['success' => false, 'message' => 'Invalid email or password']);
+        echo json_encode(['success' => false, 'message' => 'Email found but the password does not match.']);
         closeDBConnection($conn);
         exit;
     }
@@ -100,7 +100,7 @@ try {
     if ($user['role_name'] !== 'CLIENT') {
         echo json_encode([
             'success' => false,
-            'message' => 'Access denied. This portal is for clients only.'
+            'message' => 'Access denied. This account is not a CLIENT role.'
         ]);
         closeDBConnection($conn);
         exit;
@@ -153,7 +153,7 @@ try {
 } catch (Exception $e) {
     echo json_encode([
         'success' => false,
-        'message' => 'An error occurred. Please try again later.'
+        'message' => 'Server error: ' . $e->getMessage()
     ]);
 }
 ?>
