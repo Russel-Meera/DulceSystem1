@@ -6,6 +6,7 @@ const chapelServiceFeaturesById = new Map();
 document.addEventListener("DOMContentLoaded", () => {
   loadChapelServices();
   setupDateRestrictions();
+  setupTimePickers();
   setupBookingForm();
 });
 
@@ -63,6 +64,17 @@ function setupBookingForm() {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
+
+    syncTimeTarget("serviceTime");
+    syncTimeTarget("viewingStartTime");
+    syncTimeTarget("viewingEndTime");
+    syncTimeTarget("intermentTime");
+    validateViewingRange();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
@@ -134,15 +146,86 @@ function setupDateRestrictions() {
       }
     });
   }
+}
 
-  const viewingStart = document.getElementById("viewingStartTime");
-  const viewingEnd = document.getElementById("viewingEndTime");
-  if (viewingStart && viewingEnd) {
-    viewingStart.addEventListener("change", () => {
-      if (viewingStart.value) {
-        viewingEnd.min = viewingStart.value;
-      }
+function setupTimePickers() {
+  const hourSelects = Array.from(document.querySelectorAll(".time-hour"));
+  const minuteSelects = Array.from(document.querySelectorAll(".time-minute"));
+  const periodSelects = Array.from(document.querySelectorAll(".time-period"));
+
+  if (hourSelects.length === 0) return;
+
+  hourSelects.forEach((select) => {
+    if (select.options.length > 1) return;
+    for (let hour = 1; hour <= 12; hour += 1) {
+      const value = String(hour);
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value.padStart(2, "0");
+      select.appendChild(option);
+    }
+  });
+
+  const updateTargets = new Set();
+  [...hourSelects, ...minuteSelects, ...periodSelects].forEach((select) => {
+    const targetId = select.dataset.timeTarget;
+    if (!targetId) return;
+    updateTargets.add(targetId);
+    select.addEventListener("change", () => {
+      syncTimeTarget(targetId);
+      validateViewingRange();
     });
+    select.addEventListener("blur", () => {
+      syncTimeTarget(targetId);
+      validateViewingRange();
+    });
+  });
+
+  updateTargets.forEach((targetId) => syncTimeTarget(targetId));
+  validateViewingRange();
+}
+
+function syncTimeTarget(targetId) {
+  const hourSelect = document.getElementById(`${targetId}Hour`);
+  const minuteSelect = document.getElementById(`${targetId}Minute`);
+  const periodSelect = document.getElementById(`${targetId}Period`);
+  const targetInput = document.getElementById(targetId);
+
+  if (!hourSelect || !minuteSelect || !periodSelect || !targetInput) return;
+
+  const hourValue = hourSelect.value;
+  const minuteValue = minuteSelect.value;
+  const periodValue = periodSelect.value;
+
+  if (!hourValue || !minuteValue || !periodValue) {
+    targetInput.value = "";
+    return;
+  }
+
+  let hour24 = Number(hourValue) % 12;
+  if (periodValue === "PM") {
+    hour24 += 12;
+  }
+  targetInput.value = `${String(hour24).padStart(2, "0")}:${minuteValue}`;
+}
+
+function validateViewingRange() {
+  const startValue = document.getElementById("viewingStartTime")?.value || "";
+  const endValue = document.getElementById("viewingEndTime")?.value || "";
+  const endPeriod = document.getElementById("viewingEndTimePeriod");
+
+  if (!endPeriod) return;
+
+  if (!startValue || !endValue) {
+    endPeriod.setCustomValidity("");
+    return;
+  }
+
+  if (endValue < startValue) {
+    endPeriod.setCustomValidity("Viewing end time must be later than start time.");
+    endPeriod.reportValidity();
+  } else {
+    endPeriod.setCustomValidity("");
   }
 }
 

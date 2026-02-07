@@ -205,12 +205,43 @@
                       <label for="serviceTime" class="form-label">
                         <i class="bi bi-clock"></i> Service Time
                       </label>
-                      <input
-                        type="time"
-                        class="form-control"
-                        id="serviceTime"
-                        required
-                      />
+                      <div class="row g-2">
+                        <div class="col-4">
+                          <select
+                            class="form-select time-hour"
+                            id="serviceTimeHour"
+                            data-time-target="serviceTime"
+                            required
+                          >
+                            <option value="">HH</option>
+                          </select>
+                        </div>
+                        <div class="col-4">
+                          <select
+                            class="form-select time-minute"
+                            id="serviceTimeMinute"
+                            data-time-target="serviceTime"
+                            required
+                          >
+                            <option value="">MM</option>
+                            <option value="00">00</option>
+                            <option value="30">30</option>
+                          </select>
+                        </div>
+                        <div class="col-4">
+                          <select
+                            class="form-select time-period"
+                            id="serviceTimePeriod"
+                            data-time-target="serviceTime"
+                            required
+                          >
+                            <option value="">AM/PM</option>
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                          </select>
+                        </div>
+                      </div>
+                      <input type="hidden" id="serviceTime" required />
                     </div>
                   </div>
                 </div>
@@ -371,22 +402,82 @@
                       </label>
                       <div class="row g-2">
                         <div class="col-6">
-                          <input
-                            type="time"
-                            class="form-control"
-                            id="viewingStartTime"
-                            step="1800"
-                            required
-                          />
+                          <div class="row g-2">
+                            <div class="col-4">
+                              <select
+                                class="form-select time-hour"
+                                id="viewingStartTimeHour"
+                                data-time-target="viewingStartTime"
+                                required
+                              >
+                                <option value="">HH</option>
+                              </select>
+                            </div>
+                            <div class="col-4">
+                              <select
+                                class="form-select time-minute"
+                                id="viewingStartTimeMinute"
+                                data-time-target="viewingStartTime"
+                                required
+                              >
+                                <option value="">MM</option>
+                                <option value="00">00</option>
+                                <option value="30">30</option>
+                              </select>
+                            </div>
+                            <div class="col-4">
+                              <select
+                                class="form-select time-period"
+                                id="viewingStartTimePeriod"
+                                data-time-target="viewingStartTime"
+                                required
+                              >
+                                <option value="">AM/PM</option>
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                              </select>
+                            </div>
+                          </div>
+                          <input type="hidden" id="viewingStartTime" required />
                         </div>
                         <div class="col-6">
-                          <input
-                            type="time"
-                            class="form-control"
-                            id="viewingEndTime"
-                            step="1800"
-                            required
-                          />
+                          <div class="row g-2">
+                            <div class="col-4">
+                              <select
+                                class="form-select time-hour"
+                                id="viewingEndTimeHour"
+                                data-time-target="viewingEndTime"
+                                required
+                              >
+                                <option value="">HH</option>
+                              </select>
+                            </div>
+                            <div class="col-4">
+                              <select
+                                class="form-select time-minute"
+                                id="viewingEndTimeMinute"
+                                data-time-target="viewingEndTime"
+                                required
+                              >
+                                <option value="">MM</option>
+                                <option value="00">00</option>
+                                <option value="30">30</option>
+                              </select>
+                            </div>
+                            <div class="col-4">
+                              <select
+                                class="form-select time-period"
+                                id="viewingEndTimePeriod"
+                                data-time-target="viewingEndTime"
+                                required
+                              >
+                                <option value="">AM/PM</option>
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                              </select>
+                            </div>
+                          </div>
+                          <input type="hidden" id="viewingEndTime" required />
                         </div>
                       </div>
                       <small class="text-muted"
@@ -406,12 +497,40 @@
                           />
                         </div>
                         <div class="col-6">
-                          <input
-                            type="time"
-                            class="form-control"
-                            id="intermentTime"
-                            step="1800"
-                          />
+                          <div class="row g-2">
+                            <div class="col-4">
+                              <select
+                                class="form-select time-hour"
+                                id="intermentTimeHour"
+                                data-time-target="intermentTime"
+                              >
+                                <option value="">HH</option>
+                              </select>
+                            </div>
+                            <div class="col-4">
+                              <select
+                                class="form-select time-minute"
+                                id="intermentTimeMinute"
+                                data-time-target="intermentTime"
+                              >
+                                <option value="">MM</option>
+                                <option value="00">00</option>
+                                <option value="30">30</option>
+                              </select>
+                            </div>
+                            <div class="col-4">
+                              <select
+                                class="form-select time-period"
+                                id="intermentTimePeriod"
+                                data-time-target="intermentTime"
+                              >
+                                <option value="">AM/PM</option>
+                                <option value="AM">AM</option>
+                                <option value="PM">PM</option>
+                              </select>
+                            </div>
+                          </div>
+                          <input type="hidden" id="intermentTime" />
                         </div>
                       </div>
                     </div>
