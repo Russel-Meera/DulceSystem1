@@ -319,6 +319,43 @@
                     ></textarea>
                   </div>
 
+                  <div class="mb-3">
+                    <label class="form-label">
+                      <i class="bi bi-people"></i> Survived By
+                    </label>
+                    <div id="survivorsList" class="row g-2">
+                      <div class="col-md-4">
+                        <input
+                          type="text"
+                          class="form-control survivor-relation"
+                          placeholder="Relation (e.g., Husband)"
+                        />
+                      </div>
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control survivor-names"
+                            placeholder="Names (e.g., Ricardo Cruz)"
+                          />
+                          <button class="btn btn-outline-secondary remove-survivor" type="button">
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary btn-sm mt-2"
+                      id="addSurvivorRow"
+                    >
+                      <i class="bi bi-plus-circle"></i> Add Survivor
+                    </button>
+                    <small class="text-muted d-block mt-1">
+                      Leave relation or names blank to skip saving that row.
+                    </small>
+                  </div>
+
                   <div class="row">
                     <div class="col-md-6 mb-3">
                       <label for="wakeSchedule" class="form-label">

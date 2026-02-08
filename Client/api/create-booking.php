@@ -25,6 +25,7 @@ $wakeSchedule = $_POST['wake_schedule'] ?? '';
 $chapelName = $_POST['chapel'] ?? '';
 $viewingHours = $_POST['viewing_hours'] ?? '';
 $interment = $_POST['interment'] ?? '';
+$survivorsRaw = $_POST['survivors'] ?? '';
 
 if (empty($chapelId) || empty($serviceDate) || empty($serviceTime)) {
     echo json_encode([
@@ -183,6 +184,32 @@ try {
     }
 
     $obituaryId = $conn->insert_id;
+
+    // Save survivors if provided
+    $survivors = [];
+    if (!empty($survivorsRaw)) {
+        $decoded = json_decode($survivorsRaw, true);
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            $survivors = $decoded;
+        }
+    }
+
+    if (!empty($survivors)) {
+        $stmtSurvivor = $conn->prepare(
+            "INSERT INTO obituary_survivors (obituary_id, survivor_text) VALUES (?, ?)"
+        );
+        foreach ($survivors as $survivorText) {
+            $survivorText = trim((string) $survivorText);
+            if ($survivorText === '') {
+                continue;
+            }
+            $stmtSurvivor->bind_param("is", $obituaryId, $survivorText);
+            if (!$stmtSurvivor->execute()) {
+                throw new Exception('Failed to save survivors.');
+            }
+        }
+        $stmtSurvivor->close();
+    }
 
     $conn->commit();
 

@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupDateRestrictions();
   setupTimePickers();
   setupBookingForm();
+  setupSurvivorInputs();
 });
 
 function loadChapelServices() {
@@ -320,6 +321,7 @@ function buildBookingFormData() {
   formData.append("death_date", document.getElementById("deathDate").value);
   formData.append("excerpt", document.getElementById("excerpt").value.trim());
   formData.append("full_biography", document.getElementById("fullBiography").value.trim());
+  formData.append("survivors", JSON.stringify(getSurvivorsPayload()));
   const wakeStartDate = document.getElementById("wakeStartDate").value;
   const wakeEndDate = document.getElementById("wakeEndDate").value;
   const wakeSchedule = wakeStartDate && wakeEndDate
@@ -347,4 +349,48 @@ function buildBookingFormData() {
   }
 
   return formData;
+}
+
+function setupSurvivorInputs() {
+  const list = document.getElementById("survivorsList");
+  const addBtn = document.getElementById("addSurvivorRow");
+  if (!list || !addBtn) return;
+
+  addBtn.addEventListener("click", () => {
+    const row = document.createElement("div");
+    row.className = "row g-2 mt-0";
+    row.innerHTML = `
+      <div class="col-md-4">
+        <input type="text" class="form-control survivor-relation" placeholder="Relation (e.g., Children)" />
+      </div>
+      <div class="col-md-8">
+        <div class="input-group">
+          <input type="text" class="form-control survivor-names" placeholder="Names (e.g., Ana, Jose)" />
+          <button class="btn btn-outline-secondary remove-survivor" type="button">Remove</button>
+        </div>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+
+  list.addEventListener("click", (event) => {
+    if (!event.target.classList.contains("remove-survivor")) return;
+    const row = event.target.closest(".row");
+    if (row) row.remove();
+  });
+}
+
+function getSurvivorsPayload() {
+  const relations = Array.from(document.querySelectorAll(".survivor-relation"));
+  const names = Array.from(document.querySelectorAll(".survivor-names"));
+  const survivors = [];
+
+  relations.forEach((relationInput, index) => {
+    const relation = relationInput.value.trim();
+    const nameValue = names[index] ? names[index].value.trim() : "";
+    if (!relation || !nameValue) return;
+    survivors.push(`${relation}: ${nameValue}`);
+  });
+
+  return survivors;
 }
