@@ -269,7 +269,6 @@ $conn->close();
 
     .calendar-cell {
       min-height: 80px;
-      max-height: 80px;
       padding: 0.5rem;
       border-radius: 0.6rem;
       border: 1px solid #e5e7eb;
@@ -277,6 +276,7 @@ $conn->close();
       position: relative;
       cursor: pointer;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      height: auto;
     }
 
     .calendar-cell:hover {
@@ -319,8 +319,7 @@ $conn->close();
       flex-direction: column;
       gap: 4px;
       margin-top: 0.5rem;
-      max-height: 60px;
-      overflow: hidden;
+      max-height: none;
     }
 
     .event-bar {

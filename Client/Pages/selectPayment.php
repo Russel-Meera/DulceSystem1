@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once __DIR__ . '/../PHP/dbConfig.php';
 
 $bookingId = isset($_GET['booking_id']) ? (int)$_GET['booking_id'] : 0;
@@ -135,6 +135,9 @@ if ($result) {
               <a class="nav-link" href="obituaries.html">Obituaries</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="booking-calendar.php">Calendar</a>
+            </li>
+            <li class="nav-item">
               <a
                 class="btn btn-register ms-lg-3"
                 href="../../SignUp&Login/Pages/register.html"
@@ -173,10 +176,10 @@ if ($result) {
                 <small class="text-muted">
                   Booking #<?php echo (int)$bookingInfo['booking_id']; ?>
                   <?php if (!empty($bookingInfo['service_date'])) : ?>
-                    • <?php echo htmlspecialchars($bookingInfo['service_date']); ?>
+                    â€¢ <?php echo htmlspecialchars($bookingInfo['service_date']); ?>
                   <?php endif; ?>
                   <?php if (!empty($bookingInfo['service_time'])) : ?>
-                    • <?php echo htmlspecialchars($bookingInfo['service_time']); ?>
+                    â€¢ <?php echo htmlspecialchars($bookingInfo['service_time']); ?>
                   <?php endif; ?>
                 </small>
               </div>
@@ -184,8 +187,8 @@ if ($result) {
                 <div class="text-muted">Amount</div>
                 <div class="h5 mb-0">
                   <?php echo $bookingInfo['service_price'] !== null
-                    ? '₱' . number_format((float)$bookingInfo['service_price'], 2)
-                    : '₱0.00'; ?>
+                    ? 'â‚±' . number_format((float)$bookingInfo['service_price'], 2)
+                    : 'â‚±0.00'; ?>
                 </div>
               </div>
             </div>
@@ -322,3 +325,4 @@ if ($result) {
     </script>
   </body>
 </html>
+
