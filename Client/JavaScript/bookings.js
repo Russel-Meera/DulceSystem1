@@ -3,6 +3,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   setupBookingsFilter();
   loadBookings("all");
+  setupBookingModalFocus();
 });
 
 // Setup filter functionality
@@ -142,27 +143,98 @@ function showEmptyState() {
 // View booking details
 function viewBookingDetails(bookingId) {
   const modalBody = document.getElementById("modalBookingDetails");
+  const modalEl = document.getElementById("bookingModal");
+  if (modalEl) {
+    modalEl.dataset.lastFocus = document.activeElement
+      ? document.activeElement.getAttribute("data-focus-id") ||
+        document.activeElement.id ||
+        ""
+      : "";
+    modalEl._lastFocusElement = document.activeElement;
+  }
 
-  // In production, fetch from API
   modalBody.innerHTML = `
         <div class="booking-details-view">
-            <h5 class="text-primary mb-3">Booking #DULCE-${bookingId}</h5>
-            
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <strong>Package:</strong>
-                    <p>Loading...</p>
-                </div>
-                <div class="col-md-6">
-                    <strong>Chapel:</strong>
-                    <p>Loading...</p>
-                </div>
-            </div>
+            <h5 class="text-primary mb-3">Booking Details</h5>
+            <p class="text-muted">Loading details...</p>
         </div>
     `;
 
-  const modal = new bootstrap.Modal(document.getElementById("bookingModal"));
+  const modal = new bootstrap.Modal(modalEl);
   modal.show();
+
+  fetch(`http://localhost/DULCESYSTEM1/Client/api/get-bookings.php?id=${bookingId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (!data.success || !data.booking) {
+        modalBody.innerHTML = `<p class="text-danger">Unable to load booking details.</p>`;
+        return;
+      }
+
+      const booking = data.booking;
+      const features = Array.isArray(booking.chapel_features)
+        ? booking.chapel_features
+        : [];
+      const serviceDate = booking.service_date ? formatDate(booking.service_date) : "N/A";
+      const serviceTime = booking.service_time || "N/A";
+      const status = booking.booking_status || "N/A";
+      const amount = booking.total_amount
+        ? `₱${Number(booking.total_amount).toFixed(2)}`
+        : "N/A";
+
+      const deceasedName = booking.deceased_name || "N/A";
+      const deceasedDates = (booking.birth_date || booking.death_date)
+        ? `${formatDate(booking.birth_date)} - ${formatDate(booking.death_date)}${booking.age ? ` (Age ${booking.age})` : ""}`
+        : "Birth/Death dates not provided.";
+
+      modalBody.innerHTML = `
+        <div class="booking-details-view">
+          <div class="mb-3">
+            <strong>${booking.chapel_name || "Home Service"}</strong>
+            <div class="text-muted">Status: ${status}</div>
+          </div>
+
+          <div class="mb-3">
+            <h6>Service Schedule</h6>
+            <div><i class="bi bi-calendar-event me-1"></i>${serviceDate}</div>
+            <div><i class="bi bi-clock me-1"></i>${serviceTime}</div>
+          </div>
+
+          <div class="mb-3">
+            <h6>Features</h6>
+            <div>${features.length ? features.join(", ") : "No features listed."}</div>
+          </div>
+
+          <div class="mb-3">
+            <h6>Deceased Information</h6>
+            <div><strong>${deceasedName}</strong></div>
+            <div class="text-muted">${deceasedDates}</div>
+            <div><i class="bi bi-calendar2-week me-1"></i>${booking.wake_schedule || "Wake schedule not provided."}</div>
+            <div><i class="bi bi-clock-history me-1"></i>${booking.viewing_hours || "Viewing hours not provided."}</div>
+            <div><i class="bi bi-pin-map me-1"></i>${booking.interment || "Interment not provided."}</div>
+          </div>
+
+          <div><i class="bi bi-cash-coin me-1"></i>${amount}</div>
+        </div>
+      `;
+    })
+    .catch((error) => {
+      console.error("Error loading booking details:", error);
+      modalBody.innerHTML = `<p class="text-danger">An error occurred while loading details.</p>`;
+    });
+}
+
+function setupBookingModalFocus() {
+  const modalEl = document.getElementById("bookingModal");
+  if (!modalEl) return;
+
+  modalEl.addEventListener("hidden.bs.modal", () => {
+    const last = modalEl._lastFocusElement;
+    if (last && typeof last.focus === "function") {
+      last.focus();
+    }
+    modalEl._lastFocusElement = null;
+  });
 }
 
 // Helper functions

@@ -16,53 +16,55 @@ if (!isset($_SESSION['user_id'])) {
 try {
     $conn = getDBConnection();
     $userId = $_SESSION['user_id'];
-    
-    // Get total bookings count (will work once bookings table exists)
-    // For now, returning 0
+
     $totalBookings = 0;
     $pendingBookings = 0;
     $totalDocuments = 0;
     $totalPayments = 0;
-    
-    // TODO: Uncomment when bookings table is created
-    /*
+
     $stmt = $conn->prepare("SELECT COUNT(*) as total FROM bookings WHERE client_id = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $totalBookings = $row['total'];
+    $totalBookings = (int) ($row['total'] ?? 0);
     $stmt->close();
-    
-    $stmt = $conn->prepare("SELECT COUNT(*) as pending FROM bookings WHERE client_id = ? AND booking_status = 'Pending'");
+
+    $stmt = $conn->prepare("SELECT COUNT(*) as pending FROM bookings WHERE client_id = ? AND booking_status = 'pending'");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $pendingBookings = $row['pending'];
+    $pendingBookings = (int) ($row['pending'] ?? 0);
     $stmt->close();
-    
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM documents d 
-                           JOIN bookings b ON d.booking_id = b.booking_id 
-                           WHERE b.client_id = ?");
+
+    // Optional documents: count obituaries if linked to client.
+    $hasObituaryClient = false;
+    $check = $conn->query("SHOW COLUMNS FROM obituaries LIKE 'client_id'");
+    if ($check && $check->num_rows > 0) {
+        $hasObituaryClient = true;
+    }
+    if ($check) {
+        $check->free();
+    }
+
+    if ($hasObituaryClient) {
+        $stmt = $conn->prepare("SELECT COUNT(*) as total FROM obituaries WHERE client_id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $totalDocuments = (int) ($row['total'] ?? 0);
+        $stmt->close();
+    }
+
+    $stmt = $conn->prepare("SELECT COALESCE(SUM(total_amount), 0) as total FROM bookings WHERE client_id = ? AND payment_status = 'paid'");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    $totalDocuments = $row['total'];
+    $totalPayments = (float) ($row['total'] ?? 0);
     $stmt->close();
-    
-    $stmt = $conn->prepare("SELECT COALESCE(SUM(p.amount_paid), 0) as total FROM payments p 
-                           JOIN billings bil ON p.billing_id = bil.billing_id 
-                           JOIN bookings b ON bil.booking_id = b.booking_id 
-                           WHERE b.client_id = ?");
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $totalPayments = $row['total'];
-    $stmt->close();
-    */
     
     echo json_encode([
         'success' => true,
@@ -70,7 +72,7 @@ try {
             'totalBookings' => $totalBookings,
             'pendingBookings' => $pendingBookings,
             'totalDocuments' => $totalDocuments,
-            'totalPayments' => number_format($totalPayments, 2)
+            'totalPayments' => $totalPayments
         ]
     ]);
     

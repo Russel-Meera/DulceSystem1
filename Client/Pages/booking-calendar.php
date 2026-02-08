@@ -486,6 +486,20 @@ $conn->close();
             <li class="nav-item">
               <a class="nav-link active" href="booking-calendar.php">Calendar</a>
             </li>
+            <li class="nav-item">
+              <a
+                class="btn btn-register ms-lg-3"
+                href="../../SignUp&Login/Pages/register.html"
+                >Register</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="btn btn-login ms-lg-2"
+                href="../../SignUp&Login/Pages/login.html"
+                >Login</a
+              >
+            </li>
             <!-- User dropdown will be inserted here by session.js -->
           </ul>
         </div>

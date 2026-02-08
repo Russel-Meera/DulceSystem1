@@ -185,14 +185,6 @@
                     <i class="bi bi-calendar-check"></i>
                     <span>My Bookings</span>
                   </a>
-                  <a href="documents.html" class="quick-action-btn">
-                    <i class="bi bi-file-earmark-arrow-up"></i>
-                    <span>Upload Documents</span>
-                  </a>
-                  <a href="payments.html" class="quick-action-btn">
-                    <i class="bi bi-credit-card"></i>
-                    <span>Make Payment</span>
-                  </a>
                   <a href="profile.html" class="quick-action-btn">
                     <i class="bi bi-person-gear"></i>
                     <span>Account Settings</span>
@@ -289,6 +281,88 @@
     <script src="../JavaScript/main.js"></script>
     <script src="../JavaScript/session.js"></script>
     <script src="../JavaScript/dashboard.js"></script>
+
+    <div
+      class="modal fade"
+      id="bookingDetailModal"
+      tabindex="-1"
+      aria-labelledby="bookingDetailModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bookingDetailModalLabel">
+              Booking Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <strong id="bookingDetailService">Home Service</strong>
+              <div class="text-muted" id="bookingDetailStatus"></div>
+            </div>
+
+            <div class="mb-3">
+              <h6 class="mb-2">Service Schedule</h6>
+              <div class="mb-1">
+                <i class="bi bi-calendar-event me-1"></i>
+                <span id="bookingDetailDate"></span>
+              </div>
+              <div>
+                <i class="bi bi-clock me-1"></i>
+                <span id="bookingDetailTime"></span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <h6 class="mb-2">Features</h6>
+              <div id="bookingDetailFeatures" class="text-muted">
+                No features listed.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <h6 class="mb-2">Deceased Information</h6>
+              <div class="mb-1">
+                <strong id="bookingDetailDeceasedName">N/A</strong>
+              </div>
+              <div class="text-muted mb-2" id="bookingDetailDeceasedDates"></div>
+              <div class="mb-1">
+                <i class="bi bi-calendar2-week me-1"></i>
+                <span id="bookingDetailWakeSchedule"></span>
+              </div>
+              <div class="mb-1">
+                <i class="bi bi-clock-history me-1"></i>
+                <span id="bookingDetailViewingHours"></span>
+              </div>
+              <div>
+                <i class="bi bi-pin-map me-1"></i>
+                <span id="bookingDetailInterment"></span>
+              </div>
+            </div>
+
+            <div>
+              <i class="bi bi-cash-coin me-1"></i>
+              <span id="bookingDetailAmount"></span>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="bookings.html" class="btn btn-outline-secondary btn-sm">
+              View All Bookings
+            </a>
+            <button type="button" class="btn btn-primary-custom" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
 
