@@ -129,6 +129,7 @@ function setupDateRestrictions() {
 
   const birthDate = document.getElementById("birthDate");
   const deathDate = document.getElementById("deathDate");
+  const serviceDate = document.getElementById("serviceDate");
   const wakeStart = document.getElementById("wakeStartDate");
   const wakeEnd = document.getElementById("wakeEndDate");
   const intermentDate = document.getElementById("intermentDate");
@@ -139,12 +140,50 @@ function setupDateRestrictions() {
   if (wakeEnd) wakeEnd.min = todayStr;
   if (intermentDate) intermentDate.min = todayStr;
 
+  if (wakeStart) {
+    wakeStart.addEventListener("input", () => {
+      wakeStart.dataset.userEdited = "true";
+    });
+  }
+
+  if (intermentDate) {
+    intermentDate.addEventListener("input", () => {
+      intermentDate.dataset.userEdited = "true";
+    });
+  }
+
+  if (serviceDate && wakeStart) {
+    const syncWakeStart = () => {
+      if (!wakeStart.dataset.userEdited) {
+        wakeStart.value = serviceDate.value;
+      }
+    };
+    serviceDate.addEventListener("input", syncWakeStart);
+    serviceDate.addEventListener("change", syncWakeStart);
+    if (serviceDate.value) {
+      syncWakeStart();
+    }
+  }
+
   if (wakeStart && wakeEnd) {
     wakeStart.addEventListener("change", () => {
       if (wakeStart.value) {
         wakeEnd.min = wakeStart.value;
       }
     });
+  }
+
+  if (wakeEnd && intermentDate) {
+    const syncInterment = () => {
+      if (!intermentDate.dataset.userEdited) {
+        intermentDate.value = wakeEnd.value;
+      }
+    };
+    wakeEnd.addEventListener("input", syncInterment);
+    wakeEnd.addEventListener("change", syncInterment);
+    if (wakeEnd.value) {
+      syncInterment();
+    }
   }
 }
 
@@ -258,12 +297,19 @@ function buildBookingFormData() {
     "";
 
   const formData = new FormData();
-  formData.append("contact_name", document.getElementById("contactName").value.trim());
-  formData.append("contact_mobile", document.getElementById("contactMobile").value.trim());
-  formData.append("session_name", document.getElementById("sessionName").value.trim());
-  formData.append("session_number", document.getElementById("sessionNumber").value.trim());
-  formData.append("session_email", document.getElementById("sessionEmail").value.trim());
-  formData.append("session_address", document.getElementById("sessionAddress").value.trim());
+  const contactName = document.getElementById("contactName");
+  const contactMobile = document.getElementById("contactMobile");
+  const sessionName = document.getElementById("sessionName");
+  const sessionNumber = document.getElementById("sessionNumber");
+  const sessionEmail = document.getElementById("sessionEmail");
+  const sessionAddress = document.getElementById("sessionAddress");
+
+  formData.append("contact_name", contactName ? contactName.value.trim() : "");
+  formData.append("contact_mobile", contactMobile ? contactMobile.value.trim() : "");
+  formData.append("session_name", sessionName ? sessionName.value.trim() : "");
+  formData.append("session_number", sessionNumber ? sessionNumber.value.trim() : "");
+  formData.append("session_email", sessionEmail ? sessionEmail.value.trim() : "");
+  formData.append("session_address", sessionAddress ? sessionAddress.value.trim() : "");
 
   formData.append("chapel_id", chapelServiceId);
   formData.append("service_date", document.getElementById("serviceDate").value);

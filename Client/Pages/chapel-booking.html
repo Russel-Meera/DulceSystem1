@@ -40,7 +40,7 @@
             <li class="nav-item">
               <a class="nav-link" href="Index.html">Home</a>
             </li>
-<li class="nav-item">
+            <li class="nav-item">
               <a class="nav-link active" href="chapel-services.html"
                 >Home Services</a
               >
@@ -81,45 +81,7 @@
               <div class="dashboard-card">
                 <div class="card-header">
                   <h4 class="card-title">
-                    <i class="bi bi-telephone"></i> Contact Information
-                  </h4>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-6 mb-3">
-                      <label for="contactName" class="form-label">
-                        <i class="bi bi-person"></i> Name (Logged In)
-                      </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="contactName"
-                        placeholder="Your full name"
-                        required
-                      />
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="contactMobile" class="form-label">
-                        <i class="bi bi-phone"></i> Mobile Number
-                      </label>
-                      <input
-                        type="tel"
-                        class="form-control"
-                        id="contactMobile"
-                        placeholder="09xx-xxx-xxxx"
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12">
-              <div class="dashboard-card">
-                <div class="card-header">
-                  <h4 class="card-title">
-                    <i class="bi bi-person-badge"></i> Sessioned Information
+                    <i class="bi bi-person-badge"></i> Contact Information
                   </h4>
                 </div>
                 <div class="card-body">
@@ -185,6 +147,23 @@
               <div class="dashboard-card">
                 <div class="card-header">
                   <h4 class="card-title">
+                    <i class="bi bi-stars"></i> Home Service Features
+                  </h4>
+                </div>
+                <div class="card-body">
+                  <div class="row g-2" id="homeServiceFeatures">
+                    <div class="col-12 text-muted">
+                      Features will load once the home service is selected.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h4 class="card-title">
                     <i class="bi bi-calendar-check"></i> Service Schedule
                   </h4>
                 </div>
@@ -242,23 +221,6 @@
                         </div>
                       </div>
                       <input type="hidden" id="serviceTime" required />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12">
-              <div class="dashboard-card">
-                <div class="card-header">
-                  <h4 class="card-title">
-                    <i class="bi bi-stars"></i> Home Service Features
-                  </h4>
-                </div>
-                <div class="card-body">
-                  <div class="row g-2" id="homeServiceFeatures">
-                    <div class="col-12 text-muted">
-                      Features will load once the home service is selected.
                     </div>
                   </div>
                 </div>
@@ -566,7 +528,7 @@
           <div class="col-md-4 mb-4">
             <h5 class="footer-title">Quick Links</h5>
             <ul class="footer-links">
-<li><a href="chapel-services.html">Home Services</a></li>
+              <li><a href="chapel-services.html">Home Services</a></li>
               <li><a href="announcements.html">Announcements</a></li>
               <li><a href="obituaries.html">Obituaries</a></li>
             </ul>
@@ -639,7 +601,11 @@
             >
               Later
             </button>
-            <button type="button" class="btn btn-primary-custom" id="proceedToPayment">
+            <button
+              type="button"
+              class="btn btn-primary-custom"
+              id="proceedToPayment"
+            >
               Proceed to Payment
             </button>
           </div>
@@ -648,7 +614,3 @@
     </div>
   </body>
 </html>
-
-
-
-

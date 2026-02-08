@@ -184,6 +184,13 @@ $conn->close();
       padding: 1.25rem;
     }
 
+    .calendar-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 560px;
+      max-height: 560px;
+    }
+
     .calendar-header {
       display: flex;
       align-items: center;
@@ -245,25 +252,24 @@ $conn->close();
       padding: 0.35rem 0.6rem;
     }
 
-    .calendar-weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-      color: #64748b;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-align: center;
-    }
-
     .calendar-grid {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 0.5rem;
     }
 
+    .calendar-wrapper {
+      flex: 1;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      padding: 0.5rem;
+      background: #f8fafc;
+      overflow: auto;
+    }
+
     .calendar-cell {
-      min-height: 92px;
+      min-height: 80px;
+      max-height: 80px;
       padding: 0.5rem;
       border-radius: 0.6rem;
       border: 1px solid #e5e7eb;
@@ -300,28 +306,52 @@ $conn->close();
       color: #1f2937;
     }
 
+    .calendar-weekday {
+      font-size: 0.7rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
     .event-dots {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: 4px;
       margin-top: 0.5rem;
+      max-height: 60px;
+      overflow: hidden;
     }
 
-    .event-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      box-shadow: 0 2px 4px rgba(22, 163, 74, 0.3);
-    }
-
-    .event-more {
-      font-size: 10px;
-      background: #fef3c7;
-      color: #92400e;
+    .event-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      min-height: 18px;
       padding: 2px 6px;
       border-radius: 999px;
+      color: #ffffff;
+      font-size: 10px;
       font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.16);
+    }
+
+    .event-bar .event-label {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .event-bar.more {
+      background: #e2e8f0;
+      color: #1f2937;
+      cursor: default;
+      box-shadow: none;
     }
 
     .detail-card h4 {
@@ -366,6 +396,83 @@ $conn->close();
     @media (max-width: 980px) {
       .calendar-layout {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .calendar-header {
+        align-items: flex-start;
+      }
+
+      .calendar-nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .range-controls {
+        width: 100%;
+      }
+
+      .calendar-grid {
+        gap: 0.35rem;
+      }
+
+      .calendar-cell {
+        min-height: 74px;
+        padding: 0.4rem;
+      }
+
+      .calendar-day {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .content-area {
+        padding: 1rem;
+      }
+
+      .calendar-card,
+      .detail-card {
+        padding: 1rem;
+      }
+
+      .calendar-header h3 {
+        font-size: 1.1rem;
+      }
+
+      .range-controls input[type="date"] {
+        width: 140px;
+      }
+
+      .calendar-grid {
+        gap: 0.25rem;
+      }
+
+      .calendar-cell {
+        min-height: 66px;
+        padding: 0.35rem;
+      }
+
+      .calendar-weekday {
+        font-size: 0.6rem;
+      }
+
+      .event-bar {
+        font-size: 9px;
+        min-height: 16px;
+        padding: 2px 4px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .calendar-cell {
+        min-height: 60px;
+      }
+
+      .event-bar {
+        font-size: 8px;
       }
     }
   </style>
@@ -544,16 +651,9 @@ $conn->close();
                   <button class="calendar-btn" id="nextMonth">Next</button>
                 </div>
               </div>
-              <div class="calendar-weekdays">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
+              <div class="calendar-wrapper">
+                <div class="calendar-grid" id="calendarGrid"></div>
               </div>
-              <div class="calendar-grid" id="calendarGrid"></div>
             </section>
 
             <aside class="detail-card">
@@ -686,6 +786,8 @@ $conn->close();
       });
     }
 
+    const weekdayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
     function renderCalendar(dateObj) {
       const year = dateObj.getFullYear();
       const month = dateObj.getMonth();
@@ -713,6 +815,10 @@ $conn->close();
         if (dateKey === todayKey) cell.classList.add("today");
         if (selectedDate === dateKey) cell.classList.add("active");
 
+        const weekdayLabel = document.createElement("div");
+        weekdayLabel.className = "calendar-weekday";
+        weekdayLabel.textContent = weekdayLabels[cellDate.getDay()];
+
         const dayLabel = document.createElement("div");
         dayLabel.className = "calendar-day";
         dayLabel.textContent = day;
@@ -721,22 +827,30 @@ $conn->close();
         dots.className = "event-dots";
 
         if (events.length) {
-          const maxDots = 4;
-          events.slice(0, maxDots).forEach(event => {
-            const dot = document.createElement("span");
-            dot.className = "event-dot";
-            dot.style.background = event.color;
-            dots.appendChild(dot);
+          const maxBars = 3;
+          events.slice(0, maxBars).forEach(event => {
+            const bar = document.createElement("div");
+            bar.className = "event-bar";
+            bar.style.background = event.color;
+            bar.innerHTML = `<span class="event-label">${event.client}</span>`;
+            bar.addEventListener("click", (e) => {
+              e.stopPropagation();
+              selectedDate = dateKey;
+              renderCalendar(currentDate);
+              renderDetail(dateKey);
+            });
+            dots.appendChild(bar);
           });
 
-          if (events.length > maxDots) {
-            const more = document.createElement("span");
-            more.className = "event-more";
-            more.textContent = `+${events.length - maxDots}`;
+          if (events.length > maxBars) {
+            const more = document.createElement("div");
+            more.className = "event-bar more";
+            more.textContent = `+${events.length - maxBars} more`;
             dots.appendChild(more);
           }
         }
 
+        cell.appendChild(weekdayLabel);
         cell.appendChild(dayLabel);
         cell.appendChild(dots);
 
