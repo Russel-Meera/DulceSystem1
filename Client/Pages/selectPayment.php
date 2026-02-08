@@ -7,7 +7,7 @@ $clientId = isset($_GET['client_id']) ? (int)$_GET['client_id'] : 0;
 $bookingInfo = null;
 if ($bookingId > 0) {
   $stmt = $conn->prepare(
-    "SELECT b.booking_id, b.service_date, b.service_time, c.name AS chapel_name, c.price AS service_price
+    "SELECT b.booking_id, b.service_date, b.service_time, c.name AS chapel_name, b.total_amount AS service_price
      FROM bookings b
      LEFT JOIN chapel_services c ON b.chapel_id = c.id
      WHERE b.booking_id = ?"

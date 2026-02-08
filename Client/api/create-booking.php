@@ -75,11 +75,6 @@ try {
         $imageUrl = 'uploads/obituaries/' . $fileName;
     }
 
-    $stmtObituary = $conn->prepare(
-        "INSERT INTO obituaries (name, birth_date, death_date, age, image_url, excerpt, full_biography, wake_schedule, chapel, viewing_hours, interment, created_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-    );
-
     $birthDateObj = new DateTime($birthDate);
     $deathDateObj = new DateTime($deathDate);
     $today = new DateTime(date('Y-m-d'));
@@ -98,29 +93,7 @@ try {
 
     $age = (int) $birthDateObj->diff($deathDateObj)->y;
 
-    $stmtObituary->bind_param(
-        "sssissssssss",
-        $obituaryName,
-        $birthDate,
-        $deathDate,
-        $age,
-        $imageUrl,
-        $excerpt,
-        $fullBiography,
-        $wakeSchedule,
-        $chapelName,
-        $viewingHours,
-        $interment,
-        $createdAt
-    );
-
-    if (!$stmtObituary->execute()) {
-        throw new Exception('Failed to save obituary.');
-    }
-
-    $obituaryId = $conn->insert_id;
-
-    $bookingStatus = 'Pending';
+    $bookingStatus = 'pending';
     $bookingCreatedAt = date('Y-m-d H:i:s');
     $clientId = $_SESSION['user_id'];
 
@@ -144,6 +117,72 @@ try {
     }
 
     $bookingId = $conn->insert_id;
+
+    // Ensure linkage columns exist in obituaries, then insert with booking/client IDs.
+    $hasClientCol = false;
+    $hasBookingCol = false;
+    $colCheck = $conn->query("SHOW COLUMNS FROM obituaries LIKE 'client_id'");
+    if ($colCheck && $colCheck->num_rows > 0) {
+        $hasClientCol = true;
+    }
+    if ($colCheck) {
+        $colCheck->free();
+    }
+    $colCheck = $conn->query("SHOW COLUMNS FROM obituaries LIKE 'booking_id'");
+    if ($colCheck && $colCheck->num_rows > 0) {
+        $hasBookingCol = true;
+    }
+    if ($colCheck) {
+        $colCheck->free();
+    }
+
+    if (!$hasClientCol || !$hasBookingCol) {
+        $alterParts = [];
+        if (!$hasClientCol) $alterParts[] = "ADD COLUMN client_id INT(11) NULL";
+        if (!$hasBookingCol) $alterParts[] = "ADD COLUMN booking_id INT(11) NULL";
+        $alterSql = "ALTER TABLE obituaries " . implode(", ", $alterParts);
+        $conn->query($alterSql);
+
+        $colCheck = $conn->query("SHOW COLUMNS FROM obituaries LIKE 'client_id'");
+        $hasClientCol = $colCheck && $colCheck->num_rows > 0;
+        if ($colCheck) $colCheck->free();
+        $colCheck = $conn->query("SHOW COLUMNS FROM obituaries LIKE 'booking_id'");
+        $hasBookingCol = $colCheck && $colCheck->num_rows > 0;
+        if ($colCheck) $colCheck->free();
+    }
+
+    if (!$hasClientCol || !$hasBookingCol) {
+        throw new Exception('Missing client_id/booking_id columns in obituaries. Please run DB migration.');
+    }
+
+    $stmtObituary = $conn->prepare(
+        "INSERT INTO obituaries (client_id, booking_id, name, birth_date, death_date, age, image_url, excerpt, full_biography, wake_schedule, chapel, viewing_hours, interment, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    );
+
+    $stmtObituary->bind_param(
+        "iisssissssssss",
+        $clientId,
+        $bookingId,
+        $obituaryName,
+        $birthDate,
+        $deathDate,
+        $age,
+        $imageUrl,
+        $excerpt,
+        $fullBiography,
+        $wakeSchedule,
+        $chapelName,
+        $viewingHours,
+        $interment,
+        $createdAt
+    );
+
+    if (!$stmtObituary->execute()) {
+        throw new Exception('Failed to save obituary.');
+    }
+
+    $obituaryId = $conn->insert_id;
 
     $conn->commit();
 
